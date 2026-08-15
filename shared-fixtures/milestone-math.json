@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "referenceIosCommit": "95aa5b595ec8cad1ed8c7ebcf8c039e7a3588eae",
+  "nextMultiple": [
+    { "step": 1000, "after": 0, "expected": 1000 },
+    { "step": 1000, "after": 999, "expected": 1000 },
+    { "step": 1000, "after": 1000, "expected": 2000 },
+    { "step": 10000, "after": 12345, "expected": 20000 }
+  ],
+  "nextPrime": [
+    { "after": -1, "expected": 2 },
+    { "after": 2, "expected": 3 },
+    { "after": 3, "expected": 5 },
+    { "after": 12340, "expected": 12343 },
+    { "after": 12343, "expected": 12347 }
+  ],
+  "nextTwinPrime": [
+    { "after": 0, "expected": 3 },
+    { "after": 3, "expected": 5 },
+    { "after": 19, "expected": 29 },
+    { "after": 23, "expected": 29 }
+  ],
+  "nextPalindrome": [
+    { "after": 0, "expected": 1 },
+    { "after": 9, "expected": 11 },
+    { "after": 99, "expected": 101 },
+    { "after": 12345, "expected": 12421 }
+  ],
+  "nextPerfectSquare": [
+    { "after": -5, "expected": 1 },
+    { "after": 0, "expected": 1 },
+    { "after": 1, "expected": 4 },
+    { "after": 16, "expected": 25 },
+    { "after": 10000, "expected": 10201 },
+    { "after": 12345, "expected": 12544 }
+  ],
+  "nextCatalan": [
+    { "after": -1, "expected": 1 },
+    { "after": 1, "expected": 2 },
+    { "after": 132, "expected": 429 },
+    { "after": 1429, "expected": 1430 },
+    { "after": 1430, "expected": 4862 },
+    { "after": 477638700, "expected": null }
+  ],
+  "nextPowerOfTwo": [
+    { "after": -5, "expected": 1 },
+    { "after": 0, "expected": 1 },
+    { "after": 1, "expected": 2 },
+    { "after": 1024, "expected": 2048 },
+    { "after": 5000, "expected": 8192 }
+  ],
+  "nextDigitSequence": [
+    { "after": 5, "expected": 10 },
+    { "after": 1233, "expected": 1234 },
+    { "after": 1234, "expected": 2222 },
+    { "after": 6789, "expected": 7654 },
+    { "after": 9999, "expected": 11111 },
+    { "after": 477638700, "expected": 555555555 }
+  ],
+  "nextFibonacci": [
+    { "after": -5, "expected": 1 },
+    { "after": 0, "expected": 1 },
+    { "after": 1, "expected": 2 },
+    { "after": 8, "expected": 13 },
+    { "after": 5000, "expected": 6765 },
+    { "after": 433494437, "expected": 701408733 }
+  ]
+}
