@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="preview_today_catalan">Heute: Catalan-Zahl</string>
+    <string name="preview_today_square">Heute: Quadratzahl</string>
+</resources>

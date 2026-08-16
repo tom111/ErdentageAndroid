@@ -129,6 +129,10 @@ sync strategy.
 
 ### In-scope iOS behavior
 
+Phase-one parity targets the shipped iOS 1.3 feature set. The in-development
+`TogetherPageView` (“Zusammen”) is explicitly deferred until its iOS design
+and behavior are finalized and the owner separately approves adding it.
+
 - Up to 20 tracked people.
 - A horizontal pager with one page per person and a trailing “Demnächst” page.
 - Per-person name, civil birth date, optional time, days outside Earth, tint,
@@ -494,6 +498,8 @@ The owner has approved:
 - Target Google Play first. Source hosting, F-Droid publication, and a signing
   strategy remain to be established; the no-Play-Services and FLOSS dependency
   constraints still apply from the start.
+- Target the shipped iOS 1.3 feature set without the in-development
+  “Zusammen” page; reconsider that page only after the iOS feature is final.
 
 ## Primary external references
 

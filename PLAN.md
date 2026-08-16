@@ -91,6 +91,10 @@ implementation and the owner approves the risk.
 
 ### Phase one
 
+Feature parity targets the shipped iOS 1.3 app. The newer “Zusammen” page is
+still under development on iOS and is not part of this Android phase; it can be
+reconsidered after the iOS behavior is finalized.
+
 - Android phones.
 - Android tablets and resizable/foldable windows through adaptive layouts.
 - Portrait and landscape.
