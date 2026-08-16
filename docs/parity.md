@@ -8,8 +8,9 @@ deviations here.
 
 - iOS repository: `/Users/tom/SynologyDrive/projects/ErdentageiOS`
 - Commit: `95aa5b595ec8cad1ed8c7ebcf8c039e7a3588eae`
-- Branch/worktree: `main`; committed parity sources clean, unrelated
-  `TODO.md` modification present
+- Branch/worktree: `main`; uncommitted in-development “Zusammen” source,
+  project, shared-defaults, management, overview, and test changes present;
+  those changes remain outside the approved Android scope
 - Inspected: 2026-08-16
 
 ## Ledger
@@ -21,10 +22,10 @@ deviations here.
 | Milestone engine | `95aa5b5` | Complete | Shared fixture JSON plus JVM tests cover all kinds, strict-next boundaries, large values, current-day detection, filtering, same-target collapse, ordering, and dates | Pure optimized Kotlin port |
 | Persistence and repository | `95aa5b5` | Complete | File-backed JVM tests cover JSON schema, defaults, corruption replacement, concurrent transactions, cap, selection, reorder/delete, retention, and physically persisted backfill deltas | Typed app-private JSON DataStore; no obsolete iOS-key migration |
 | Theme and tint foundation | `95aa5b5` | In progress | Exact adaptive tint mapping tests; rendered gradient pixel test; light/dark phone previews; owner emulator review pending | Neutral Material scheme and system sans; no screenshot harness by owner decision |
-| Person pager | `95aa5b5` | In progress | Compose tests cover empty state, person render, single overview sentinel, swipe, and indicator; visible API 36 launch | Settings/management chrome and milestone actions pending |
+| Person pager | `95aa5b5` | In progress | Compose tests cover empty state, person render, single overview sentinel, swipe, indicator, top controls, and share copy; visible API 36 launch | Milestone-row actions pending; Android combines edit/share in one overflow menu |
 | Demnächst overview | `95aa5b5` | In progress | Merged chronological 30-row feed runs in pager and instrumentation test | Exact sky colors present; custom cloud canvas/wobble pending |
-| Settings and people | `95aa5b5` | Not started | Pending | Native Android controls |
-| Platform integrations | `95aa5b5` | Not started | Pending | Android intents and selected-contact access |
+| Settings and people | `95aa5b5` | In progress | Compose tests cover add/edit entry, reorder/delete actions, and saving a named draft; JVM tests cover time clamps and prime/twin selection; visible phone review | Contact import pending; Android uses accessible up/down commands rather than iOS drag-edit mode |
+| Platform integrations | `95aa5b5` | In progress | Current-person text reaches `ACTION_SEND` through a chooser; Compose test verifies named share copy | Contact picker and calendar handoff pending |
 | Home-screen widget | `95aa5b5` | Not started | Pending | One configurable Glance widget type |
 
 ## Verification log
@@ -83,6 +84,28 @@ deviations here.
   pixels. All 56 JVM tests, lint, debug/release APK assembly, and release AAB
   bundling also pass. The final debug APK was reinstalled and visibly checked
   on the emulator without clearing its saved app data.
+
+### 2026-08-16 — multi-person management and options
+
+- Added inset-safe people and overflow controls to person pages. The overflow
+  menu edits the current person or shares the current German day-count copy;
+  controls remain hidden on the trailing “Demnächst” page.
+- Added a full-screen people manager with stable-UUID selection, add, edit,
+  delete confirmation, accessible up/down reorder commands, active-person
+  indication, distinct default tints, and the 20-person cap. A new manual
+  person is persisted only after the editor is confirmed, so cancel leaves no
+  stub record.
+- Added the per-person editor for name, independent-wheel date, optional time,
+  days outside Earth, all tint swatches, mutually exclusive ordinary/twin
+  prime selection, every other milestone kind, and version information.
+- Native date/time picker actions are explicitly German on an English device.
+  The picker, person top controls, people list, and editor were visibly
+  inspected on `Erdentage_API_36`; the numeric stepper was revised after the
+  first phone-width render exposed an overlap.
+- All 60 JVM tests and seven API 36 instrumentation tests pass, along with
+  lint, debug/release APK assembly, and release AAB bundling. Dependency
+  verification and locking cover the small Compose core icon artifact; the
+  project-owned group/minus vectors avoid the extended icon bundle.
 
 ## Scope decisions
 

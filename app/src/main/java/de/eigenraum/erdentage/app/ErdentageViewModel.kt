@@ -37,17 +37,33 @@ class ErdentageViewModel(
     }
 
     fun addFirstPerson(birthDate: LocalDate) {
+        addPerson(
+            Person(
+                name = "Ich",
+                birthYear = birthDate.year,
+                birthMonth = birthDate.monthValue,
+                birthDay = birthDate.dayOfMonth,
+                tint = PersonTint.SAND,
+            ),
+        )
+    }
+
+    fun addPerson(person: Person) {
+        viewModelScope.launch { repository.addPerson(person) }
+    }
+
+    fun updatePerson(person: Person) {
         viewModelScope.launch {
-            repository.addPerson(
-                Person(
-                    name = "Ich",
-                    birthYear = birthDate.year,
-                    birthMonth = birthDate.monthValue,
-                    birthDay = birthDate.dayOfMonth,
-                    tint = PersonTint.SAND,
-                ),
-            )
+            repository.updatePerson(person.id) { person }
         }
+    }
+
+    fun deletePerson(personId: String) {
+        viewModelScope.launch { repository.deletePerson(personId) }
+    }
+
+    fun movePerson(fromIndex: Int, toIndex: Int) {
+        viewModelScope.launch { repository.movePerson(fromIndex, toIndex) }
     }
 
     fun selectPage(index: Int) {

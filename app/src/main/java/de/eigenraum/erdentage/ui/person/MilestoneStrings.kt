@@ -36,3 +36,33 @@ internal val MilestoneKind.todayLabelResource: Int
         MilestoneKind.CATALAN -> R.string.milestone_catalan
         MilestoneKind.FIBONACCI -> R.string.milestone_fibonacci
     }
+
+@get:StringRes
+internal val MilestoneKind.labelResource: Int
+    get() = when (this) {
+        MilestoneKind.TAUSENDER -> R.string.milestone_label_thousand
+        MilestoneKind.ZEHNTAUSENDER -> R.string.milestone_label_ten_thousand
+        MilestoneKind.PRIMZAHL -> R.string.milestone_label_prime
+        MilestoneKind.ZWILLINGSPRIMZAHL -> R.string.milestone_label_twin_prime
+        MilestoneKind.PALINDROM -> R.string.milestone_label_palindrome
+        MilestoneKind.QUADRAT -> R.string.milestone_label_square
+        MilestoneKind.ZWEIERPOTENZ -> R.string.milestone_label_power_two
+        MilestoneKind.ZIFFERNFOLGE -> R.string.milestone_label_digit_sequence
+        MilestoneKind.CATALAN -> R.string.milestone_label_catalan
+        MilestoneKind.FIBONACCI -> R.string.milestone_label_fibonacci
+    }
+
+@get:StringRes
+internal val MilestoneKind.explanationResource: Int
+    get() = when (this) {
+        MilestoneKind.TAUSENDER -> R.string.milestone_explanation_thousand
+        MilestoneKind.ZEHNTAUSENDER -> R.string.milestone_explanation_ten_thousand
+        MilestoneKind.PRIMZAHL -> R.string.milestone_explanation_prime
+        MilestoneKind.ZWILLINGSPRIMZAHL -> R.string.milestone_explanation_twin_prime
+        MilestoneKind.PALINDROM -> R.string.milestone_explanation_palindrome
+        MilestoneKind.QUADRAT -> R.string.milestone_explanation_square
+        MilestoneKind.ZWEIERPOTENZ -> R.string.milestone_explanation_power_two
+        MilestoneKind.ZIFFERNFOLGE -> R.string.milestone_explanation_digit_sequence
+        MilestoneKind.CATALAN -> R.string.milestone_explanation_catalan
+        MilestoneKind.FIBONACCI -> R.string.milestone_explanation_fibonacci
+    }

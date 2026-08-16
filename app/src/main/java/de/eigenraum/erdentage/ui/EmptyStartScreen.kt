@@ -4,6 +4,7 @@
 package de.eigenraum.erdentage.ui
 
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -60,6 +61,12 @@ fun EmptyStartScreen(
                         .atStartOfDay(ZoneId.systemDefault())
                         .toInstant()
                         .toEpochMilli() - 1
+                    setOnShowListener {
+                        getButton(DialogInterface.BUTTON_NEGATIVE)
+                            .setText(R.string.cancel)
+                        getButton(DialogInterface.BUTTON_POSITIVE)
+                            .setText(R.string.apply)
+                    }
                 }.show()
             },
         ) {

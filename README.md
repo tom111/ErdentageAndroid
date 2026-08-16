@@ -6,7 +6,8 @@ preserving behavior and visual identity from the iOS source.
 
 The domain and persistence layers are in place, along with a functional
 first-run birth-date flow, person counter, milestone feed, pager, and initial
-“Demnächst” overview. See [`PLAN.md`](PLAN.md) for the roadmap,
+“Demnächst” overview. Multi-person management, per-person settings, and text
+sharing are also functional. See [`PLAN.md`](PLAN.md) for the roadmap,
 [`docs/parity.md`](docs/parity.md) for parity status, and
 [`docs/emulators.md`](docs/emulators.md) for the local Android test matrix.
 

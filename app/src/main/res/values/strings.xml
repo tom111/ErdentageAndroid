@@ -15,6 +15,86 @@
     <string name="no_upcoming_milestones">Noch keine Meilensteine</string>
     <string name="page_indicator" tools:ignore="PluralsCandidate">Seite %1$d von %2$d</string>
 
+    <string name="manage_people">Personen verwalten</string>
+    <string name="people_title">Personen</string>
+    <string name="close">Schließen</string>
+    <string name="save">Speichern</string>
+    <string name="person_options">Optionen für %1$s</string>
+    <string name="row_options">Listenoptionen für %1$s</string>
+    <string name="add_person">Person hinzufügen</string>
+    <string name="edit_person">Einstellungen</string>
+    <string name="share_days">Erdentage teilen</string>
+    <string name="share_chooser_title">Erdentage teilen</string>
+    <string name="move_up">Nach oben</string>
+    <string name="move_down">Nach unten</string>
+    <string name="delete_person">Person löschen</string>
+    <string name="delete_person_title">%1$s löschen?</string>
+    <string name="delete_person_message">Die Person und ihre gespeicherten Einstellungen werden dauerhaft entfernt.</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="apply">Übernehmen</string>
+    <string name="delete">Löschen</string>
+    <string name="selected_person">Aktuell ausgewählt</string>
+    <string name="max_people" tools:ignore="PluralsCandidate">Maximal %1$d Personen. Lösche jemanden, um eine weitere hinzuzufügen.</string>
+    <string name="person_birth_date">Geboren am %1$s</string>
+
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_name_section">Name</string>
+    <string name="settings_name_label">Name</string>
+    <string name="settings_birth_section">Geburt</string>
+    <string name="settings_date_label">Datum</string>
+    <string name="settings_time_known">Uhrzeit bekannt</string>
+    <string name="settings_time_label">Uhrzeit</string>
+    <string name="settings_astronaut_section">Astronaut:innen</string>
+    <string name="settings_days_off_earth">Tage außerhalb der Erde</string>
+    <string name="settings_decrease_days">Tage verringern</string>
+    <string name="settings_increase_days">Tage erhöhen</string>
+    <string name="settings_astronaut_explanation">Tage im All zählen nicht als Erdentage und werden vom Zähler abgezogen. Glückwunsch zum Flug.</string>
+    <string name="settings_color_section">Farbe</string>
+    <string name="settings_milestones_section">Meilensteine</string>
+    <string name="settings_milestones_footer">Aktive Meilensteine erscheinen auf der Hauptseite, in der „Demnächst“-Übersicht und im Widget.</string>
+    <string name="settings_twin_only">Nur Zwillinge</string>
+    <string name="settings_about_section">Über</string>
+    <string name="settings_about">Familienprojekt aus Magdeburg. Version %1$s (%2$d).</string>
+
+    <string name="share_owner_regular">Ich bin heute %1$s Tage auf der Erde. 🌍</string>
+    <string name="share_owner_milestone">Ich bin heute %1$s Tage auf der Erde! 🎉🌍</string>
+    <string name="share_named_regular">%1$s ist heute %2$s Tage auf der Erde. 🌍</string>
+    <string name="share_named_milestone">%1$s ist heute %2$s Tage auf der Erde! 🎉🌍</string>
+
+    <string name="tint_sand">Sand</string>
+    <string name="tint_coral">Koralle</string>
+    <string name="tint_rose">Rose</string>
+    <string name="tint_lavender">Lavendel</string>
+    <string name="tint_sky">Himmel</string>
+    <string name="tint_mint">Minze</string>
+    <string name="tint_forest">Wald</string>
+    <string name="tint_ocean">Ozean</string>
+    <string name="tint_slate">Schiefer</string>
+    <string name="tint_stone">Stein</string>
+    <string name="tint_white">Weiß</string>
+
+    <string name="milestone_label_thousand">Tausender</string>
+    <string name="milestone_label_ten_thousand">Zehntausender</string>
+    <string name="milestone_label_prime">Primzahlen</string>
+    <string name="milestone_label_twin_prime">Zwillingsprimzahlen</string>
+    <string name="milestone_label_palindrome">Palindrome</string>
+    <string name="milestone_label_square">Quadratzahlen</string>
+    <string name="milestone_label_power_two">Zweierpotenzen</string>
+    <string name="milestone_label_digit_sequence">Ziffernfolgen</string>
+    <string name="milestone_label_catalan">Catalan-Zahlen</string>
+    <string name="milestone_label_fibonacci">Fibonacci-Zahlen</string>
+
+    <string name="milestone_explanation_thousand">1.000, 2.000, 3.000 …</string>
+    <string name="milestone_explanation_ten_thousand">10.000, 20.000, 30.000 …</string>
+    <string name="milestone_explanation_prime">Nur durch 1 und sich selbst teilbar, z. B. 17 oder 9.973.</string>
+    <string name="milestone_explanation_twin_prime">Primzahl, deren Nachbar 2 weiter oder 2 davor auch prim ist, z. B. 17 und 19.</string>
+    <string name="milestone_explanation_palindrome">Vorwärts wie rückwärts gelesen gleich, z. B. 12.321.</string>
+    <string name="milestone_explanation_square">Quadrat einer Zahl, z. B. 144 = 12 × 12.</string>
+    <string name="milestone_explanation_power_two">Produkt von nur 2en, z. B. 1.024 = 2¹⁰.</string>
+    <string name="milestone_explanation_digit_sequence">Auf- oder absteigende Ziffern oder lauter gleiche, z. B. 4.567, 9.876 oder 7.777.</string>
+    <string name="milestone_explanation_catalan">Die berühmten Catalan-Zahlen (OEIS A000108): 1, 2, 5, 14, 42 …</string>
+    <string name="milestone_explanation_fibonacci">Die berühmten Fibonacci-Zahlen (OEIS A000045): 1, 2, 3, 5, 8, 13, 21 …</string>
+
     <string name="caption_next_thousand">nächster Tausender</string>
     <string name="caption_next_ten_thousand">nächster Zehntausender</string>
     <string name="caption_next_prime">nächste Primzahl</string>
