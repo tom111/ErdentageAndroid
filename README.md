@@ -4,8 +4,8 @@ Native Android port of the German family app Erdentage. The app is being built
 with Kotlin and Jetpack Compose for phones, tablets, and Android widgets while
 preserving behavior and visual identity from the iOS source.
 
-The initial scaffold and pure model/day-count/milestone domain port are in
-place. See [`PLAN.md`](PLAN.md) for the roadmap,
+The initial scaffold, pure model/day-count/milestone domain port, and typed
+DataStore repository are in place. See [`PLAN.md`](PLAN.md) for the roadmap,
 [`docs/parity.md`](docs/parity.md) for parity status, and
 [`docs/emulators.md`](docs/emulators.md) for the local Android test matrix.
 

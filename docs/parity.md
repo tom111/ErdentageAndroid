@@ -10,15 +10,16 @@ deviations here.
 - Commit: `95aa5b595ec8cad1ed8c7ebcf8c039e7a3588eae`
 - Branch/worktree: `main`; committed parity sources clean, unrelated
   `TODO.md` modification present
-- Inspected: 2026-08-15
+- Inspected: 2026-08-16
 
 ## Ledger
 
 | Area | iOS reference | Android status | Verification | Deviation |
 | --- | --- | --- | --- | --- |
 | Project skeleton | `95aa5b5` | Complete | `test lint assembleDebug`; `assembleRelease bundleRelease`; API 36 instrumentation test; visible launch and screenshot inspected 2026-08-15 | Native Android build and lifecycle |
-| Domain model and day count | `95aa5b5` | Complete | JVM tests cover civil dates, invalid data, zone changes, DST gaps/overlaps, future dates, residual time, rollover, limits, UUIDs, sentinel, JSON schema, retention, and backfill deltas | Uses `java.time` with injected clock/zone; DataStore repository is a separate pending slice |
+| Domain model and day count | `95aa5b5` | Complete | JVM tests cover civil dates, invalid data, zone changes, DST gaps/overlaps, future dates, residual time, rollover, limits, UUIDs, and the overview sentinel | Uses `java.time` with injected clock/zone |
 | Milestone engine | `95aa5b5` | Complete | Shared fixture JSON plus JVM tests cover all kinds, strict-next boundaries, large values, current-day detection, filtering, same-target collapse, ordering, and dates | Pure optimized Kotlin port |
+| Persistence and repository | `95aa5b5` | Complete | File-backed JVM tests cover JSON schema, defaults, corruption replacement, concurrent transactions, cap, selection, reorder/delete, retention, and physically persisted backfill deltas | Typed app-private JSON DataStore; no obsolete iOS-key migration |
 | Person pager | `95aa5b5` | Not started | Pending | Native Compose pager |
 | Demnächst overview | `95aa5b5` | Not started | Pending | Native Compose canvas |
 | Settings and people | `95aa5b5` | Not started | Pending | Native Android controls |
@@ -37,3 +38,22 @@ deviations here.
 - `./gradlew connectedDebugAndroidTest` passed on `Erdentage_API_36`.
 - Foundation and `java.time` produced the same next-rollover instants for the
   Europe/Berlin spring DST gap and autumn overlap.
+
+### 2026-08-16 — DataStore repository
+
+- All 51 JVM test methods pass; 14 exercise the serializer and repository with
+  real DataStore I/O, including concurrent writes and corruption replacement.
+- Android OS-managed backup remains enabled; the app-private DataStore file is
+  covered by the existing default backup rules.
+- The packaged APK requests no network, contacts, or calendar permission. Its
+  only declared permission is the app-scoped AndroidX dynamic-receiver guard.
+
+## Open parity decision
+
+The current committed iOS source contains a second trailing `TogetherPageView`
+(“Zusammen”) when at least two people exist, tagged at `people.count + 1`.
+That surface is absent from the iOS repository's own `AGENTS.md` summary and
+from the owner-approved Android scope, which specifies one trailing
+“Demnächst” sentinel at `people.size`. Android persistence therefore continues
+to implement the approved single sentinel. Before person-pager implementation,
+the owner must decide whether “Zusammen” is now phase-one parity scope.
