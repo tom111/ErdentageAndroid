@@ -20,7 +20,7 @@ deviations here.
 | Domain model and day count | `95aa5b5` | Complete | JVM tests cover civil dates, invalid data, zone changes, DST gaps/overlaps, future dates, residual time, rollover, limits, UUIDs, and the overview sentinel | Uses `java.time` with injected clock/zone |
 | Milestone engine | `95aa5b5` | Complete | Shared fixture JSON plus JVM tests cover all kinds, strict-next boundaries, large values, current-day detection, filtering, same-target collapse, ordering, and dates | Pure optimized Kotlin port |
 | Persistence and repository | `95aa5b5` | Complete | File-backed JVM tests cover JSON schema, defaults, corruption replacement, concurrent transactions, cap, selection, reorder/delete, retention, and physically persisted backfill deltas | Typed app-private JSON DataStore; no obsolete iOS-key migration |
-| Theme and tint foundation | `95aa5b5` | In progress | Exact adaptive tint mapping tests; rendered gradient pixel test; light/dark phone previews; manual comparison pending | Neutral Material scheme and system sans; screenshot plugin deferred while official tool is alpha-only |
+| Theme and tint foundation | `95aa5b5` | In progress | Exact adaptive tint mapping tests; rendered gradient pixel test; light/dark phone previews; owner emulator review pending | Neutral Material scheme and system sans; no screenshot harness by owner decision |
 | Person pager | `95aa5b5` | Not started | Pending | Native Compose pager |
 | Demnächst overview | `95aa5b5` | Not started | Pending | Native Compose canvas |
 | Settings and people | `95aa5b5` | Not started | Pending | Native Android controls |
@@ -60,9 +60,9 @@ deviations here.
   the neutral background at the vertical midpoint and below.
 - All 54 JVM tests, both API 36 instrumentation tests, lint, debug/release APK
   assembly, and release AAB bundling pass; the verified APK cold-launches.
-- The official Compose Preview Screenshot Testing plugin remains experimental
-  and alpha-only. Stable previews and emulator evidence are used for now; do
-  not add the alpha dependency without owner approval.
+- The owner waived an automated screenshot harness. Visible emulator runs,
+  owner screenshots/feedback, Compose previews, semantics tests, and focused
+  pixel assertions form the visual verification workflow.
 
 ## Scope decisions
 

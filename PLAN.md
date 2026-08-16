@@ -58,7 +58,7 @@ Android should port current tested behavior, not freeze the July 2026 snapshot.
 | Android versions | Minimum API 26; compile and target API 36 |
 | Application ID | `de.eigenraum.erdentage` |
 | Dependency injection | Small manual `AppContainer`; no DI framework initially |
-| Tests | JUnit, repository tests, Compose semantics/UI tests, official Compose screenshot tests, emulator instrumentation |
+| Tests | JUnit, repository tests, Compose semantics/UI tests, focused rendered-pixel checks, emulator instrumentation |
 
 ### Why Kotlin and Compose
 
@@ -234,9 +234,11 @@ system-owned interactions remain native Android experiences.
 - Use native Android date/time pickers, switches, contact picker, calendar UI,
   Sharesheet, accessibility semantics, and back behavior.
 
-Major Android surfaces will receive stable screenshot-test baselines. Compare
-them manually with the iOS reference screenshots for product parity, while
-allowing expected differences in system bars, fonts, and native controls.
+Major Android surfaces will be run visibly in the emulator for owner
+screenshots and feedback. Compare them manually with the iOS reference
+screenshots for product parity, while allowing expected differences in system
+bars, fonts, and native controls. The owner waived a separate automated
+screenshot harness on 2026-08-16.
 
 ## Architecture outline
 
@@ -351,7 +353,7 @@ prerequisite for beginning development.
 5. Add DataStore, repository, schema-version, corruption, sentinel, retention,
    and backfill tests.
 6. Establish the theme, exact palette, typography, edge-to-edge insets, sample
-   states, previews, and screenshot infrastructure.
+   states, previews, and emulator visual-review workflow.
 7. Build the empty state, person pager, counter, and milestone list.
 8. Build settings and people management, including selected-contact import.
 9. Build the custom adaptive “Demnächst” cloud canvas.
@@ -367,7 +369,6 @@ Expected verification tasks once they exist include:
 ```sh
 ./gradlew test lint assembleDebug
 ./gradlew connectedDebugAndroidTest
-./gradlew validateDebugScreenshotTest
 ./gradlew assembleRelease bundleRelease
 ```
 

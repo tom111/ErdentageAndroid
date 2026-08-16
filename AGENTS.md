@@ -86,7 +86,7 @@ These decisions govern the project unless the owner explicitly changes them.
 | Build | Gradle Kotlin DSL, Gradle wrapper, version catalog, JDK 17, pinned dependency versions |
 | SDK | `compileSdk = 36`, `targetSdk = 36`, `minSdk = 26` |
 | App ID | `de.eigenraum.erdentage` (lowercase and permanent once published) |
-| Tests | JUnit pure-domain tests, repository tests, Compose UI/semantics tests, official Compose screenshot tests, and emulator instrumentation |
+| Tests | JUnit pure-domain tests, repository tests, Compose UI/semantics tests, focused rendered-pixel checks, and emulator instrumentation |
 | Dependency injection | A small manual `AppContainer`; do not add Hilt/Koin for this app unless complexity proves it necessary |
 
 Why this stack:
@@ -425,11 +425,14 @@ resize, light and dark themes, gesture and three-button navigation, font scales
 midnight/birth-time rollovers. Seed multiple people, long names, all milestone
 kinds, empty state, and 20-person state.
 
-Use Compose previews for rapid iteration and official Compose screenshot tests
-for stable Android goldens. Compare major surfaces manually against the iOS
-screenshots, accounting for platform status/navigation bars and fonts rather
-than demanding meaningless whole-screen pixel identity. Add semantics tests
-for content descriptions, traversal, touch target sizes, and large text.
+Use Compose previews for rapid iteration, then run each visible UI milestone
+in the emulator for owner screenshots and feedback. Compare major surfaces
+manually against the iOS screenshots, accounting for platform
+status/navigation bars and fonts rather than demanding meaningless
+whole-screen pixel identity. The owner explicitly waived an automated
+screenshot harness on 2026-08-16. Add semantics tests for content descriptions,
+traversal, touch target sizes, and large text, plus focused rendered-pixel
+checks when they protect a concrete visual contract.
 
 Emulators are the normal development target, but before production obtain at
 least one independent physical-device or managed device-cloud smoke test for
@@ -443,7 +446,6 @@ of:
 ```sh
 ./gradlew test lint assembleDebug
 ./gradlew connectedDebugAndroidTest
-./gradlew validateDebugScreenshotTest
 ./gradlew assembleRelease bundleRelease
 ```
 
@@ -460,7 +462,7 @@ emulator or release verification if only host-side tests ran.
 3. Add DataStore and repository tests, including corruption/default/backfill
    behavior and the overview sentinel.
 4. Establish theme, palette, typography, edge-to-edge insets, sample state,
-   Compose previews, and screenshot-test baselines.
+   Compose previews, and emulator visual-review evidence.
 5. Build the person pager and empty state, then settings and people management.
 6. Build the custom “Demnächst” cloud canvas and adaptive phone/tablet/
    landscape behavior.
