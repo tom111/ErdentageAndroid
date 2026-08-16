@@ -10,6 +10,17 @@
     <string name="residual_time_accessibility" tools:ignore="PluralsCandidate">%1$d Stunden %2$d Minuten</string>
     <string name="day_count_accessibility">%1$s Erdentage</string>
     <string name="milestone_date">%1$s Tage am %2$s</string>
+    <string name="milestone_actions">Aktionen für %1$s Erdentage</string>
+    <string name="share_milestone">Meilenstein teilen</string>
+    <string name="calendar_add">Zum Kalender hinzufügen</string>
+    <string name="calendar_add_again">Erneut zum Kalender hinzufügen</string>
+    <string name="calendar_handoff_recorded">An Kalender übergeben</string>
+    <string name="calendar_app_missing">Keine Kalender-App verfügbar.</string>
+    <string name="calendar_title_base">%1$s Erdentage</string>
+    <string name="calendar_title_tagged">%1$s Erdentage (%2$s)</string>
+    <string name="calendar_title_named">%1$s: %2$s</string>
+    <string name="share_upcoming_owner">Am %1$s habe ich %2$s Erdentage%3$s. 🌍</string>
+    <string name="share_upcoming_named">Am %1$s hat %2$s %3$s Erdentage%4$s. 🌍</string>
     <string name="no_milestones">Keine Meilensteine aktiv</string>
     <string name="upcoming_title">Demnächst</string>
     <string name="no_upcoming_milestones">Noch keine Meilensteine</string>
@@ -22,6 +33,16 @@
     <string name="person_options">Optionen für %1$s</string>
     <string name="row_options">Listenoptionen für %1$s</string>
     <string name="add_person">Person hinzufügen</string>
+    <string name="new_person">Neue Person</string>
+    <string name="import_contact">Aus Kontakten…</string>
+    <string name="contacts_app_missing">Keine Kontakte-App verfügbar.</string>
+    <string name="widget_name">Erdentage</string>
+    <string name="widget_description">Erdentage einer ausgewählten oder der aktuell angezeigten Person.</string>
+    <string name="widget_configuration_title">Widget auswählen</string>
+    <string name="widget_follow_current">Aktueller Person folgen</string>
+    <string name="widget_follow_current_explanation">Zeigt die zuletzt in Erdentage geöffnete Person.</string>
+    <string name="widget_fixed_person_explanation">Dieses Widget bleibt bei %1$s.</string>
+    <string name="widget_empty">Geburtsdatum festlegen</string>
     <string name="edit_person">Einstellungen</string>
     <string name="share_days">Erdentage teilen</string>
     <string name="share_chooser_title">Erdentage teilen</string>
@@ -55,6 +76,10 @@
     <string name="settings_twin_only">Nur Zwillinge</string>
     <string name="settings_about_section">Über</string>
     <string name="settings_about">Familienprojekt aus Magdeburg. Version %1$s (%2$d).</string>
+    <string name="settings_feedback_prefix">Feedback gerne per </string>
+    <string name="settings_feedback_mail">Mail</string>
+    <string name="settings_feedback_or"> oder </string>
+    <string name="settings_feedback_mastodon">Mastodon</string>
 
     <string name="share_owner_regular">Ich bin heute %1$s Tage auf der Erde. 🌍</string>
     <string name="share_owner_milestone">Ich bin heute %1$s Tage auf der Erde! 🎉🌍</string>

@@ -4,10 +4,10 @@ Native Android port of the German family app Erdentage. The app is being built
 with Kotlin and Jetpack Compose for phones, tablets, and Android widgets while
 preserving behavior and visual identity from the iOS source.
 
-The domain and persistence layers are in place, along with a functional
-first-run birth-date flow, person counter, milestone feed, pager, and initial
-“Demnächst” overview. Multi-person management, per-person settings, and text
-sharing are also functional. See [`PLAN.md`](PLAN.md) for the roadmap,
+The phase-one Android feature set is implemented: multi-person day counts,
+milestones, the custom “Demnächst” overview, settings, contact import, sharing,
+calendar handoff, and configurable responsive home-screen widgets. See
+[`PLAN.md`](PLAN.md) for the roadmap,
 [`docs/parity.md`](docs/parity.md) for parity status, and
 [`docs/emulators.md`](docs/emulators.md) for the local Android test matrix.
 
@@ -25,6 +25,10 @@ Prerequisites:
 
 Open this directory in Android Studio or start the documented primary AVD,
 then run `./gradlew connectedDebugAndroidTest` for the emulator smoke test.
+
+Publication preparation and remaining external gates are documented in
+[`docs/release.md`](docs/release.md). The German privacy policy source is
+[`docs/privacy-policy-de.md`](docs/privacy-policy-de.md).
 
 ## License
 

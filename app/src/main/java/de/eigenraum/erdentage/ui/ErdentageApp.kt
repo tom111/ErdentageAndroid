@@ -24,9 +24,11 @@ import androidx.compose.ui.unit.dp
 import de.eigenraum.erdentage.app.ErdentageUiState
 import de.eigenraum.erdentage.domain.Person
 import de.eigenraum.erdentage.domain.PersonTint
+import de.eigenraum.erdentage.platform.ContactPersonDraft
 import de.eigenraum.erdentage.ui.manage.ManagePeopleDialog
 import de.eigenraum.erdentage.ui.overview.OverviewPage
 import de.eigenraum.erdentage.ui.person.PersonPage
+import de.eigenraum.erdentage.ui.person.MilestoneCalendarAction
 import de.eigenraum.erdentage.ui.settings.PersonSettingsDialog
 import java.time.LocalDate
 import java.time.ZoneId
@@ -42,13 +44,21 @@ fun ErdentageApp(
     onDeletePerson: (String) -> Unit,
     onMovePerson: (Int, Int) -> Unit,
     onPageSelected: (Int) -> Unit,
+    onCalendarHandoff: (MilestoneCalendarAction) -> Unit,
     onShare: (String) -> Unit,
     modifier: Modifier = Modifier,
+    contactDraft: ContactPersonDraft? = null,
+    onPickContact: () -> Unit = {},
+    onContactDraftConsumed: () -> Unit = {},
 ) {
     val persisted = state.persisted
+    var editFirstPersonAfterCreation by rememberSaveable { mutableStateOf(false) }
     if (persisted.people.isEmpty()) {
         EmptyStartScreen(
-            onBirthDateSelected = onAddFirstPerson,
+            onBirthDateSelected = { date ->
+                editFirstPersonAfterCreation = true
+                onAddFirstPerson(date)
+            },
             modifier = modifier,
         )
         return
@@ -61,6 +71,32 @@ fun ErdentageApp(
     var editingPerson by remember { mutableStateOf<Person?>(null) }
     var editorCreatesPerson by remember { mutableStateOf(false) }
     var returnToManager by remember { mutableStateOf(false) }
+
+    LaunchedEffect(editFirstPersonAfterCreation, persisted.people) {
+        if (editFirstPersonAfterCreation) {
+            persisted.people.firstOrNull()?.let { firstPerson ->
+                editingPerson = firstPerson
+                editorCreatesPerson = false
+                returnToManager = false
+                editFirstPersonAfterCreation = false
+            }
+        }
+    }
+    LaunchedEffect(contactDraft?.token) {
+        contactDraft?.let { imported ->
+            editingPerson = Person(
+                name = imported.name,
+                birthYear = imported.birthDate.year,
+                birthMonth = imported.birthDate.monthValue,
+                birthDay = imported.birthDate.dayOfMonth,
+                tint = PersonTint.firstUnused(persisted.people),
+            )
+            editorCreatesPerson = true
+            returnToManager = true
+            managePeopleVisible = false
+            onContactDraftConsumed()
+        }
+    }
 
     LaunchedEffect(selectedPage, pageCount) {
         if (pagerState.currentPage != selectedPage) {
@@ -83,7 +119,11 @@ fun ErdentageApp(
             if (personPage == null) {
                 OverviewPage(events = state.overviewEvents)
             } else {
-                PersonPage(state = personPage)
+                PersonPage(
+                    state = personPage,
+                    onShare = onShare,
+                    onCalendarHandoff = onCalendarHandoff,
+                )
             }
         }
 
@@ -118,7 +158,7 @@ fun ErdentageApp(
                 .getOrNull(persisted.currentPersonIndex)
                 ?.id,
             onDismiss = { managePeopleVisible = false },
-            onAdd = {
+            onAddManual = {
                 val preset = LocalDate.now(ZoneId.systemDefault()).minusDays(5_000)
                 editingPerson = Person(
                     name = "",
@@ -131,6 +171,7 @@ fun ErdentageApp(
                 returnToManager = true
                 managePeopleVisible = false
             },
+            onImportContact = onPickContact,
             onEdit = { person ->
                 editingPerson = person
                 editorCreatesPerson = false

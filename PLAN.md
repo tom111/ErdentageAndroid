@@ -1,8 +1,8 @@
 # Erdentage Android port plan
 
-Status: **implementation started** on 2026-08-15. The owner approved the
-technical decisions, GPL license, application ID, development-tool
-installation, project scaffolding, emulator work, and implementation.
+Status: **phase-one feature implementation complete** on 2026-08-16. Store
+account setup, signing, hosted URLs, listing screenshots, and independent
+physical-device or managed-device verification remain release work.
 
 This plan was prepared on 2026-07-22 after inspecting the SwiftUI source,
 tests, screenshots, widgets, and project notes in the iOS repository. Durable

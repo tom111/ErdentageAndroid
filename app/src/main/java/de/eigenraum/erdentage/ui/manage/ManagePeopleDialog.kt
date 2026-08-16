@@ -8,9 +8,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
@@ -51,6 +54,7 @@ import androidx.compose.ui.window.DialogProperties
 import de.eigenraum.erdentage.R
 import de.eigenraum.erdentage.domain.ErdentageLimits
 import de.eigenraum.erdentage.domain.Person
+import de.eigenraum.erdentage.ui.icons.ErdentageIcons
 import de.eigenraum.erdentage.ui.theme.LocalDarkTheme
 import de.eigenraum.erdentage.ui.theme.surfaceColor
 import java.time.DateTimeException
@@ -65,13 +69,15 @@ fun ManagePeopleDialog(
     people: List<Person>,
     selectedPersonId: String?,
     onDismiss: () -> Unit,
-    onAdd: () -> Unit,
+    onAddManual: () -> Unit,
+    onImportContact: () -> Unit,
     onEdit: (Person) -> Unit,
     onSelect: (Int) -> Unit,
     onDelete: (String) -> Unit,
     onMove: (Int, Int) -> Unit,
 ) {
     var pendingDelete by remember { mutableStateOf<Person?>(null) }
+    var addMenuExpanded by remember { mutableStateOf(false) }
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -98,55 +104,93 @@ fun ManagePeopleDialog(
                             }
                         },
                         actions = {
-                            IconButton(
-                                onClick = onAdd,
-                                enabled = people.size < ErdentageLimits.MAX_PEOPLE,
-                            ) {
-                                Icon(
-                                    Icons.Default.Add,
-                                    contentDescription = stringResource(R.string.add_person),
-                                )
+                            Box {
+                                IconButton(
+                                    onClick = { addMenuExpanded = true },
+                                    enabled = people.size < ErdentageLimits.MAX_PEOPLE,
+                                ) {
+                                    Icon(
+                                        Icons.Default.Add,
+                                        contentDescription = stringResource(R.string.add_person),
+                                    )
+                                }
+                                DropdownMenu(
+                                    expanded = addMenuExpanded,
+                                    onDismissRequest = { addMenuExpanded = false },
+                                ) {
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(R.string.new_person)) },
+                                        leadingIcon = {
+                                            Icon(Icons.Default.Add, contentDescription = null)
+                                        },
+                                        onClick = {
+                                            addMenuExpanded = false
+                                            onAddManual()
+                                        },
+                                    )
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(R.string.import_contact)) },
+                                        leadingIcon = {
+                                            Icon(
+                                                ErdentageIcons.Group,
+                                                contentDescription = null,
+                                            )
+                                        },
+                                        onClick = {
+                                            addMenuExpanded = false
+                                            onImportContact()
+                                        },
+                                    )
+                                }
                             }
                         },
                     )
                 },
             ) { contentPadding ->
-                LazyColumn(
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(contentPadding),
-                    contentPadding = PaddingValues(bottom = 24.dp),
+                    contentAlignment = Alignment.TopCenter,
                 ) {
-                    itemsIndexed(
-                        items = people,
-                        key = { _, person -> person.id },
-                    ) { index, person ->
-                        PersonManagementRow(
-                            person = person,
-                            index = index,
-                            peopleCount = people.size,
-                            selected = person.id == selectedPersonId,
-                            onSelect = {
-                                onSelect(index)
-                                onDismiss()
-                            },
-                            onEdit = { onEdit(person) },
-                            onDelete = { pendingDelete = person },
-                            onMove = onMove,
-                        )
-                        if (index < people.lastIndex) HorizontalDivider()
-                    }
-                    if (people.size >= ErdentageLimits.MAX_PEOPLE) {
-                        item {
-                            Text(
-                                text = stringResource(
-                                    R.string.max_people,
-                                    ErdentageLimits.MAX_PEOPLE,
-                                ),
-                                modifier = Modifier.padding(20.dp),
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                style = MaterialTheme.typography.bodySmall,
+                    LazyColumn(
+                        modifier = Modifier
+                            .widthIn(max = 720.dp)
+                            .fillMaxWidth()
+                            .fillMaxHeight(),
+                        contentPadding = PaddingValues(bottom = 24.dp),
+                    ) {
+                        itemsIndexed(
+                            items = people,
+                            key = { _, person -> person.id },
+                        ) { index, person ->
+                            PersonManagementRow(
+                                person = person,
+                                index = index,
+                                peopleCount = people.size,
+                                selected = person.id == selectedPersonId,
+                                onSelect = {
+                                    onSelect(index)
+                                    onDismiss()
+                                },
+                                onEdit = { onEdit(person) },
+                                onDelete = { pendingDelete = person },
+                                onMove = onMove,
                             )
+                            if (index < people.lastIndex) HorizontalDivider()
+                        }
+                        if (people.size >= ErdentageLimits.MAX_PEOPLE) {
+                            item {
+                                Text(
+                                    text = stringResource(
+                                        R.string.max_people,
+                                        ErdentageLimits.MAX_PEOPLE,
+                                    ),
+                                    modifier = Modifier.padding(20.dp),
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                            }
                         }
                     }
                 }

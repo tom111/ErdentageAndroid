@@ -7,10 +7,12 @@ deviations here.
 ## Current reference
 
 - iOS repository: `/Users/tom/SynologyDrive/projects/ErdentageiOS`
-- Commit: `95aa5b595ec8cad1ed8c7ebcf8c039e7a3588eae`
-- Branch/worktree: `main`; uncommitted in-development “Zusammen” source,
-  project, shared-defaults, management, overview, and test changes present;
-  those changes remain outside the approved Android scope
+- Current iOS HEAD inspected: `12abdde4f5df2ec2fe0a7a920f752672b40fa9b0`
+- Branch/worktree: `main`, clean
+- Approved shipped-1.3 parity baseline:
+  `95aa5b595ec8cad1ed8c7ebcf8c039e7a3588eae`
+- Newer “Zusammen” behavior at current iOS HEAD remains outside the approved
+  Android scope
 - Inspected: 2026-08-16
 
 ## Ledger
@@ -21,12 +23,13 @@ deviations here.
 | Domain model and day count | `95aa5b5` | Complete | JVM tests cover civil dates, invalid data, zone changes, DST gaps/overlaps, future dates, residual time, rollover, limits, UUIDs, and the overview sentinel | Uses `java.time` with injected clock/zone |
 | Milestone engine | `95aa5b5` | Complete | Shared fixture JSON plus JVM tests cover all kinds, strict-next boundaries, large values, current-day detection, filtering, same-target collapse, ordering, and dates | Pure optimized Kotlin port |
 | Persistence and repository | `95aa5b5` | Complete | File-backed JVM tests cover JSON schema, defaults, corruption replacement, concurrent transactions, cap, selection, reorder/delete, retention, and physically persisted backfill deltas | Typed app-private JSON DataStore; no obsolete iOS-key migration |
-| Theme and tint foundation | `95aa5b5` | In progress | Exact adaptive tint mapping tests; rendered gradient pixel test; light/dark phone previews; owner emulator review pending | Neutral Material scheme and system sans; no screenshot harness by owner decision |
-| Person pager | `95aa5b5` | In progress | Compose tests cover empty state, person render, single overview sentinel, swipe, indicator, top controls, and share copy; visible API 36 launch | Milestone-row actions pending; Android combines edit/share in one overflow menu |
-| Demnächst overview | `95aa5b5` | In progress | Merged chronological 30-row feed runs in pager and instrumentation test | Exact sky colors present; custom cloud canvas/wobble pending |
-| Settings and people | `95aa5b5` | In progress | Compose tests cover add/edit entry, reorder/delete actions, and saving a named draft; JVM tests cover time clamps and prime/twin selection; visible phone review | Contact import pending; Android uses accessible up/down commands rather than iOS drag-edit mode |
-| Platform integrations | `95aa5b5` | In progress | Current-person text reaches `ACTION_SEND` through a chooser; Compose test verifies named share copy | Contact picker and calendar handoff pending |
-| Home-screen widget | `95aa5b5` | Not started | Pending | One configurable Glance widget type |
+| Theme and tint foundation | `95aa5b5` | Complete | Exact tint tests, rendered gradient pixels, light/dark review, phone/tablet/landscape and 1.3x font-scale emulator passes | Neutral Material scheme and Android system sans; screenshot harness waived by owner |
+| Person pager | `95aa5b5` | Complete | Compose tests cover empty state, person render, sentinel, swipe, indicator, controls, share, milestone actions, management, and contact import | Android combines edit/share in one top overflow menu |
+| Demnächst overview | `95aa5b5` | Complete | Chronological 30-row cap, deterministic cloud-math test, visible phone/landscape/tablet renders, large-font correction | Compose shapes reproduce seeded wobble rather than SwiftUI paths verbatim |
+| Settings and people | `95aa5b5` | Complete | Add/edit/delete/reorder/import flows and setting logic tested; phone and tablet first-run editors visibly checked | Accessible up/down commands replace iOS drag-edit mode; Android-native pickers |
+| Platform integrations | `95aa5b5` | Complete | Sharesheet and milestone-copy Compose tests; permission-free calendar drafts and action history; selected-contact parser/fallback tests | Calendar record means handoff launched, never confirmation of save |
+| Home-screen widget | `95aa5b5` | Complete | Selection/fallback JVM tests; real API 36 launcher registration, configuration, fixed/follow-current rendering, and live resize to wide layout | One responsive Glance widget; ordinary Android lock-screen host compatibility only where OEM exposes it |
+| Release preparation | Android-specific | In progress | Unsigned APK/AAB build; metadata, privacy/data-safety drafts, adaptive icon, AOSP and Play-image smoke tests | Account, signing, hosted URLs, screenshots, closed test, and physical-device gate remain |
 
 ## Verification log
 
@@ -106,6 +109,34 @@ deviations here.
   lint, debug/release APK assembly, and release AAB bundling. Dependency
   verification and locking cover the small Compose core icon artifact; the
   project-owned group/minus vectors avoid the extended icon bundle.
+
+### 2026-08-16 — remaining iOS 1.3 parity
+
+- Added balanced per-milestone overflow actions for German text sharing and a
+  permission-free calendar `ACTION_INSERT` handoff. The app records only that
+  the handoff was launched and uses neutral UI wording.
+- Added selected-contact import through the system picker with no broad
+  contacts permission. Complete birthdays enter the editor directly; missing
+  or yearless birthdays open a date picker and cancel creates nothing.
+- Replaced the provisional overview list with deterministic alternating cloud
+  shapes, adaptive tint fills/outlines, light/dark skies, tablet sizing, and
+  compact-height behavior. A 1.3x-font landscape pass exposed clipped captions;
+  cloud height/spacing now follows system font scale and the corrected render
+  keeps all visible text inside its shape.
+- Added one responsive Glance widget with fixed-person and follow-current
+  configuration, immediate repository updates, next-rollover WorkManager
+  scheduling, time/time-zone rescheduling, deletion cleanup, and OS-backup
+  exclusion for widget IDs. A real Pixel launcher instance rendered correctly
+  at 2x2 and after live resizing to a wide milestone layout.
+- Added lifecycle-aware foreground refresh, system time/date/zone handling,
+  Android backup rules, adaptive/round/monochrome icons, asset provenance,
+  German listing metadata, privacy policy, data-safety draft, and release
+  checklist.
+- All 66 JVM tests pass. Nine instrumentation tests pass on both API 36 and the
+  API 26 compatibility floor. The APK cold-launches on the API 36 AOSP image
+  with Play Services absent, on the tablet image, and on the Google Play image.
+  The overview sentinel was also verified across force-stop/cold-relaunch after
+  its DataStore transaction completed.
 
 ## Scope decisions
 

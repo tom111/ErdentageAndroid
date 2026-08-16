@@ -1,0 +1,8 @@
+Erste Android-Version von Erdentage.
+
+• Mehrere Personen mit eigenen Farben und Meilensteinen
+• Gemeinsame „Demnächst“-Übersicht
+• Import eines ausgewählten Kontakts
+• Teilen und datensparsamer Kalender-Handoff
+• Konfigurierbares, responsives Startbildschirm-Widget
+• Hell-/Dunkelmodus, Telefon- und Tablet-Layouts

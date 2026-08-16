@@ -1,0 +1,25 @@
+Wie viele Tage hast du schon auf der Erde erlebt? Erdentage zählt mit.
+
+Trag dein Geburtsdatum ein, optional auch die Uhrzeit, und sieh deine aktuelle Zahl an Erdentagen. Mehrere Personen lassen sich mit eigenen Farben und Einstellungen verwalten. Die Seite „Demnächst“ führt die nächsten Meilensteine der ganzen Familie chronologisch zusammen.
+
+MEILENSTEINE
+
+Entdecke runde Zahlen, Primzahlen und Zwillingsprimzahlen, Palindrome, Quadratzahlen, Zweierpotenzen, Ziffernfolgen, Catalan-Zahlen und Fibonacci-Zahlen. Welche Zahlenarten angezeigt werden, entscheidest du für jede Person selbst.
+
+WIDGETS
+
+Das anpassbare Startbildschirm-Widget kann einer festen Person folgen oder immer die zuletzt in der App angezeigte Person verwenden. Kleine und breite Widget-Größen zeigen genau die Informationen, für die Platz ist.
+
+TEILEN UND KALENDER
+
+Teile Tageszahlen und Meilensteine über das Android-Teilen-Menü. Übergib einen kommenden Meilenstein an deine Kalender-App, ohne Erdentage Zugriff auf deinen Kalender zu geben.
+
+PRIVAT
+
+Deine Eingaben bleiben lokal in der App. Kein Konto, kein eigener Server, keine Werbung, kein Tracking und keine Analytics. Erdentage benötigt keine Internet-, Kontakte- oder Kalenderberechtigung.
+
+KOSTENLOS UND FREIE SOFTWARE
+
+Erdentage ist kostenlos und unter GPL-3.0-or-later als freie Software veröffentlicht.
+
+Ein Familienprojekt aus Magdeburg, Deutschland.

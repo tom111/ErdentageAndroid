@@ -15,13 +15,12 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 class ErdentageViewModel(
@@ -29,11 +28,34 @@ class ErdentageViewModel(
 ) : ViewModel() {
     private val mutableState = MutableStateFlow<ErdentageUiState?>(null)
     val state: StateFlow<ErdentageUiState?> = mutableState.asStateFlow()
+    private val uiActive = MutableStateFlow(false)
+    private val refreshCounter = MutableStateFlow(0L)
 
     init {
         viewModelScope.launch {
-            repository.state.collectLatest(::publishLiveUiState)
+            combine(repository.state, uiActive, refreshCounter) { persisted, active, _ ->
+                persisted to active
+            }.collectLatest { (persisted, active) ->
+                if (active) {
+                    publishLiveUiState(persisted)
+                } else {
+                    publishSnapshot(persisted)
+                }
+            }
         }
+    }
+
+    fun onUiStarted() {
+        uiActive.value = true
+        refreshNow()
+    }
+
+    fun onUiStopped() {
+        uiActive.value = false
+    }
+
+    fun refreshNow() {
+        refreshCounter.value += 1
     }
 
     fun addFirstPerson(birthDate: LocalDate) {
@@ -72,8 +94,23 @@ class ErdentageViewModel(
         }
     }
 
+    fun recordCalendarHandoff(
+        personId: String,
+        milestoneKey: String,
+        visibleKeys: Set<String>,
+    ) {
+        viewModelScope.launch {
+            repository.recordCalendarHandoff(
+                personId = personId,
+                milestoneKey = milestoneKey,
+                launchedAt = Instant.now(),
+                visibleKeys = visibleKeys,
+            )
+        }
+    }
+
     private suspend fun publishLiveUiState(persisted: PersistedAppState) {
-        while (currentCoroutineContext().isActive) {
+        while (true) {
             val now = Instant.now()
             val zone = ZoneId.systemDefault()
             mutableState.value = ErdentageUiState.create(persisted, now, zone)
@@ -89,6 +126,14 @@ class ErdentageViewModel(
             }
             delay(Duration.between(now, next).toMillis().coerceAtLeast(250L))
         }
+    }
+
+    private fun publishSnapshot(persisted: PersistedAppState) {
+        mutableState.value = ErdentageUiState.create(
+            persisted = persisted,
+            at = Instant.now(),
+            zoneId = ZoneId.systemDefault(),
+        )
     }
 
     class Factory(

@@ -7,6 +7,7 @@ import android.app.Application
 import android.content.Context
 import de.eigenraum.erdentage.app.AppContainer
 import de.eigenraum.erdentage.platform.withGermanLocale
+import de.eigenraum.erdentage.widget.WidgetStateObserver
 
 class ErdentageApplication : Application() {
     lateinit var container: AppContainer
@@ -19,5 +20,6 @@ class ErdentageApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         container = AppContainer(this)
+        WidgetStateObserver.start(this, container.peopleRepository)
     }
 }

@@ -9,6 +9,7 @@ import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
@@ -21,7 +22,10 @@ import de.eigenraum.erdentage.domain.Person
 import de.eigenraum.erdentage.domain.PersonTint
 import de.eigenraum.erdentage.ui.theme.ErdentageTheme
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
+import java.text.NumberFormat
+import java.util.Locale
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -43,6 +47,7 @@ class ErdentageAppTest {
                     onDeletePerson = {},
                     onMovePerson = { _, _ -> },
                     onPageSelected = {},
+                    onCalendarHandoff = {},
                     onShare = {},
                 )
             }
@@ -77,6 +82,7 @@ class ErdentageAppTest {
                     onDeletePerson = {},
                     onMovePerson = { _, _ -> },
                     onPageSelected = {},
+                    onCalendarHandoff = {},
                     onShare = {},
                 )
             }
@@ -106,6 +112,7 @@ class ErdentageAppTest {
                     onDeletePerson = {},
                     onMovePerson = { _, _ -> },
                     onPageSelected = {},
+                    onCalendarHandoff = {},
                     onShare = { sharedText = it },
                 )
             }
@@ -124,6 +131,51 @@ class ErdentageAppTest {
     }
 
     @Test
+    fun milestoneMenuSharesAndHandsOffCalendarDraft() {
+        var sharedText: String? = null
+        var calendarAction: de.eigenraum.erdentage.ui.person.MilestoneCalendarAction? = null
+        val state = uiState(onePersonState())
+        val firstMilestone = state.personPages.single().snapshot.milestones.first()
+        val count = NumberFormat.getIntegerInstance(Locale.GERMANY)
+            .format(firstMilestone.target)
+
+        composeRule.setContent {
+            ErdentageTheme(darkTheme = false) {
+                ErdentageApp(
+                    state = state,
+                    onAddFirstPerson = {},
+                    onAddPerson = {},
+                    onUpdatePerson = {},
+                    onDeletePerson = {},
+                    onMovePerson = { _, _ -> },
+                    onPageSelected = {},
+                    onCalendarHandoff = { calendarAction = it },
+                    onShare = { sharedText = it },
+                )
+            }
+        }
+
+        val actionsDescription = "Aktionen für $count Erdentage"
+        composeRule.onAllNodesWithContentDescription(actionsDescription)[0].performClick()
+        composeRule.onNodeWithText("Meilenstein teilen").performClick()
+        composeRule.runOnIdle {
+            val text = checkNotNull(sharedText)
+            check(text.startsWith("Am "))
+            check(text.contains("hat Anne $count Erdentage"))
+        }
+
+        composeRule.onAllNodesWithContentDescription(actionsDescription)[0].performClick()
+        composeRule.onNodeWithText("Zum Kalender hinzufügen").performClick()
+        composeRule.runOnIdle {
+            val action = checkNotNull(calendarAction)
+            check(action.personId == onePersonState().people.single().id)
+            check(action.event.title.contains("$count Erdentage"))
+            check(action.event.allDay)
+            check(action.visibleKeys.contains(action.milestoneKey))
+        }
+    }
+
+    @Test
     fun managementAddsNamedPersonThroughEditor() {
         var added: Person? = null
         composeRule.setContent {
@@ -136,6 +188,7 @@ class ErdentageAppTest {
                     onDeletePerson = {},
                     onMovePerson = { _, _ -> },
                     onPageSelected = {},
+                    onCalendarHandoff = {},
                     onShare = {},
                 )
             }
@@ -144,6 +197,7 @@ class ErdentageAppTest {
         composeRule.onNodeWithContentDescription("Personen verwalten").performClick()
         composeRule.onNodeWithText("Personen").assertIsDisplayed()
         composeRule.onNodeWithContentDescription("Person hinzufügen").performClick()
+        composeRule.onNodeWithText("Neue Person").performClick()
         composeRule.onNode(hasSetTextAction() and hasText("Name")).performTextInput("Clara")
         composeRule.onNodeWithContentDescription("Speichern").performClick()
 
@@ -152,6 +206,45 @@ class ErdentageAppTest {
             check(saved.name == "Clara")
             check(saved.id != onePersonState().people.single().id)
         }
+    }
+
+    @Test
+    fun managementOffersContactPickerAndImportsCompletedDraftIntoEditor() {
+        var pickerRequested = false
+        var consumed = false
+        val imported = de.eigenraum.erdentage.platform.ContactPersonDraft(
+            name = "Clara",
+            birthDate = LocalDate.of(1992, 4, 3),
+            token = "33333333-3333-4333-8333-333333333333",
+        )
+
+        composeRule.setContent {
+            ErdentageTheme(darkTheme = false) {
+                ErdentageApp(
+                    state = uiState(onePersonState()),
+                    onAddFirstPerson = {},
+                    onAddPerson = {},
+                    onUpdatePerson = {},
+                    onDeletePerson = {},
+                    onMovePerson = { _, _ -> },
+                    onPageSelected = {},
+                    onCalendarHandoff = {},
+                    onShare = {},
+                    contactDraft = imported,
+                    onPickContact = { pickerRequested = true },
+                    onContactDraftConsumed = { consumed = true },
+                )
+            }
+        }
+
+        composeRule.onNode(hasSetTextAction() and hasText("Clara")).assertIsDisplayed()
+        composeRule.runOnIdle { check(consumed) }
+        composeRule.onNodeWithContentDescription("Abbrechen").performClick()
+
+        composeRule.onNodeWithText("Personen").assertIsDisplayed()
+        composeRule.onNodeWithContentDescription("Person hinzufügen").performClick()
+        composeRule.onNodeWithText("Aus Kontakten…").performClick()
+        composeRule.runOnIdle { check(pickerRequested) }
     }
 
     @Test
@@ -178,6 +271,7 @@ class ErdentageAppTest {
                     onDeletePerson = { deletedId = it },
                     onMovePerson = { from, to -> move = from to to },
                     onPageSelected = {},
+                    onCalendarHandoff = {},
                     onShare = {},
                 )
             }

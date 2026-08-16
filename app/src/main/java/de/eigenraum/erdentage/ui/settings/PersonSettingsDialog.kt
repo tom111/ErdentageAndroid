@@ -16,11 +16,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -51,12 +53,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -128,20 +135,27 @@ fun PersonSettingsDialog(
                     )
                 },
             ) { contentPadding ->
-                LazyColumn(
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(contentPadding)
-                        .imePadding(),
-                    contentPadding = PaddingValues(
-                        start = 20.dp,
-                        top = 8.dp,
-                        end = 20.dp,
-                        bottom = 40.dp,
-                    ),
+                        .padding(contentPadding),
+                    contentAlignment = Alignment.TopCenter,
                 ) {
-                    item { SettingsSectionTitle(R.string.settings_name_section) }
-                    item {
+                    LazyColumn(
+                        modifier = Modifier
+                            .widthIn(max = 720.dp)
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .imePadding(),
+                        contentPadding = PaddingValues(
+                            start = 20.dp,
+                            top = 8.dp,
+                            end = 20.dp,
+                            bottom = 40.dp,
+                        ),
+                    ) {
+                        item { SettingsSectionTitle(R.string.settings_name_section) }
+                        item {
                         OutlinedTextField(
                             value = draft.name,
                             onValueChange = { draft = draft.copy(name = it) },
@@ -155,8 +169,8 @@ fun PersonSettingsDialog(
                         )
                     }
 
-                    item { SettingsSectionTitle(R.string.settings_birth_section) }
-                    item {
+                        item { SettingsSectionTitle(R.string.settings_birth_section) }
+                        item {
                         SettingsValueRow(
                             label = stringResource(R.string.settings_date_label),
                             value = validBirthDate(draft).format(SettingsDateFormatter),
@@ -177,7 +191,7 @@ fun PersonSettingsDialog(
                             },
                         )
                     }
-                    item {
+                        item {
                         ListItem(
                             headlineContent = {
                                 Text(stringResource(R.string.settings_time_known))
@@ -198,8 +212,8 @@ fun PersonSettingsDialog(
                             },
                         )
                     }
-                    if (draft.hasTime) {
-                        item {
+                        if (draft.hasTime) {
+                            item {
                             SettingsValueRow(
                                 label = stringResource(R.string.settings_time_label),
                                 value = LocalTime.of(draft.birthHour, draft.birthMinute)
@@ -220,30 +234,30 @@ fun PersonSettingsDialog(
                                     )
                                 },
                             )
+                            }
                         }
-                    }
 
-                    item { SettingsSectionTitle(R.string.settings_astronaut_section) }
-                    item {
+                        item { SettingsSectionTitle(R.string.settings_astronaut_section) }
+                        item {
                         DaysOffEarthControl(
                             value = draft.daysOffEarth,
                             onValueChange = { draft = draft.copy(daysOffEarth = it) },
                         )
                     }
-                    item {
+                        item {
                         SettingsSupportingText(R.string.settings_astronaut_explanation)
                     }
 
-                    item { SettingsSectionTitle(R.string.settings_color_section) }
-                    item {
+                        item { SettingsSectionTitle(R.string.settings_color_section) }
+                        item {
                         TintPicker(
                             selection = draft.tint ?: PersonTint.SAND,
                             onSelected = { draft = draft.copy(tint = it) },
                         )
                     }
 
-                    item { SettingsSectionTitle(R.string.settings_milestones_section) }
-                    items(TopLevelMilestones, key = MilestoneKind::name) { kind ->
+                        item { SettingsSectionTitle(R.string.settings_milestones_section) }
+                        items(TopLevelMilestones, key = MilestoneKind::name) { kind ->
                         if (kind == MilestoneKind.PRIMZAHL) {
                             MilestoneToggle(
                                 kind = kind,
@@ -279,10 +293,11 @@ fun PersonSettingsDialog(
                         }
                         HorizontalDivider()
                     }
-                    item { SettingsSupportingText(R.string.settings_milestones_footer) }
+                        item { SettingsSupportingText(R.string.settings_milestones_footer) }
 
-                    item { SettingsSectionTitle(R.string.settings_about_section) }
-                    item { AboutText() }
+                        item { SettingsSectionTitle(R.string.settings_about_section) }
+                        item { AboutText() }
+                    }
                 }
             }
         }
@@ -441,6 +456,7 @@ private fun MilestoneToggle(
     title: String? = null,
 ) {
     val visibleTitle = title ?: stringResource(kind.labelResource)
+    val explanation = milestoneExplanation(kind)
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -451,7 +467,7 @@ private fun MilestoneToggle(
         Column(modifier = Modifier.weight(1f)) {
             Text(text = visibleTitle, style = MaterialTheme.typography.bodyLarge)
             Text(
-                text = stringResource(kind.explanationResource),
+                text = explanation,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodySmall,
             )
@@ -466,6 +482,7 @@ private fun MilestoneToggle(
 @Composable
 private fun AboutText() {
     val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
     val packageInfo = remember(context) {
         context.packageManager.getPackageInfo(context.packageName, 0)
     }
@@ -475,15 +492,70 @@ private fun AboutText() {
         @Suppress("DEPRECATION")
         packageInfo.versionCode.toLong()
     }
-    Text(
-        text = stringResource(
-            R.string.settings_about,
-            packageInfo.versionName ?: "?",
-            versionCode,
-        ),
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        style = MaterialTheme.typography.bodySmall,
-    )
+    val linkColor = MaterialTheme.colorScheme.primary
+    val feedback = buildAnnotatedString {
+        append(stringResource(R.string.settings_feedback_prefix))
+        withLink(
+            LinkAnnotation.Url(
+                url = FeedbackMailUri,
+                linkInteractionListener = { uriHandler.openUri(FeedbackMailUri) },
+            ),
+        ) {
+            pushStyle(SpanStyle(color = linkColor))
+            append(stringResource(R.string.settings_feedback_mail))
+            pop()
+        }
+        append(stringResource(R.string.settings_feedback_or))
+        withLink(
+            LinkAnnotation.Url(
+                url = MastodonUri,
+                linkInteractionListener = { uriHandler.openUri(MastodonUri) },
+            ),
+        ) {
+            pushStyle(SpanStyle(color = linkColor))
+            append(stringResource(R.string.settings_feedback_mastodon))
+            pop()
+        }
+    }
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text(
+            text = stringResource(
+                R.string.settings_about,
+                packageInfo.versionName ?: "?",
+                versionCode,
+            ),
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.bodySmall,
+        )
+        Text(
+            text = feedback,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.bodySmall,
+        )
+    }
+}
+
+@Composable
+private fun milestoneExplanation(kind: MilestoneKind): androidx.compose.ui.text.AnnotatedString {
+    val source = stringResource(kind.explanationResource)
+    val markerAndUrl = when (kind) {
+        MilestoneKind.CATALAN -> "OEIS A000108" to "https://oeis.org/A000108"
+        MilestoneKind.FIBONACCI -> "OEIS A000045" to "https://oeis.org/A000045"
+        else -> null
+    } ?: return androidx.compose.ui.text.AnnotatedString(source)
+    val (marker, url) = markerAndUrl
+    val markerStart = source.indexOf(marker)
+    if (markerStart < 0) return androidx.compose.ui.text.AnnotatedString(source)
+    val linkColor = MaterialTheme.colorScheme.primary
+    return buildAnnotatedString {
+        append(source.substring(0, markerStart))
+        withLink(LinkAnnotation.Url(url)) {
+            pushStyle(SpanStyle(color = linkColor))
+            append(marker)
+            pop()
+        }
+        append(source.substring(markerStart + marker.length))
+    }
 }
 
 private fun showBirthDatePicker(
@@ -554,3 +626,7 @@ private val SettingsDateFormatter = DateTimeFormatter
 private val SettingsTimeFormatter = DateTimeFormatter
     .ofLocalizedTime(FormatStyle.SHORT)
     .withLocale(Locale.GERMANY)
+
+private const val FeedbackMailUri =
+    "mailto:thomas.kahle@jpberlin.de?subject=Feedback%20Erdentage"
+private const val MastodonUri = "https://machteburch.social/@tomkalei"

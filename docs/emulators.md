@@ -25,8 +25,21 @@ After it finishes booting, run the instrumentation tests:
 ./gradlew connectedDebugAndroidTest
 ```
 
-The initial project-skeleton check passed on `Erdentage_API_36` on
-2026-08-15. That check covered installation, a cold activity launch, Compose
-semantics, and visual inspection of the rendered screen. The other AVDs are
-installed targets for feature-specific and release-matrix testing; their mere
-creation is not recorded as an application test pass.
+## Verification record
+
+- `Erdentage_API_36`: all nine instrumentation tests passed on 2026-08-16.
+  Visible checks covered first run, person/settings screens, overview,
+  force-stop restoration, 1.3x font scale, landscape, and a real launcher-hosted
+  widget at compact and wide resized dimensions.
+- `Erdentage_API_26`: all nine instrumentation tests passed and the first-run UI
+  cold-launched on 2026-08-16.
+- `Erdentage_API_36_AOSP`: the APK installed and cold-launched in German with
+  `com.google.android.gms` absent on 2026-08-16.
+- `Erdentage_API_36_Tablet`: first run, settings, and the wide custom overview
+  were visibly checked on 2026-08-16.
+- `Erdentage_API_36_Play`: the APK installed and cold-launched with the Play
+  Store package present on 2026-08-16.
+
+These are emulator results. OEM widget behavior, real contact/calendar apps,
+backup/restore, and background execution still require the independent
+physical-device or managed-device-cloud gate in `docs/release.md`.
