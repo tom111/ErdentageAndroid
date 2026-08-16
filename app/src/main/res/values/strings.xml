@@ -1,4 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Erdentage</string>
+    <string name="empty_birth_date">Noch kein Geburtsdatum festgelegt.</string>
+    <string name="set_birth_date">Geburtsdatum festlegen</string>
+    <string name="erdentage_adjusted">Erdentage*</string>
+    <string name="today_milestones">Heute: %1$s</string>
+    <string name="today_milestones_accessibility">heute %1$s</string>
+    <string name="residual_time" tools:ignore="PluralsCandidate">%1$d Std. %2$d Min.</string>
+    <string name="residual_time_accessibility" tools:ignore="PluralsCandidate">%1$d Stunden %2$d Minuten</string>
+    <string name="day_count_accessibility">%1$s Erdentage</string>
+    <string name="milestone_date">%1$s Tage am %2$s</string>
+    <string name="no_milestones">Keine Meilensteine aktiv</string>
+    <string name="upcoming_title">Demnächst</string>
+    <string name="no_upcoming_milestones">Noch keine Meilensteine</string>
+    <string name="page_indicator" tools:ignore="PluralsCandidate">Seite %1$d von %2$d</string>
+
+    <string name="caption_next_thousand">nächster Tausender</string>
+    <string name="caption_next_ten_thousand">nächster Zehntausender</string>
+    <string name="caption_next_prime">nächste Primzahl</string>
+    <string name="caption_next_twin_prime">nächste Zwillingsprimzahl</string>
+    <string name="caption_next_palindrome">nächstes Palindrom</string>
+    <string name="caption_next_square">nächste Quadratzahl</string>
+    <string name="caption_next_power_two">nächste Zweierpotenz</string>
+    <string name="caption_next_digit_sequence">nächste Ziffernfolge</string>
+    <string name="caption_next_catalan">nächste Catalan-Zahl</string>
+    <string name="caption_next_fibonacci">nächste Fibonacci-Zahl</string>
+
+    <string name="milestone_thousand">Tausender</string>
+    <string name="milestone_ten_thousand">Zehntausender</string>
+    <string name="milestone_prime">Primzahl</string>
+    <string name="milestone_twin_prime">Zwillingsprimzahl</string>
+    <string name="milestone_palindrome">Palindrom</string>
+    <string name="milestone_square">Quadratzahl</string>
+    <string name="milestone_power_two">Zweierpotenz</string>
+    <string name="milestone_digit_sequence">Ziffernfolge</string>
+    <string name="milestone_catalan">Catalan-Zahl</string>
+    <string name="milestone_fibonacci">Fibonacci-Zahl</string>
 </resources>

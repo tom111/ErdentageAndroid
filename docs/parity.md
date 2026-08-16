@@ -21,8 +21,8 @@ deviations here.
 | Milestone engine | `95aa5b5` | Complete | Shared fixture JSON plus JVM tests cover all kinds, strict-next boundaries, large values, current-day detection, filtering, same-target collapse, ordering, and dates | Pure optimized Kotlin port |
 | Persistence and repository | `95aa5b5` | Complete | File-backed JVM tests cover JSON schema, defaults, corruption replacement, concurrent transactions, cap, selection, reorder/delete, retention, and physically persisted backfill deltas | Typed app-private JSON DataStore; no obsolete iOS-key migration |
 | Theme and tint foundation | `95aa5b5` | In progress | Exact adaptive tint mapping tests; rendered gradient pixel test; light/dark phone previews; owner emulator review pending | Neutral Material scheme and system sans; no screenshot harness by owner decision |
-| Person pager | `95aa5b5` | Not started | Pending | Native Compose pager |
-| Demnächst overview | `95aa5b5` | Not started | Pending | Native Compose canvas |
+| Person pager | `95aa5b5` | In progress | Compose tests cover empty state, person render, single overview sentinel, swipe, and indicator; visible API 36 launch | Settings/management chrome and milestone actions pending |
+| Demnächst overview | `95aa5b5` | In progress | Merged chronological 30-row feed runs in pager and instrumentation test | Exact sky colors present; custom cloud canvas/wobble pending |
 | Settings and people | `95aa5b5` | Not started | Pending | Native Android controls |
 | Platform integrations | `95aa5b5` | Not started | Pending | Android intents and selected-contact access |
 | Home-screen widget | `95aa5b5` | Not started | Pending | One configurable Glance widget type |
@@ -63,6 +63,26 @@ deviations here.
 - The owner waived an automated screenshot harness. Visible emulator runs,
   owner screenshots/feedback, Compose previews, semantics tests, and focused
   pixel assertions form the visual verification workflow.
+
+### 2026-08-16 — first functional UI
+
+- The runtime now collects DataStore through a lifecycle-aware `ViewModel`;
+  the scaffold-only title screen is gone.
+- A fresh install offers a native three-spinner birth-date picker with the iOS
+  5,000-day preset, persists the owner person, and renders the live count and
+  upcoming milestones using German formatting. The spinner presentation was
+  selected after owner feedback so the year is independently selectable.
+- The Compose pager has stable person keys, exactly one trailing “Demnächst”
+  sentinel, persisted selection, an inset-safe indicator, and compact-height
+  side-by-side person layout.
+- The initial “Demnächst” implementation merges, sorts, and caps events at 30
+  over the exact adaptive sky gradient. The custom cloud canvas remains a
+  later parity slice.
+- Four API 36 instrumentation tests pass, covering activity launch, empty
+  state, person-to-overview swiping, pager semantics, and rendered gradient
+  pixels. All 56 JVM tests, lint, debug/release APK assembly, and release AAB
+  bundling also pass. The final debug APK was reinstalled and visibly checked
+  on the emulator without clearing its saved app data.
 
 ## Scope decisions
 

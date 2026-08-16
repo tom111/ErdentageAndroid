@@ -4,4 +4,8 @@
         <item name="android:windowActionModeOverlay">true</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
+    <style name="ThemeOverlay.Erdentage.DatePicker" parent="android:style/Theme.Material.Dialog.Alert">
+        <item name="android:datePickerStyle">@style/Widget.Erdentage.DatePicker</item>
+    </style>
 </resources>
