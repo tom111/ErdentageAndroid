@@ -79,9 +79,9 @@ deviations here.
 - The Compose pager has stable person keys, exactly one trailing “Demnächst”
   sentinel, persisted selection, an inset-safe indicator, and compact-height
   side-by-side person layout.
-- The initial “Demnächst” implementation merges, sorts, and caps events at 30
-  over the exact adaptive sky gradient. The custom cloud canvas remains a
-  later parity slice.
+- At this checkpoint, the initial “Demnächst” implementation merged, sorted,
+  and capped events at 30 over the exact adaptive sky gradient. The custom
+  cloud canvas was completed in the later parity entry below.
 - Four API 36 instrumentation tests pass, covering activity launch, empty
   state, person-to-overview swiping, pager semantics, and rendered gradient
   pixels. All 56 JVM tests, lint, debug/release APK assembly, and release AAB

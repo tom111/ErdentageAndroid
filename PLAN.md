@@ -40,12 +40,12 @@ The live source of truth is:
 - Baseline state: `main`, clean, iOS 1.3 build 16
 
 The iOS app continues to change. Each Android parity task must inspect the
-then-current iOS commit and record it in a future `docs/parity.md` ledger.
+then-current iOS commit and record it in [`docs/parity.md`](docs/parity.md).
 Android should port current tested behavior, not freeze the July 2026 snapshot.
 
 ## Approved technology decision
 
-| Area | Recommendation |
+| Area | Decision |
 | --- | --- |
 | Production language | Kotlin |
 | UI framework | Jetpack Compose with Material 3 primitives and a custom Erdentage theme |
@@ -72,7 +72,7 @@ those choices would introduce another runtime or require restructuring the iOS
 app without providing enough useful shared code. The mathematics can instead
 stay independently implemented and cross-checked with shared fixtures.
 
-### Android version recommendation
+### Android version decision
 
 - `minSdk = 26` supports Android 8.0 and later, gives a broad compatibility
   range, and supports in-app widget pinning.
@@ -87,7 +87,7 @@ Gradle Plugin, Kotlin, Compose BOM, AndroidX, DataStore, and Glance. Avoid
 alpha, beta, and RC dependencies unless a required feature has no stable
 implementation and the owner approves the risk.
 
-## Proposed release scope
+## Release scope
 
 ### Phase one
 
@@ -224,9 +224,8 @@ system-owned interactions remain native Android experiences.
   `PersonTint` source.
 - Reproduce the person gradients, overview sky, cloud layout, visual hierarchy,
   spacing, and responsive behavior.
-- Compare samples of Android's system rounded sans and suitable bundled libre
-  fonts before the owner chooses one. Document any bundled font's license and
-  do not redistribute Apple's San Francisco font.
+- Use Android's system sans typography for phase one. Do not redistribute
+  Apple's San Francisco font or add an unnecessary bundled font dependency.
 - Use Material Symbols or project-owned libre vectors instead of SF Symbols.
 - Derive an Android adaptive/monochrome icon from the owner-approved SVG
   masters in the iOS repository; do not copy the Icon Composer bundle directly.
@@ -342,7 +341,11 @@ therefore proceed as far as practical on the emulator matrix. Physical-device
 or managed-device testing remains a pre-production activity rather than a
 prerequisite for beginning development.
 
-## Implementation sequence after explicit approval
+## Implementation record
+
+Steps 1-11 are complete. Step 12 is complete for source preparation and the
+documented emulator matrix; signing, store workflows, and independent-device
+verification remain release work. Step 13 remains deferred.
 
 1. Lift the planning hold in `AGENTS.md`.
 2. Create the initial Git commit, add the owner-chosen license, and scaffold

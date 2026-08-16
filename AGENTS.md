@@ -8,13 +8,12 @@ contracts; `PLAN.md` records proposed choices, phases, and owner decisions.
 
 ## Implementation status
 
-The repository owner lifted the planning hold on 2026-08-15. Android Studio,
-JDK 17, the Android SDK, and ARM64 emulator images are installed, and the
-initial Kotlin/Compose project skeleton was created in the same change. Normal
-implementation, testing, dependency downloads, and emulator work described by
-this file and `PLAN.md` are authorized. Asset provenance, signing operations,
-store-account actions, and any expansion of product scope still require their
-documented approvals.
+The repository owner lifted the planning hold on 2026-08-15. Phase-one feature
+implementation was completed on 2026-08-16, including the documented Android
+emulator matrix. Normal implementation, testing, dependency downloads, and
+emulator work described by this file and `PLAN.md` are authorized. Signing
+operations, store-account actions, publication assets, and any expansion of
+product scope still require their documented approvals.
 
 ## Mission
 
@@ -75,7 +74,7 @@ The pure behavior is primarily defined by:
 
 These decisions govern the project unless the owner explicitly changes them.
 
-| Area | Recommendation |
+| Area | Decision |
 | --- | --- |
 | Language | Kotlin only for production Android code |
 | UI | Jetpack Compose with Material 3 primitives and a custom Erdentage theme |
@@ -113,7 +112,7 @@ as `+` or version ranges.
 
 ## Product scope
 
-### Phase-one recommendation
+### Phase-one scope
 
 Ship phone and tablet support plus Android home-screen widgets first. Make the
 normal widget compatible with Android lock-screen widget hosts where the OS
@@ -452,7 +451,11 @@ of:
 Only list tasks that the checked-in build actually defines. Never claim
 emulator or release verification if only host-side tests ran.
 
-## Recommended implementation sequence after approval
+## Implementation and release sequence
+
+Steps 1-8 are complete. The source preparation and emulator portions of step
+9 are complete; signing and the independent-device/store gates remain. Step 10
+is deferred unless separately approved.
 
 1. Lift the hold; create the initial Git commit; add the chosen license;
    scaffold the minimal Kotlin/Compose project and deterministic CI/build
@@ -473,10 +476,10 @@ emulator or release verification if only host-side tests ran.
    disclosures, signing, reproducible release builds, and release checklists.
 10. Consider Wear OS only as a separately approved follow-up.
 
-Maintain a `docs/parity.md` ledger once implementation begins. For every iOS
-surface or rule, record the reference iOS commit, Android status, tests, visual
-evidence, and any intentional platform deviation. “Looks similar” is not a
-completed parity item without behavior and verification.
+Maintain `docs/parity.md` for every future parity change. Record the reference
+iOS commit, Android status, tests, visual evidence, and any intentional
+platform deviation. “Looks similar” is not a completed parity item without
+behavior and verification.
 
 ## Owner decisions
 
@@ -494,7 +497,8 @@ The owner has approved:
   that the event was saved.
 - Use one configurable widget type; following the app's current person is an
   option alongside selecting a fixed person.
-- Choose between system and bundled libre fonts after reviewing samples.
+- Use Android's system sans typography for phase one; do not bundle Apple's
+  fonts or an unnecessary third-party font.
 - Develop and verify as far as possible with emulators because no physical
   Android phone is currently available.
 - Target Google Play first. Source hosting, F-Droid publication, and a signing
