@@ -4,6 +4,7 @@
 package de.eigenraum.erdentage.widget
 
 import android.content.Context
+import android.appwidget.AppWidgetManager
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
@@ -89,6 +90,15 @@ class ErdentageGlanceWidget : GlanceAppWidget() {
 
 class ErdentageWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget: GlanceAppWidget = ErdentageGlanceWidget()
+
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray,
+    ) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
+        WidgetUpdateScheduler.enqueueImmediate(context)
+    }
 
     override fun onDeleted(context: Context, appWidgetIds: IntArray) {
         WidgetSelectionStore(context).delete(appWidgetIds)

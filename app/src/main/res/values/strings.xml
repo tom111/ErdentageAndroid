@@ -46,6 +46,7 @@
     <string name="edit_person">Einstellungen</string>
     <string name="share_days">Erdentage teilen</string>
     <string name="share_chooser_title">Erdentage teilen</string>
+    <string name="share_app_missing">Keine App zum Teilen verfügbar.</string>
     <string name="move_up">Nach oben</string>
     <string name="move_down">Nach unten</string>
     <string name="delete_person">Person löschen</string>

@@ -68,14 +68,17 @@ fun ErdentageApp(
     val selectedPage = persisted.currentPersonIndex.coerceIn(0, state.personPages.size)
     val pagerState = rememberPagerState(initialPage = selectedPage) { pageCount }
     var managePeopleVisible by rememberSaveable { mutableStateOf(false) }
-    var editingPerson by remember { mutableStateOf<Person?>(null) }
-    var editorCreatesPerson by remember { mutableStateOf(false) }
-    var returnToManager by remember { mutableStateOf(false) }
+    var editingPersonState by rememberSaveable { mutableStateOf<String?>(null) }
+    val editingPerson = remember(editingPersonState) {
+        PersonEditorStateCodec.decodeOrNull(editingPersonState)
+    }
+    var editorCreatesPerson by rememberSaveable { mutableStateOf(false) }
+    var returnToManager by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(editFirstPersonAfterCreation, persisted.people) {
         if (editFirstPersonAfterCreation) {
             persisted.people.firstOrNull()?.let { firstPerson ->
-                editingPerson = firstPerson
+                editingPersonState = PersonEditorStateCodec.encode(firstPerson)
                 editorCreatesPerson = false
                 returnToManager = false
                 editFirstPersonAfterCreation = false
@@ -84,12 +87,14 @@ fun ErdentageApp(
     }
     LaunchedEffect(contactDraft?.token) {
         contactDraft?.let { imported ->
-            editingPerson = Person(
-                name = imported.name,
-                birthYear = imported.birthDate.year,
-                birthMonth = imported.birthDate.monthValue,
-                birthDay = imported.birthDate.dayOfMonth,
-                tint = PersonTint.firstUnused(persisted.people),
+            editingPersonState = PersonEditorStateCodec.encode(
+                Person(
+                    name = imported.name,
+                    birthYear = imported.birthDate.year,
+                    birthMonth = imported.birthDate.monthValue,
+                    birthDay = imported.birthDate.dayOfMonth,
+                    tint = PersonTint.firstUnused(persisted.people),
+                ),
             )
             editorCreatesPerson = true
             returnToManager = true
@@ -132,7 +137,7 @@ fun ErdentageApp(
                 state = personPage,
                 onManagePeople = { managePeopleVisible = true },
                 onEditPerson = {
-                    editingPerson = personPage.person
+                    editingPersonState = PersonEditorStateCodec.encode(personPage.person)
                     editorCreatesPerson = false
                     returnToManager = false
                 },
@@ -160,12 +165,14 @@ fun ErdentageApp(
             onDismiss = { managePeopleVisible = false },
             onAddManual = {
                 val preset = LocalDate.now(ZoneId.systemDefault()).minusDays(5_000)
-                editingPerson = Person(
-                    name = "",
-                    birthYear = preset.year,
-                    birthMonth = preset.monthValue,
-                    birthDay = preset.dayOfMonth,
-                    tint = PersonTint.firstUnused(persisted.people),
+                editingPersonState = PersonEditorStateCodec.encode(
+                    Person(
+                        name = "",
+                        birthYear = preset.year,
+                        birthMonth = preset.monthValue,
+                        birthDay = preset.dayOfMonth,
+                        tint = PersonTint.firstUnused(persisted.people),
+                    ),
                 )
                 editorCreatesPerson = true
                 returnToManager = true
@@ -173,7 +180,7 @@ fun ErdentageApp(
             },
             onImportContact = onPickContact,
             onEdit = { person ->
-                editingPerson = person
+                editingPersonState = PersonEditorStateCodec.encode(person)
                 editorCreatesPerson = false
                 returnToManager = true
                 managePeopleVisible = false
@@ -188,7 +195,7 @@ fun ErdentageApp(
         PersonSettingsDialog(
             person = person,
             onDismiss = {
-                editingPerson = null
+                editingPersonState = null
                 if (returnToManager) managePeopleVisible = true
             },
             onSave = { updated ->
@@ -197,7 +204,7 @@ fun ErdentageApp(
                 } else {
                     onUpdatePerson(updated)
                 }
-                editingPerson = null
+                editingPersonState = null
                 if (returnToManager) managePeopleVisible = true
             },
         )

@@ -164,6 +164,28 @@ deviations here.
   tests cover the runtime three-person seed, direct top actions, exact footer
   spacing, and round-number captions in addition to the existing UI contract.
 
+### 2026-08-20 — reviewed robustness pass
+
+- Triaged `docs/code-review-2026-08-20.md` against Android commit `947774d` and
+  iOS HEAD `9e52c6913f213f0cd93dc5c69b02b77e64dd9c63`; the report now records accepted,
+  partial, rejected, and owner-decision findings instead of treating every
+  suggestion as a required change.
+- Corrected deterministic cloud jitter, retained cloud shapes across
+  recomposition, rejected future contact birthdays, broadened defensive
+  birthday parsing, and moved contact-provider and milestone computation work
+  off the main thread.
+- Preserved unsaved person edits and navigation across saved-instance restore,
+  made the astronaut-day field naturally editable, and changed editor saves to
+  merge with the newest calendar history.
+- Added transient DataStore read retry without substituting an apparently empty
+  family, removed process-global locale mutation, hardened share handoff, used
+  the native time-format preference, and restored widget rollover scheduling
+  after widget updates.
+- 73 JVM tests and 12 API 36 instrumentation tests pass. The new emulator test
+  covers draft restoration, manager return, and empty-to-number input. The
+  newer-schema/malformed-record data-loss policy remains an explicit owner
+  decision before its serializer behavior changes.
+
 ## Scope decisions
 
 The current committed iOS source contains a second trailing `TogetherPageView`

@@ -9,7 +9,6 @@ import java.util.Locale
 
 fun Context.withGermanLocale(): Context {
     val locale = Locale.forLanguageTag("de-DE")
-    Locale.setDefault(locale)
     val configuration = Configuration(resources.configuration).apply {
         setLocale(locale)
         setLayoutDirection(locale)

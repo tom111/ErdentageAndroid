@@ -4,9 +4,12 @@
 package de.eigenraum.erdentage.ui
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.hasSetTextAction
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.junit4.StateRestorationTester
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onAllNodesWithContentDescription
@@ -14,9 +17,14 @@ import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
+import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.text.AnnotatedString
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import de.eigenraum.erdentage.app.ErdentageUiState
 import de.eigenraum.erdentage.data.PersistedAppState
@@ -352,6 +360,59 @@ class ErdentageAppTest {
         composeRule.runOnIdle {
             check(deletedId == "22222222-2222-4222-8222-222222222222")
         }
+    }
+
+    @Test
+    fun editorDraftAndManagerReturnSurviveStateRestoration() {
+        var updated: Person? = null
+        val restorationTester = StateRestorationTester(composeRule)
+        restorationTester.setContent {
+            ErdentageTheme(darkTheme = false) {
+                ErdentageApp(
+                    state = uiState(onePersonState()),
+                    onAddFirstPerson = {},
+                    onAddPerson = {},
+                    onUpdatePerson = { updated = it },
+                    onDeletePerson = {},
+                    onMovePerson = { _, _ -> },
+                    onPageSelected = {},
+                    onCalendarHandoff = {},
+                    onShare = {},
+                )
+            }
+        }
+
+        composeRule.onNodeWithContentDescription("Personen verwalten").performClick()
+        composeRule.onNodeWithContentDescription("Listenoptionen für Anne").performClick()
+        composeRule.onNodeWithText("Einstellungen").performClick()
+        composeRule.onNode(hasSetTextAction() and hasText("Anne"))
+            .performTextReplacement("Anne Neu")
+        composeRule.onNodeWithTag("person_settings_list")
+            .performScrollToNode(hasTestTag("days_off_earth_input"))
+        composeRule.onNodeWithTag("days_off_earth_input").performTextClearance()
+        composeRule.onNodeWithTag("days_off_earth_input").assert(
+            SemanticsMatcher.expectValue(
+                SemanticsProperties.EditableText,
+                AnnotatedString(""),
+            ),
+        )
+        composeRule.onNodeWithTag("days_off_earth_input").performTextInput("42")
+
+        restorationTester.emulateSavedInstanceStateRestore()
+
+        composeRule.onNodeWithTag("days_off_earth_input").assert(
+            SemanticsMatcher.expectValue(
+                SemanticsProperties.EditableText,
+                AnnotatedString("42"),
+            ),
+        )
+        composeRule.onNodeWithContentDescription("Speichern").performClick()
+        composeRule.runOnIdle {
+            val saved = checkNotNull(updated)
+            check(saved.name == "Anne Neu")
+            check(saved.daysOffEarth == 42)
+        }
+        composeRule.onNodeWithText("Personen").assertIsDisplayed()
     }
 
     private fun onePersonState() = PersistedAppState(

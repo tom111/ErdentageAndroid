@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import de.eigenraum.erdentage.app.ErdentageViewModel
 import de.eigenraum.erdentage.platform.launchTextShare
 import de.eigenraum.erdentage.platform.launchCalendarHandoff
@@ -40,6 +41,9 @@ import de.eigenraum.erdentage.ui.ErdentageApp
 import de.eigenraum.erdentage.ui.theme.ErdentageTheme
 import java.time.LocalDate
 import java.time.ZoneId
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
     private var contactDraft by mutableStateOf<ContactPersonDraft?>(null)
@@ -54,12 +58,17 @@ class MainActivity : ComponentActivity() {
         ActivityResultContracts.PickContact(),
     ) { uri ->
         if (uri == null) return@registerForActivityResult
-        val selected = SelectedContactReader(contentResolver).read(uri)
-        val completeDate = ContactImportLogic.completeDate(selected.birthday)
-        if (completeDate != null) {
-            contactDraft = ContactPersonDraft(selected.name, completeDate)
-        } else {
-            showContactBirthdayPicker(selected)
+        lifecycleScope.launch {
+            val selected = withContext(Dispatchers.IO) {
+                SelectedContactReader(contentResolver).read(uri)
+            }
+            val today = LocalDate.now(ZoneId.systemDefault())
+            val completeDate = ContactImportLogic.completeDate(selected.birthday, today)
+            if (completeDate != null) {
+                contactDraft = ContactPersonDraft(selected.name, completeDate)
+            } else {
+                showContactBirthdayPicker(selected)
+            }
         }
     }
 
@@ -114,11 +123,18 @@ class MainActivity : ComponentActivity() {
                         onPickContact = ::launchContactPicker,
                         onContactDraftConsumed = { contactDraft = null },
                         onShare = { text ->
-                            launchTextShare(
-                                context = this@MainActivity,
-                                text = text,
-                                chooserTitle = getString(R.string.share_chooser_title),
-                            )
+                            if (!launchTextShare(
+                                    context = this@MainActivity,
+                                    text = text,
+                                    chooserTitle = getString(R.string.share_chooser_title),
+                                )
+                            ) {
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    R.string.share_app_missing,
+                                    Toast.LENGTH_LONG,
+                                ).show()
+                            }
                         },
                     )
                 }

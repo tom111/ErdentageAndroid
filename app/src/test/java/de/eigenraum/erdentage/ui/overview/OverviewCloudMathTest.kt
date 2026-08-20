@@ -21,4 +21,15 @@ class OverviewCloudMathTest {
         assertTrue(first.value in -18f..18f)
         assertTrue(other.value in -18f..18f)
     }
+
+    @Test
+    fun seededJitterUsesTheAvailableRange() {
+        val factors = (0 until 256).map { index ->
+            OverviewCloudMath.jitter("cloud-$index-x", 1.dp).value
+        }
+
+        assertTrue(factors.min() < -0.75f)
+        assertTrue(factors.max() > 0.75f)
+        assertTrue(factors.distinct().size > 200)
+    }
 }

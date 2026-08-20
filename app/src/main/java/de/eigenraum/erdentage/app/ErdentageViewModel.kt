@@ -15,6 +15,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ErdentageViewModel(
     private val repository: PeopleRepository,
@@ -76,7 +78,9 @@ class ErdentageViewModel(
 
     fun updatePerson(person: Person) {
         viewModelScope.launch {
-            repository.updatePerson(person.id) { person }
+            repository.updatePerson(person.id) { stored ->
+                stored.withEditorValues(person)
+            }
         }
     }
 
@@ -113,7 +117,7 @@ class ErdentageViewModel(
         while (true) {
             val now = Instant.now()
             val zone = ZoneId.systemDefault()
-            mutableState.value = ErdentageUiState.create(persisted, now, zone)
+            mutableState.value = createUiState(persisted, now, zone)
 
             val next = if (persisted.people.any(Person::hasTime)) {
                 now.truncatedTo(ChronoUnit.MINUTES).plus(1, ChronoUnit.MINUTES)
@@ -128,12 +132,20 @@ class ErdentageViewModel(
         }
     }
 
-    private fun publishSnapshot(persisted: PersistedAppState) {
-        mutableState.value = ErdentageUiState.create(
+    private suspend fun publishSnapshot(persisted: PersistedAppState) {
+        mutableState.value = createUiState(
             persisted = persisted,
             at = Instant.now(),
             zoneId = ZoneId.systemDefault(),
         )
+    }
+
+    private suspend fun createUiState(
+        persisted: PersistedAppState,
+        at: Instant,
+        zoneId: ZoneId,
+    ): ErdentageUiState = withContext(Dispatchers.Default) {
+        ErdentageUiState.create(persisted, at, zoneId)
     }
 
     class Factory(
@@ -146,3 +158,16 @@ class ErdentageViewModel(
         }
     }
 }
+
+internal fun Person.withEditorValues(edited: Person): Person = copy(
+    name = edited.name,
+    birthYear = edited.birthYear,
+    birthMonth = edited.birthMonth,
+    birthDay = edited.birthDay,
+    birthHour = edited.birthHour,
+    birthMinute = edited.birthMinute,
+    hasTime = edited.hasTime,
+    daysOffEarth = edited.daysOffEarth,
+    enabledMilestones = edited.enabledMilestones,
+    tint = edited.tint,
+)

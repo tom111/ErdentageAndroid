@@ -67,14 +67,14 @@ class WidgetConfigurationActivity : ComponentActivity() {
             Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId),
         )
         val application = application as ErdentageApplication
+        val currentSelection = WidgetSelectionStore(this).read(appWidgetId)
         setContent {
             ErdentageTheme {
                 val state by application.container.peopleRepository.state
                     .collectAsStateWithLifecycle(initialValue = PersistedAppState())
                 WidgetConfigurationScreen(
                     state = state,
-                    currentSelection = WidgetSelectionStore(this)
-                        .read(appWidgetId),
+                    currentSelection = currentSelection,
                     onCancel = ::finish,
                     onSelect = ::completeConfiguration,
                 )

@@ -10,10 +10,12 @@ import de.eigenraum.erdentage.domain.MilestoneKind
 import de.eigenraum.erdentage.domain.Person
 import de.eigenraum.erdentage.domain.PersonTint
 import java.io.File
+import java.io.IOException
 import java.time.Instant
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.decodeFromString
@@ -36,6 +38,26 @@ class PeopleRepositoryTest {
         repository.initialize()
 
         assertEquals(PersistedAppState(), repository.state.first())
+    }
+
+    @Test
+    fun transientReadFailureIsRetried() = runTest {
+        val expected = PersistedAppState(people = listOf(person(0)))
+        var subscriptions = 0
+        val dataStore = object : DataStore<PersistedAppState> {
+            override val data = flow {
+                if (subscriptions++ == 0) throw IOException("temporary")
+                emit(expected)
+            }
+
+            override suspend fun updateData(
+                transform: suspend (t: PersistedAppState) -> PersistedAppState,
+            ): PersistedAppState = error("not used")
+        }
+        val repository = DataStorePeopleRepository(dataStore)
+
+        assertEquals(expected, repository.state.first())
+        assertEquals(2, subscriptions)
     }
 
     @Test

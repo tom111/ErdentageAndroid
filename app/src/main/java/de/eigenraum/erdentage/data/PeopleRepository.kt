@@ -9,10 +9,13 @@ import de.eigenraum.erdentage.domain.AddedMilestoneRecord
 import de.eigenraum.erdentage.domain.ErdentageLimits
 import de.eigenraum.erdentage.domain.Person
 import de.eigenraum.erdentage.domain.PersonTint
+import java.io.IOException
 import java.time.Instant
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.retryWhen
 
 interface PeopleRepository {
     val state: Flow<PersistedAppState>
@@ -35,6 +38,11 @@ class DataStorePeopleRepository(
     private val dataStore: DataStore<PersistedAppState>,
 ) : PeopleRepository {
     override val state: Flow<PersistedAppState> = dataStore.data
+        .retryWhen { cause, attempt ->
+            if (cause !is IOException) return@retryWhen false
+            delay(readRetryDelayMillis(attempt))
+            true
+        }
         .map(PersistedAppState::normalized)
         .distinctUntilChanged()
 
@@ -145,11 +153,15 @@ class DataStorePeopleRepository(
     override suspend fun setCurrentPersonIndex(index: Int) {
         dataStore.updateData { stored ->
             val current = stored.normalized()
+            val normalizedIndex = ErdentageLimits.normalizeCurrentPersonIndex(
+                index,
+                current.people.size,
+            )
+            if (current.currentPersonIndex == normalizedIndex) {
+                return@updateData current
+            }
             current.copy(
-                currentPersonIndex = ErdentageLimits.normalizeCurrentPersonIndex(
-                    index,
-                    current.people.size,
-                ),
+                currentPersonIndex = normalizedIndex,
             )
         }
     }
@@ -168,3 +180,6 @@ class DataStorePeopleRepository(
         )
     }
 }
+
+private fun readRetryDelayMillis(attempt: Long): Long =
+    (100L shl attempt.coerceAtMost(8).toInt()).coerceAtMost(30_000L)

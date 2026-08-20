@@ -28,11 +28,11 @@ data class ContactPersonDraft(
 )
 
 object ContactImportLogic {
-    fun completeDate(birthday: ContactBirthday?): LocalDate? {
+    fun completeDate(birthday: ContactBirthday?, today: LocalDate): LocalDate? {
         val year = birthday?.year?.takeIf { it > 0 } ?: return null
         val month = birthday.month ?: return null
         val day = birthday.day ?: return null
-        return validDate(year, month, day)
+        return validDate(year, month, day)?.takeUnless { it > today }
     }
 
     fun initialDate(birthday: ContactBirthday?, today: LocalDate): LocalDate {
@@ -41,7 +41,8 @@ object ContactImportLogic {
         val day = birthday?.day?.takeIf { it in 1..31 } ?: preset.dayOfMonth
         val explicitYear = birthday?.year?.takeIf { it > 0 }
         if (explicitYear != null) {
-            return validDate(explicitYear, month, day) ?: preset
+            val explicitDate = validDate(explicitYear, month, day)
+            if (explicitDate != null && explicitDate <= today) return explicitDate
         }
         for (distance in 0..4) {
             val earlier = validDate(preset.year - distance, month, day)
@@ -78,8 +79,8 @@ object ContactImportLogic {
         null
     }
 
-    private val FullBirthday = Regex("(\\d{4})-(\\d{2})-(\\d{2})")
-    private val PartialBirthday = Regex("--(\\d{2})-(\\d{2})")
+    private val FullBirthday = Regex("(\\d{4})-(\\d{1,2})-(\\d{1,2})(?:[T ].*)?")
+    private val PartialBirthday = Regex("--(\\d{1,2})-(\\d{1,2})(?:[T ].*)?")
 }
 
 class SelectedContactReader(

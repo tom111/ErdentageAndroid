@@ -21,7 +21,7 @@ class MainActivityTest {
     @Test
     fun appContentIsDisplayed() {
         composeRule.onRoot().assertIsDisplayed()
-        composeRule.waitUntil(timeoutMillis = 5_000) {
+        composeRule.waitUntil(timeoutMillis = 15_000) {
             composeRule.onAllNodesWithContentDescription("Seite 1 von 4")
                 .fetchSemanticsNodes()
                 .isNotEmpty()

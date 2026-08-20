@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -146,6 +147,9 @@ private fun CloudTimeline(
         ) {
             events.forEachIndexed { index, event ->
                 val id = event.cloudId
+                val shape = remember(id) {
+                    cloudShape(OverviewCloudMath.fnv1a(id))
+                }
                 val horizontalJitter = OverviewCloudMath.jitter(id + "-x", jitter)
                 val verticalJitter = OverviewCloudMath.jitter(id + "-y", jitter / 2)
                 val baseX = if (index % 2 == 0) {
@@ -157,7 +161,7 @@ private fun CloudTimeline(
                     event = event,
                     darkTheme = darkTheme,
                     wide = wide,
-                    shape = cloudShape(OverviewCloudMath.fnv1a(id)),
+                    shape = shape,
                     modifier = Modifier
                         .offset(
                             x = (baseX + horizontalJitter)
@@ -252,7 +256,7 @@ private fun CloudBubble(
 @Composable
 private fun EmptyCloud(darkTheme: Boolean) {
     val ink = inkSlateColor(darkTheme)
-    val shape = cloudShape(0xE3E11E)
+    val shape = remember { cloudShape(0xE3E11E) }
     Surface(
         modifier = Modifier
             .padding(top = 24.dp)
@@ -341,7 +345,7 @@ internal object OverviewCloudMath {
 
     fun jitter(key: String, range: Dp): Dp {
         val positive = fnv1a(key).ushr(11)
-        val unit = positive.toDouble() / Long.MAX_VALUE.toDouble()
+        val unit = positive.toDouble() / (1L shl 53).toDouble()
         return range * ((unit * 2.0 - 1.0).toFloat())
     }
 }

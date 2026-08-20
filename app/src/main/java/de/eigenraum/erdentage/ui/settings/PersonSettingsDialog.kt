@@ -7,6 +7,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.os.Build
+import android.text.format.DateFormat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -48,6 +49,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,10 +65,12 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -75,6 +79,7 @@ import de.eigenraum.erdentage.domain.ErdentageLimits
 import de.eigenraum.erdentage.domain.MilestoneKind
 import de.eigenraum.erdentage.domain.Person
 import de.eigenraum.erdentage.domain.PersonTint
+import de.eigenraum.erdentage.ui.PersonEditorStateCodec
 import de.eigenraum.erdentage.ui.person.explanationResource
 import de.eigenraum.erdentage.ui.person.labelResource
 import de.eigenraum.erdentage.ui.icons.ErdentageIcons
@@ -94,7 +99,12 @@ fun PersonSettingsDialog(
     onDismiss: () -> Unit,
     onSave: (Person) -> Unit,
 ) {
-    var draft by remember(person.id) { mutableStateOf(person) }
+    var draft by rememberSaveable(
+        person.id,
+        stateSaver = PersonEditorStateCodec.saver,
+    ) {
+        mutableStateOf(person)
+    }
     val context = LocalContext.current
 
     Dialog(
@@ -242,6 +252,7 @@ fun PersonSettingsDialog(
                         item { SettingsSectionTitle(R.string.settings_astronaut_section) }
                         item {
                         DaysOffEarthControl(
+                            personId = draft.id,
                             value = draft.daysOffEarth,
                             onValueChange = { draft = draft.copy(daysOffEarth = it) },
                         )
@@ -350,23 +361,46 @@ private fun SettingsValueRow(
 
 @Composable
 private fun DaysOffEarthControl(
+    personId: String,
     value: Int,
     onValueChange: (Int) -> Unit,
 ) {
     val decreaseDescription = stringResource(R.string.settings_decrease_days)
+    var input by rememberSaveable(
+        personId,
+        stateSaver = TextFieldValue.Saver,
+    ) {
+        mutableStateOf(TextFieldValue(value.toString()))
+    }
+
+    fun setNumericValue(newValue: Int) {
+        val text = newValue.toString()
+        input = TextFieldValue(text, selection = TextRange(text.length))
+        onValueChange(newValue)
+    }
+
     Column(modifier = Modifier.fillMaxWidth()) {
         OutlinedTextField(
-            value = value.toString(),
+            value = input,
             onValueChange = { raw ->
-                if (raw.all(Char::isDigit)) {
-                    onValueChange(
-                        raw.toIntOrNull()
-                            ?.coerceIn(0, ErdentageLimits.MAX_DAYS_OFF_EARTH)
-                            ?: 0,
-                    )
+                when {
+                    raw.text.isEmpty() -> {
+                        input = raw
+                        if (value != 0) onValueChange(0)
+                    }
+                    raw.text.all(Char::isDigit) -> {
+                        raw.text.toIntOrNull()
+                            ?.takeIf { it <= ErdentageLimits.MAX_DAYS_OFF_EARTH }
+                            ?.let { parsed ->
+                                input = raw
+                                if (parsed != value) onValueChange(parsed)
+                            }
+                    }
                 }
             },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag("days_off_earth_input"),
             label = { Text(stringResource(R.string.settings_days_off_earth)) },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -379,7 +413,7 @@ private fun DaysOffEarthControl(
             horizontalArrangement = Arrangement.End,
         ) {
             IconButton(
-                onClick = { onValueChange((value - 1).coerceAtLeast(0)) },
+                onClick = { setNumericValue((value - 1).coerceAtLeast(0)) },
                 enabled = value > 0,
                 modifier = Modifier.semantics {
                     contentDescription = decreaseDescription
@@ -392,7 +426,7 @@ private fun DaysOffEarthControl(
             }
             IconButton(
                 onClick = {
-                    onValueChange(
+                    setNumericValue(
                         (value + 1).coerceAtMost(ErdentageLimits.MAX_DAYS_OFF_EARTH),
                     )
                 },
@@ -600,7 +634,7 @@ private fun showBirthTimePicker(
         { _, hour, minute -> onSelected(LocalTime.of(hour, minute)) },
         person.birthHour,
         person.birthMinute,
-        true,
+        DateFormat.is24HourFormat(context),
     ).apply {
         setOnShowListener {
             getButton(DialogInterface.BUTTON_NEGATIVE).setText(R.string.cancel)

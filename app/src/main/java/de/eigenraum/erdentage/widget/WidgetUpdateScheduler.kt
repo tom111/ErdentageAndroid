@@ -46,6 +46,15 @@ class WidgetUpdateWorker(
 object WidgetUpdateScheduler {
     private const val UNIQUE_WORK = "erdentage-widget-rollover"
 
+    fun enqueueImmediate(context: Context) {
+        if (!hasWidgets(context)) return
+        WorkManager.getInstance(context).enqueueUniqueWork(
+            UNIQUE_WORK,
+            ExistingWorkPolicy.REPLACE,
+            OneTimeWorkRequestBuilder<WidgetUpdateWorker>().build(),
+        )
+    }
+
     fun scheduleNext(
         context: Context,
         state: PersistedAppState,
