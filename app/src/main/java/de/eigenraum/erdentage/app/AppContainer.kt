@@ -4,6 +4,7 @@
 package de.eigenraum.erdentage.app
 
 import android.content.Context
+import android.content.pm.ApplicationInfo
 import de.eigenraum.erdentage.data.AppStateDataStore
 import de.eigenraum.erdentage.data.DataStorePeopleRepository
 import de.eigenraum.erdentage.data.PeopleRepository
@@ -21,7 +22,11 @@ class AppContainer(context: Context) {
 
     init {
         applicationScope.launch {
-            peopleRepository.initialize()
+            val isDebuggable = context.applicationInfo.flags and
+                ApplicationInfo.FLAG_DEBUGGABLE != 0
+            peopleRepository.initialize(
+                initialPeople = initialPeopleForBuild(isDebuggable),
+            )
         }
     }
 }

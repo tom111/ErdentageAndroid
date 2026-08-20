@@ -54,6 +54,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -143,6 +144,7 @@ fun PersonSettingsDialog(
                 ) {
                     LazyColumn(
                         modifier = Modifier
+                            .testTag("person_settings_list")
                             .widthIn(max = 720.dp)
                             .fillMaxWidth()
                             .fillMaxHeight()
@@ -495,6 +497,7 @@ private fun AboutText() {
     val linkColor = MaterialTheme.colorScheme.primary
     val feedback = buildAnnotatedString {
         append(stringResource(R.string.settings_feedback_prefix))
+        append(' ')
         withLink(
             LinkAnnotation.Url(
                 url = FeedbackMailUri,
@@ -505,7 +508,9 @@ private fun AboutText() {
             append(stringResource(R.string.settings_feedback_mail))
             pop()
         }
+        append(' ')
         append(stringResource(R.string.settings_feedback_or))
+        append(' ')
         withLink(
             LinkAnnotation.Url(
                 url = MastodonUri,

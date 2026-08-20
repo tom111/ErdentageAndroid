@@ -11,13 +11,16 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import de.eigenraum.erdentage.app.ErdentageUiState
 import de.eigenraum.erdentage.data.PersistedAppState
+import de.eigenraum.erdentage.domain.MilestoneKind
 import de.eigenraum.erdentage.domain.Person
 import de.eigenraum.erdentage.domain.PersonTint
 import de.eigenraum.erdentage.ui.theme.ErdentageTheme
@@ -100,7 +103,7 @@ class ErdentageAppTest {
     }
 
     @Test
-    fun personOptionsOpenSettingsAndShareCurrentCount() {
+    fun personTopControlsShareAndOpenSettings() {
         var sharedText: String? = null
         composeRule.setContent {
             ErdentageTheme(darkTheme = false) {
@@ -118,16 +121,77 @@ class ErdentageAppTest {
             }
         }
 
-        composeRule.onNodeWithContentDescription("Optionen für Anne").performClick()
-        composeRule.onNodeWithText("Erdentage teilen").performClick()
+        composeRule.onNodeWithContentDescription("Erdentage teilen").performClick()
         composeRule.runOnIdle {
             check(sharedText?.contains("Anne ist heute") == true)
         }
 
-        composeRule.onNodeWithContentDescription("Optionen für Anne").performClick()
-        composeRule.onNodeWithText("Einstellungen").performClick()
+        composeRule.onNodeWithContentDescription("Einstellungen").performClick()
         composeRule.onNodeWithText("Geburt").assertIsDisplayed()
         composeRule.onNodeWithContentDescription("Abbrechen").performClick()
+    }
+
+    @Test
+    fun settingsFeedbackPreservesSpacesAroundLinks() {
+        composeRule.setContent {
+            ErdentageTheme(darkTheme = false) {
+                ErdentageApp(
+                    state = uiState(onePersonState()),
+                    onAddFirstPerson = {},
+                    onAddPerson = {},
+                    onUpdatePerson = {},
+                    onDeletePerson = {},
+                    onMovePerson = { _, _ -> },
+                    onPageSelected = {},
+                    onCalendarHandoff = {},
+                    onShare = {},
+                )
+            }
+        }
+
+        val feedback = "Feedback gerne per Mail oder Mastodon"
+        composeRule.onNodeWithContentDescription("Einstellungen").performClick()
+        composeRule.onNodeWithTag("person_settings_list")
+            .performScrollToNode(hasText(feedback))
+        composeRule.onNodeWithText(feedback).assertIsDisplayed()
+    }
+
+    @Test
+    fun roundMilestonesShowBothCaptions() {
+        val persisted = PersistedAppState(
+            people = listOf(
+                Person(
+                    id = "11111111-1111-4111-8111-111111111111",
+                    name = "Anne",
+                    birthYear = 1973,
+                    birthMonth = 1,
+                    birthDay = 1,
+                    tint = PersonTint.SKY,
+                    enabledMilestones = setOf(
+                        MilestoneKind.TAUSENDER,
+                        MilestoneKind.ZEHNTAUSENDER,
+                    ),
+                ),
+            ),
+        )
+        composeRule.setContent {
+            ErdentageTheme(darkTheme = false) {
+                ErdentageApp(
+                    state = uiState(persisted),
+                    onAddFirstPerson = {},
+                    onAddPerson = {},
+                    onUpdatePerson = {},
+                    onDeletePerson = {},
+                    onMovePerson = { _, _ -> },
+                    onPageSelected = {},
+                    onCalendarHandoff = {},
+                    onShare = {},
+                )
+            }
+        }
+
+        composeRule.onNodeWithText("nächster Tausender").assertIsDisplayed()
+        composeRule.onNodeWithText("nächster Zehntausender").assertIsDisplayed()
     }
 
     @Test

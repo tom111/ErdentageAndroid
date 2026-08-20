@@ -5,6 +5,12 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="Theme.Erdentage.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_mark</item>
+        <item name="postSplashScreenTheme">@style/Theme.Erdentage</item>
+    </style>
+
     <style name="ThemeOverlay.Erdentage.DatePicker" parent="android:style/Theme.Material.Light.Dialog.Alert">
         <item name="android:datePickerStyle">@style/Widget.Erdentage.DatePicker</item>
     </style>

@@ -340,10 +340,7 @@ private fun MilestoneRow(
             resources.getString(kind.todayLabelResource)
         }
     }
-    val captionKinds = milestone.kinds.filterNot { kind ->
-        kind == de.eigenraum.erdentage.domain.MilestoneKind.TAUSENDER ||
-            kind == de.eigenraum.erdentage.domain.MilestoneKind.ZEHNTAUSENDER
-    }
+    val captionKinds = milestone.kinds
     val tagSuffix = tags.takeIf(List<String>::isNotEmpty)
         ?.joinToString(", ", prefix = " (", postfix = ")")
         .orEmpty()

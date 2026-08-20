@@ -39,6 +39,24 @@ class PeopleRepositoryTest {
     }
 
     @Test
+    fun initializeSeedsOnlyAnEmptyRepository() = runTest {
+        val (_, repository) = repository("initial-people")
+        val initialPeople = listOf(person(0), person(1), person(2))
+
+        repository.initialize(initialPeople)
+
+        var state = repository.state.first()
+        assertEquals(initialPeople, state.people)
+        assertEquals(0, state.currentPersonIndex)
+
+        repository.updatePerson(initialPeople.first().id) { it.copy(name = "Geändert") }
+        repository.initialize(listOf(person(3), person(4), person(5)))
+
+        state = repository.state.first()
+        assertEquals(listOf("Geändert", "Person 1", "Person 2"), state.people.map(Person::name))
+    }
+
+    @Test
     fun addAssignsDistinctTintSelectsNewPersonAndRejectsDuplicateOrOverflow() = runTest {
         val (_, repository) = repository("add")
 

@@ -231,9 +231,7 @@ private fun MilestoneBlock(
     modifier: GlanceModifier = GlanceModifier,
 ) {
     Column(modifier = modifier) {
-        milestone.kinds.filterNot { kind ->
-            kind == MilestoneKind.TAUSENDER || kind == MilestoneKind.ZEHNTAUSENDER
-        }.forEach { kind ->
+        milestone.kinds.forEach { kind ->
             Text(
                 text = strings.captions.getValue(kind),
                 style = widgetTextStyle(10.sp, FontWeight.Normal, TextAlign.Start),

@@ -3,7 +3,8 @@
 ## Erdentage application icon
 
 - Android resources: `app/src/main/res/drawable/ic_launcher_foreground.xml`,
-  `ic_launcher_monochrome.xml`, and the `mipmap-anydpi*` adaptive-icon files.
+  `ic_launcher_monochrome.xml`, `ic_splash_mark.xml`, and the
+  `mipmap-anydpi*` adaptive-icon files.
 - Source master: `IconComposer/Icon-Flat.svg` at iOS reference commit
   `95aa5b595ec8cad1ed8c7ebcf8c039e7a3588eae` in the adjacent Erdentage iOS
   repository.
@@ -11,8 +12,10 @@
 - License: GPL-3.0-or-later, matching this Android application.
 - Transformation: the source geometry and colors were translated to Android
   vector paths, scaled into the adaptive-icon safe zone, and supplemented by
-  a project-owned monochrome line version. No Apple framework asset, SF Symbol,
-  font, or Icon Composer bundle is distributed.
+  a project-owned monochrome line version. The splash mark reuses those paths
+  at a smaller scale appropriate to Android's system splash container; it is
+  not a separate or redrawn logo. No Apple framework asset, SF Symbol, font, or
+  Icon Composer bundle is distributed.
 
 ## Project-owned interface vectors
 

@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.map
 interface PeopleRepository {
     val state: Flow<PersistedAppState>
 
-    suspend fun initialize()
+    suspend fun initialize(initialPeople: List<Person> = emptyList())
     suspend fun addPerson(person: Person): Boolean
     suspend fun updatePerson(personId: String, transform: (Person) -> Person): Boolean
     suspend fun deletePerson(personId: String): Boolean
@@ -38,8 +38,20 @@ class DataStorePeopleRepository(
         .map(PersistedAppState::normalized)
         .distinctUntilChanged()
 
-    override suspend fun initialize() {
-        dataStore.updateData(PersistedAppState::normalized)
+    override suspend fun initialize(initialPeople: List<Person>) {
+        dataStore.updateData { stored ->
+            val current = stored.normalized()
+            if (current.people.isNotEmpty() || initialPeople.isEmpty()) {
+                current
+            } else {
+                current.copy(
+                    people = initialPeople
+                        .take(ErdentageLimits.MAX_PEOPLE)
+                        .map(Person::normalizedForStorage),
+                    currentPersonIndex = 0,
+                ).normalized()
+            }
+        }
     }
 
     override suspend fun addPerson(person: Person): Boolean {

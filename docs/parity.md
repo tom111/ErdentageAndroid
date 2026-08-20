@@ -7,13 +7,13 @@ deviations here.
 ## Current reference
 
 - iOS repository: `/Users/tom/SynologyDrive/projects/ErdentageiOS`
-- Current iOS HEAD inspected: `12abdde4f5df2ec2fe0a7a920f752672b40fa9b0`
+- Current iOS HEAD inspected: `9e52c6913f213f0cd93dc5c69b02b77e64dd9c63`
 - Branch/worktree: `main`, clean
 - Approved shipped-1.3 parity baseline:
   `95aa5b595ec8cad1ed8c7ebcf8c039e7a3588eae`
 - Newer “Zusammen” behavior at current iOS HEAD remains outside the approved
   Android scope
-- Inspected: 2026-08-16
+- Inspected: 2026-08-20
 
 ## Ledger
 
@@ -24,9 +24,9 @@ deviations here.
 | Milestone engine | `95aa5b5` | Complete | Shared fixture JSON plus JVM tests cover all kinds, strict-next boundaries, large values, current-day detection, filtering, same-target collapse, ordering, and dates | Pure optimized Kotlin port |
 | Persistence and repository | `95aa5b5` | Complete | File-backed JVM tests cover JSON schema, defaults, corruption replacement, concurrent transactions, cap, selection, reorder/delete, retention, and physically persisted backfill deltas | Typed app-private JSON DataStore; no obsolete iOS-key migration |
 | Theme and tint foundation | `95aa5b5` | Complete | Exact tint tests, rendered gradient pixels, light/dark review, phone/tablet/landscape and 1.3x font-scale emulator passes | Neutral Material scheme and Android system sans; screenshot harness waived by owner |
-| Person pager | `95aa5b5` | Complete | Compose tests cover empty state, person render, sentinel, swipe, indicator, controls, share, milestone actions, management, and contact import | Android combines edit/share in one top overflow menu |
+| Person pager | `9e52c69` | Complete | Compose tests cover empty state, person render, sentinel, swipe, indicator, direct share/settings controls, milestone actions, management, and contact import | Material share/settings icons replace SF Symbols |
 | Demnächst overview | `95aa5b5` | Complete | Chronological 30-row cap, deterministic cloud-math test, visible phone/landscape/tablet renders, large-font correction | Compose shapes reproduce seeded wobble rather than SwiftUI paths verbatim |
-| Settings and people | `95aa5b5` | Complete | Add/edit/delete/reorder/import flows and setting logic tested; phone and tablet first-run editors visibly checked | Accessible up/down commands replace iOS drag-edit mode; Android-native pickers |
+| Settings and people | `9e52c69` | Complete | Add/edit/delete/reorder/import flows, exact linked-footer spacing, and setting logic tested; phone and tablet first-run editors visibly checked | Accessible up/down commands replace iOS drag-edit mode; Android-native pickers |
 | Platform integrations | `95aa5b5` | Complete | Sharesheet and milestone-copy Compose tests; permission-free calendar drafts and action history; selected-contact parser/fallback tests | Calendar record means handoff launched, never confirmation of save |
 | Home-screen widget | `95aa5b5` | Complete | Selection/fallback JVM tests; real API 36 launcher registration, configuration, fixed/follow-current rendering, and live resize to wide layout | One responsive Glance widget; ordinary Android lock-screen host compatibility only where OEM exposes it |
 | Release preparation | Android-specific | In progress | Unsigned APK/AAB build; metadata, privacy/data-safety drafts, adaptive icon, AOSP and Play-image smoke tests | Account, signing, hosted URLs, screenshots, closed test, and physical-device gate remain |
@@ -137,6 +137,32 @@ deviations here.
   with Play Services absent, on the tablet image, and on the Google Play image.
   The overview sentinel was also verified across force-stop/cold-relaunch after
   its DataStore transaction completed.
+
+### 2026-08-20 — live parity polish and emulator fixtures
+
+- Inspected iOS HEAD `9e52c6913f213f0cd93dc5c69b02b77e64dd9c63`.
+  Its current person chrome uses separate Share and Settings actions, and its
+  milestone caption source includes the round-thousand kinds.
+- Replaced Android's two-item person overflow menu with separate Material Share
+  and Settings buttons. All three top controls have explicit 48 dp bounds and
+  direct content descriptions.
+- Restored `nächster Tausender` and `nächster Zehntausender` above personal
+  milestone rows and in milestone-capable widgets. Round values remain untagged
+  in calendar/share suffixes and overview cloud badges, matching iOS
+  `eventTitleTag` behavior.
+- Fixed the linked About footer by inserting separators in the annotated text
+  rather than relying on resource-edge whitespace, which Android trims.
+- Debuggable builds now seed exactly three deterministic, representative people
+  whenever the repository is empty; non-debuggable release builds still start
+  empty and never receive those fixtures.
+- Replaced the oversized default Android 12 splash rendering with the stable
+  AndroidX SplashScreen API and a smaller source-derived Erdentage mark on an
+  adaptive neutral background. Cold-start frames and the launcher icon were
+  visibly inspected on `Erdentage_API_36`.
+- `test lint assembleDebug assembleRelease bundleRelease` passed with updated
+  dependency locking and checksum verification. Eleven API 36 instrumentation
+  tests cover the runtime three-person seed, direct top actions, exact footer
+  spacing, and round-number captions in addition to the existing UI contract.
 
 ## Scope decisions
 
