@@ -29,7 +29,7 @@ deviations here.
 | Settings and people | `9e52c69` | Complete | Add/edit/delete/reorder/import flows, exact linked-footer spacing, and setting logic tested; phone and tablet first-run editors visibly checked | Accessible up/down commands replace iOS drag-edit mode; Android-native pickers |
 | Platform integrations | `95aa5b5` | Complete | Sharesheet and milestone-copy Compose tests; permission-free calendar drafts and action history; selected-contact parser/fallback tests | Calendar record means handoff launched, never confirmation of save |
 | Home-screen widget | `95aa5b5` | Complete | Selection/fallback JVM tests; real API 36 launcher registration, configuration, fixed/follow-current rendering, and live resize to wide layout | One responsive Glance widget; ordinary Android lock-screen host compatibility only where OEM exposes it |
-| Release preparation | Android-specific | In progress | Unsigned APK/AAB build; metadata, privacy/data-safety drafts, adaptive icon, AOSP and Play-image smoke tests | Account, signing, hosted URLs, screenshots, closed test, and physical-device gate remain |
+| Release preparation | Android-specific | In progress | Unsigned APK/AAB build; metadata, privacy/data-safety drafts, adaptive icon, AOSP and Play-image smoke tests; permanent cross-store signing identity recorded | Signed/reproducible artifact, key backup confirmation, hosted URLs, screenshots, store submissions, Play account/closed test, and independent-device gate remain |
 
 ## Verification log
 

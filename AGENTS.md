@@ -378,12 +378,13 @@ Hard rules:
   feature set. Do not ship a privacy-reduced “free” flavor and a tracking Play
   flavor.
 
-Choose signing strategy before the first public artifact. The preferred goal
-is cross-store updates with one owner-controlled app-signing key: provide that
-key to Play App Signing and pursue F-Droid's reproducible-build/upstream-signed
-APK path. Never put keystores, passwords, service-account files, or signing
-properties in Git. If F-Droid signs with a different key, document that users
-cannot switch stores in place.
+The owner chose cross-store updates with one owner-controlled app-signing key
+and created that identity on 2026-08-22; its public details are recorded in
+`docs/signing.md`. Provide that key to Play App Signing only through a separately
+approved enrollment procedure and pursue F-Droid's reproducible-build/
+upstream-signed APK path. Never put keystores, passwords, service-account files,
+or signing properties in Git. If a store ever uses a different key, document
+that users cannot switch stores in place.
 
 The owner's personal Google Play developer account from 2012 was closed for
 inactivity on 2024-04-06 and cannot publish the app. Google Play publication
@@ -433,11 +434,13 @@ screenshot harness on 2026-08-16. Add semantics tests for content descriptions,
 traversal, touch target sizes, and large text, plus focused rendered-pixel
 checks when they protect a concrete visual contract.
 
-Emulators are the normal development target, but before production obtain at
-least one independent physical-device or managed device-cloud smoke test for
-OEM launcher widgets, calendar/contact handoff, process death, backup/restore,
-and background rollover behavior. Google Play's pre-launch report can
-supplement, not replace, the AOSP no-Google test.
+Emulators are the normal development target. By explicit owner decision, the
+GitHub and official F-Droid releases precede purchase of a physical Android
+device. After F-Droid and before Google Play production, obtain at least one
+independent physical-device smoke test for OEM launcher widgets,
+calendar/contact handoff, process death, backup/restore, and background
+rollover behavior. Google Play's pre-launch report can supplement, not replace,
+the AOSP no-Google test.
 
 Once a project exists, the normal verification gate should include equivalents
 of:
@@ -453,8 +456,9 @@ emulator or release verification if only host-side tests ran.
 
 ## Implementation and release sequence
 
-Steps 1-8 are complete. The source preparation and emulator portions of step
-9 are complete; signing and the independent-device/store gates remain. Step 10
+Steps 1-8 are complete. The source preparation, emulator matrix, and permanent
+signing identity portions of step 9 are complete; signed/reproducible artifacts,
+key backup confirmation, and the independent-device/store gates remain. Step 10
 is deferred unless separately approved.
 
 1. Lift the hold; create the initial Git commit; add the chosen license;
@@ -501,9 +505,13 @@ The owner has approved:
   fonts or an unnecessary third-party font.
 - Develop and verify as far as possible with emulators because no physical
   Android phone is currently available.
-- Target Google Play first. Source hosting, F-Droid publication, and a signing
-  strategy remain to be established; the no-Play-Services and FLOSS dependency
-  constraints still apply from the start.
+- Follow the owner-approved publication order: GitHub, official F-Droid, obtain
+  a Pixel 6a or similar physical test device, create the new Google developer
+  account, then publish through Google Play. The GitHub repository name and all
+  external creation/push/store actions still require owner confirmation.
+- Use the one owner-controlled signing identity created on 2026-08-22 for
+  upstream APKs, reproducible F-Droid delivery, and later Play App Signing;
+  keep all private material and credentials outside Git.
 - Target the shipped iOS 1.3 feature set without the in-development
   “Zusammen” page; reconsider that page only after the iOS feature is final.
 

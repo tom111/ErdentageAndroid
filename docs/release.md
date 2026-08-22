@@ -1,7 +1,8 @@
 # Release checklist
 
-Phase-one feature implementation is complete, but the repository does not yet
-contain a publishable signed release.
+Phase-one feature implementation is complete. The permanent app-signing
+identity exists, but the repository does not yet contain a configured,
+owner-approved public release.
 
 ## Completed in source
 
@@ -15,31 +16,124 @@ contain a publishable signed release.
 - Adaptive, round, and monochrome launcher icons with documented provenance.
 - No-Google AOSP, API 26, phone, tablet, Google Play image, and launcher-widget
   emulator checks recorded in `docs/parity.md`.
+- One owner-controlled cross-store signing identity, whose public fingerprint
+  and handling rules are recorded in `docs/signing.md`.
 
-## Required before the first public build
+## Required before the first public artifact
 
-1. Create and verify a new personal Google Play developer account. Re-check the
-   then-current device-verification, closed-testing, and production-access rules.
-2. Choose public source hosting and an issue tracker. Publish the privacy policy
-   and support contact at stable HTTPS URLs; enter real URLs in Play Console and
-   later F-Droid metadata.
-3. Review the publisher postal/contact details in the privacy policy.
-4. Choose the public `versionName`/`versionCode`. The project deliberately
+1. Create the public source repository under the owner's GitHub account
+   `tom111`, enable its issue tracker, and publish maintainer/support contact and
+   the privacy policy at stable HTTPS URLs.
+2. Review the publisher postal/contact details in the privacy policy.
+3. Choose the public `versionName`/`versionCode`. The project deliberately
    remains `0.1.0` / `1` until that release decision.
-5. Follow a separately owner-reviewed signing procedure. Create one
-   owner-controlled key offline, back it up securely, enroll it with Play App
-   Signing as intended, and never commit the keystore or credentials.
-6. Capture owner-approved phone and tablet listing screenshots plus any required
-   Play feature graphic and 512 px store icon. The automated screenshot harness
-   was waived; store images are a manual owner review artifact.
-7. Complete content rating, app-access, ads, target-audience, data-safety, and
-   privacy declarations in Play Console.
-8. Run at least one independent physical-device or managed-device-cloud smoke
-   test for OEM widgets, contact/calendar handoff, backup/restore, process death,
-   and background rollover. A real Android device is also required for any Play
-   account verification that cannot be performed in an emulator.
-9. Run Google Play pre-launch reports and the required closed test before
+4. Confirm that the encrypted PKCS#12 file and password are recoverable from the
+   owner's password manager, create a second independent offline backup, and
+   configure release signing without placing paths, passwords, or key material
+   in Git.
+5. Capture owner-approved phone and tablet listing screenshots and add the
+   selected icon/screenshots below the Fastlane image directory. The automated
+   screenshot harness was waived; store images are a manual owner-review
+   artifact.
+6. Re-run the full build gate from a clean checkout, sign the release APK with
+   the recorded identity, record checksums, and verify reproducibility before
+   uploading it to GitHub Releases.
+
+Additional Google Play gates may follow later without blocking the initial
+GitHub/F-Droid track:
+
+1. Obtain a Pixel 6a or similar physical Android device and smoke-test OEM
+   widgets, contact/calendar handoff, backup/restore, process death, and
+   background rollover.
+2. Create and verify a new personal Play developer account with that physical
+   device and pay the current registration fee.
+3. Enroll the recorded app-signing identity with Play App Signing using the
+   owner-reviewed key-transfer flow; create a separate upload key if requested.
+4. Capture the Play-specific feature graphic and 512 px store icon, then
+   complete content rating, app-access, ads, target-audience, data-safety, and
+   privacy declarations.
+5. Complete the required closed test and Play pre-launch reports before
    requesting production access.
+
+## Account, device, and verification gates
+
+Established with the owner on 2026-08-22.
+
+**Play developer account.** The owner's original developer account was closed
+for *inactivity*, not terminated for a policy violation. Google's official
+inactivity page confirms that the old fee is not refunded, but does not provide
+a reactivation procedure. Current, non-authoritative
+[Play community guidance](https://support.google.com/googleplay/android-developer/thread/452910803)
+reports that the Google account already attached to the closed developer account
+cannot be reused for a new registration. Use the owner's separate Google
+account for new onboarding, and contact Play support before paying if the signup
+flow raises any linked-account concern. Expect a new one-time 25 USD fee.
+
+**Physical device verification.** Since early 2024 a new personal developer
+account must clear a device-verification step before it may publish: sign in to
+the Play Console mobile app as the account owner on a *non-rooted physical*
+Android device running **Android 10 or higher**. Emulators, iPhones, and desktop
+browsers do not satisfy it, which is why an earlier attempt from an iPhone
+failed. This is a hard blocker on the Play track.
+
+Candidate device: a used Pixel 6a, budget under 100 EUR. It runs Android 16 and
+Google's five-year update window reaches July 2027, so it can exercise the real
+`targetSdk = 36` surface instead of only the emulator matrix. This is a
+conditional recommendation: Google identified a subset of Pixel 6a devices with
+a battery-overheating risk, applied capacity/charging limits after 400 cycles,
+and ended its support-options program on 2026-07-08. Check battery condition and
+device history before purchase. Devices stuck below Android 13 satisfy Google's
+verification minimum but provide little value for current-target testing.
+
+**Closed testing.** Personal accounts created after 2023-11-13 need at least 12
+testers opted in *continuously* for the 14 days preceding the production-access
+request. A tester who opts out stops counting and must begin a new consecutive
+period if they return; if fewer than 12 qualifying testers remain, the
+application is not eligible. Recruit a buffer above 12 and ask participants to
+remain opted in until the request is filed.
+
+**Android Developer Verification, a future sideload gate.** From 2026-09-30,
+Google's first regional phase applies on certified Android devices in Brazil,
+Indonesia, Singapore, and Thailand only to installations from named
+participating stores. F-Droid and direct GitHub sideloads are not among those
+stores, so their installation behavior does not change at that first deadline.
+Google currently plans a global expansion to all apps on certified devices in
+2027. It also documents an advanced opt-in flow for power users, ordinary ADB
+installation, and a free limited-distribution account for up to 20 devices;
+none is a practical substitute for unrestricted public distribution. Plan to
+verify the owner and register the package/signing certificate before the global
+phase, while re-checking the policy because the rollout is still changing.
+
+Primary sources for this section, checked 2026-08-22: Play Console help on
+[device verification](https://support.google.com/googleplay/android-developer/answer/14316361),
+[closed-testing requirements](https://support.google.com/googleplay/android-developer/answer/14151465),
+[closure of inactive developer accounts](https://support.google.com/googleplay/android-developer/answer/11605267),
+[Android Developer Verification timeline](https://developer.android.com/developer-verification),
+[verification FAQ](https://support.google.com/android-developer-console/answer/16561738),
+[package/key registration](https://support.google.com/googleplay/android-developer/answer/16761053),
+[Pixel update window](https://support.google.com/pixelphone/answer/4457705),
+and [Pixel 6a battery guidance](https://support.google.com/pixelphone/answer/16340779).
+Treat those as authoritative if this note becomes stale.
+
+## Distribution channel order
+
+1. **GitHub Releases** carrying the signed APK and matching source tag. This is
+   also the upstream binary required for the intended reproducible F-Droid
+   route.
+2. **fdroiddata** inclusion per the F-Droid release track below. Review timing
+   is outside the owner's control because F-Droid builds from source and checks
+   policy compliance.
+3. **Physical Android device**, preferably a used Pixel 6a or similar, followed
+   by the independent-device smoke test and Play device verification.
+4. **New personal Google Play developer account** using a Google account not
+   already attached to the inactive closed developer account.
+5. **Google Play release**, after signing enrollment, console declarations,
+   pre-launch reports, and the required closed test.
+
+The sideload/F-Droid-first order makes the app available without waiting for
+Play's external gates. By explicit owner decision, the documented emulator
+matrix is the pre-F-Droid device evidence; the independent physical-device gate
+follows F-Droid and must pass before Play publication.
 
 ## F-Droid release track
 
@@ -84,14 +178,14 @@ Before submitting to `fdroiddata`:
    before submission. F-Droid has no paid developer-registration step, but its
    technical and policy review remains mandatory.
 
-Signing is an explicit owner decision. The normal F-Droid path builds and signs
-the APK with an F-Droid-managed per-app key; that APK cannot update an install
-signed with the Play/upstream key. The preferred Erdentage path is therefore a
-reproducible build: F-Droid independently rebuilds the same APK and, after a
-successful match, can publish the owner-signed APK. Record the chosen key,
-certificate fingerprint, signing-tool version, source tag, artifact hash, and
-reproducibility result without ever committing the private key or credentials.
-Use the then-current `Binaries`/`Builds.binary` and
+The owner chose one owner-controlled identity for every store; its public data
+is recorded in `docs/signing.md`. The normal F-Droid path would instead use an
+F-Droid-managed per-app key, preventing in-place switches from the Play/upstream
+build. Erdentage therefore targets a reproducible build: F-Droid independently
+rebuilds the APK and, after a successful match, publishes the owner-signed APK.
+Record the signing-tool version, source tag, artifact hash, and reproducibility
+result without ever committing the private key or credentials. Use the
+then-current `Binaries`/`Builds.binary` and
 `AllowedAPKSigningKeys` metadata rules rather than assuming today's schema will
 remain unchanged.
 
@@ -103,6 +197,30 @@ and was cross-checked against F-Droid's
 [store-metadata guidance](https://f-droid.org/docs/All_About_Descriptions_Graphics_and_Screenshots/),
 and [reproducible-build documentation](https://f-droid.org/docs/Reproducible_Builds/).
 Treat those primary sources as authoritative if this note becomes stale.
+
+## Next-session checkpoint
+
+Start here after 2026-08-22:
+
+1. Confirm that both the encrypted `.p12` and public `.pem` are attached to the
+   owner's password-manager item; arrange an independent offline backup later,
+   before the first public artifact.
+2. Confirm the GitHub repository name under `tom111`, create the public
+   repository with Issues enabled, and add its source/issue URLs to metadata.
+   Repository creation and pushing are external actions requiring owner
+   confirmation.
+3. Choose the first public version (`versionName` and monotonically increasing
+   `versionCode`).
+4. Add owner-approved Fastlane images, configure local signing without tracked
+   secrets, build and inspect the signed APK, and establish the reproducible
+   GitHub/F-Droid release flow.
+5. After the GitHub and official F-Droid releases, obtain the physical test
+   device; only then begin Google developer-account onboarding and the later
+   Play track.
+
+No app-feature implementation remains in the phase-one scope. The last full
+gate passed 73 JVM tests, lint, debug/release APK and release AAB assembly, and
+12 API 36 instrumentation tests; no production source changed afterward.
 
 ## Build gate
 

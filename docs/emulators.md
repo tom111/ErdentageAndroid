@@ -86,6 +86,7 @@ properties, screenshots, or committed emulator artifacts.
 - `Erdentage_API_36_Play`: the APK installed and cold-launched with the Play
   Store package present on 2026-08-16.
 
-These are emulator results. OEM widget behavior, real contact/calendar apps,
-backup/restore, and background execution still require the independent
-physical-device or managed-device-cloud gate in `docs/release.md`.
+These are emulator results. By owner decision they are the pre-F-Droid device
+evidence. OEM widget behavior, real contact/calendar apps, backup/restore, and
+background execution remain for the physical-device gate after F-Droid and
+before Google Play, as recorded in `docs/release.md`.

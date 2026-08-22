@@ -1,8 +1,9 @@
 # Erdentage Android port plan
 
-Status: **phase-one feature implementation complete** on 2026-08-16. Store
-account setup, signing, hosted URLs, listing screenshots, and independent
-physical-device or managed-device verification remain release work.
+Status: **phase-one feature implementation complete** on 2026-08-16. The
+permanent signing identity was created on 2026-08-22; release-signing setup,
+hosted URLs, listing screenshots, store workflows, and independent
+physical-device verification remain release work.
 
 This plan was prepared on 2026-07-22 after inspecting the SwiftUI source,
 tests, screenshots, widgets, and project notes in the iOS repository. Durable
@@ -301,13 +302,14 @@ production access. Re-check these rules during release preparation. Do not
 enroll the signing key in a service without a separate owner-reviewed
 procedure.
 
-The owner chose a sideload/F-Droid-first publication sequence before the later
-Google Play track; `docs/release.md` records the current channel order. GitHub
-under the owner's `tom111` account is the selected upstream host, but the public
-repository, issue tracker, privacy-policy hosting, and F-Droid submission are
-not established yet. Continue to honor the FLOSS, reproducibility, and
-no-Play-Services rules so every channel can ship the same app and signing
-identity.
+The owner chose this publication sequence: GitHub, official F-Droid, obtain a
+Pixel 6a or similar physical test device, create the new Google developer
+account, then publish through Google Play. `docs/release.md` records the detailed
+gates. GitHub under the owner's `tom111` account is the selected upstream host,
+but the public repository, issue tracker, privacy-policy hosting, and F-Droid
+submission are not established yet. Continue to honor the FLOSS,
+reproducibility, and no-Play-Services rules so every channel can ship the same
+app and signing identity.
 
 ## Emulator and tool setup plan
 
@@ -336,22 +338,24 @@ German and English system locales, Europe/Rome and another DST-observing time
 zone, leap days, rollover times, long names, empty state, multiple people, and
 the 20-person limit.
 
-Emulators are the primary development environment. Before production, obtain
-an independent physical-device or managed device-cloud smoke test for OEM
-launcher widgets, process death, contact/calendar handoff, backup/restore, and
-background refresh. Google Play's pre-launch report supplements but does not
-replace the AOSP no-Google run.
+Emulators are the primary development environment. By owner decision, GitHub
+and official F-Droid publication come before buying the physical Android test
+device. After F-Droid and before Google Play production, test OEM launcher
+widgets, process death, contact/calendar handoff, backup/restore, and background
+refresh on the physical device. Google Play's pre-launch report supplements but
+does not replace the AOSP no-Google run.
 
-The owner currently has no Android phone. Development and verification should
-therefore proceed as far as practical on the emulator matrix. Physical-device
-or managed-device testing remains a pre-production activity rather than a
-prerequisite for beginning development.
+The owner currently has no Android phone. Development and the GitHub/F-Droid
+release work therefore proceed on the completed emulator matrix. A Pixel 6a or
+similar device is planned afterward, and its smoke test is mandatory before the
+later Google Play release.
 
 ## Implementation record
 
-Steps 1-11 are complete. Step 12 is complete for source preparation and the
-documented emulator matrix; signing, store workflows, and independent-device
-verification remain release work. Step 13 remains deferred.
+Steps 1-11 are complete. Step 12 is complete for source preparation, the
+documented emulator matrix, and creation of the permanent signing identity;
+release signing, store workflows, and independent-device verification remain.
+Step 13 remains deferred.
 
 1. Lift the planning hold in `AGENTS.md`.
 2. Create the initial Git commit, add the owner-chosen license, and scaffold
