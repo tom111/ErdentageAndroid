@@ -288,20 +288,26 @@ that key to Play App Signing and pursue F-Droid's reproducible upstream-signed
 APK process. Secrets and keystores must never enter Git. If F-Droid uses a
 different key, users cannot switch stores in place; document that clearly.
 
-No signing strategy or key exists yet. The owner's personal Google Play
-developer account from 2012 was closed for inactivity on 2024-04-06 and cannot
-publish the app. A new personal account will be required. Under the rules
-checked on 2026-08-15, it must be verified using a non-rooted physical Android
-10+ device, and Erdentage must run a closed test with at least 12 opted-in
-testers for 14 continuous days before applying for production access. Re-check
-these rules during release preparation. Do not create a signing key or enroll
-it in a service without a separate owner-reviewed procedure.
+The owner created the permanent app-signing identity on 2026-08-22 after a
+separate review; its public details are recorded in `docs/signing.md`, while the
+private key and password remain outside Git. Password-manager and independent
+offline backup confirmation remain required before the first public artifact.
+The owner's personal Google Play developer account from 2012 was closed for
+inactivity on 2024-04-06 and cannot publish the app. A new personal account will
+be required. Under the rules checked on 2026-08-15, it must be verified using a
+non-rooted physical Android 10+ device, and Erdentage must run a closed test with
+at least 12 opted-in testers for 14 continuous days before applying for
+production access. Re-check these rules during release preparation. Do not
+enroll the signing key in a service without a separate owner-reviewed
+procedure.
 
-Google Play is the first publication target. Public source hosting, issue
-tracking, privacy-policy hosting, and F-Droid publication are not established
-yet. Continue to honor the FLOSS, reproducibility, and no-Play-Services rules
-from the first implementation so later F-Droid publication does not require a
-different app.
+The owner chose a sideload/F-Droid-first publication sequence before the later
+Google Play track; `docs/release.md` records the current channel order. GitHub
+under the owner's `tom111` account is the selected upstream host, but the public
+repository, issue tracker, privacy-policy hosting, and F-Droid submission are
+not established yet. Continue to honor the FLOSS, reproducibility, and
+no-Play-Services rules so every channel can ship the same app and signing
+identity.
 
 ## Emulator and tool setup plan
 
