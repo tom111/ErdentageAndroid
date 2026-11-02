@@ -128,9 +128,12 @@ sync strategy.
 
 ### In-scope iOS behavior
 
-Phase-one parity targets the shipped iOS 1.3 feature set. The in-development
-`TogetherPageView` (“Zusammen”) is explicitly deferred until its iOS design
-and behavior are finalized and the owner separately approves adding it.
+Phase-one parity targets the shipped iOS 1.3 feature set. Phase two, approved
+on 2026-11-02, extends it to the shipped iOS 1.4 features at tag
+`v1.4.2-build19`: the “Zusammen” page (`TogetherPageView`, a second trailing
+page at `people.size + 1` from two people onward), its family-level row
+budgets, and the Geburtstags-Zufälle. The steps and the rules to keep are in
+`PLAN.md` under *Phase two: iOS 1.4 parity*.
 
 - Up to 20 tracked people.
 - A horizontal pager with one page per person and a trailing “Demnächst” page.
@@ -514,8 +517,10 @@ The owner has approved:
 - Use the one owner-controlled signing identity created on 2026-08-22 for
   upstream APKs, reproducible F-Droid delivery, and later Play App Signing;
   keep all private material and credentials outside Git.
-- Target the shipped iOS 1.3 feature set without the in-development
-  “Zusammen” page; reconsider that page only after the iOS feature is final.
+- Phase one targeted the shipped iOS 1.3 feature set. On 2026-11-02 the owner
+  approved phase two: port the shipped iOS 1.4 features („Zusammen“,
+  Geburtstags-Zufälle, small UI changes up to iOS 1.4.2), as planned in
+  `PLAN.md`.
 
 ## Primary external references
 

@@ -3,7 +3,9 @@
 Status: **phase-one feature implementation complete** on 2026-08-16. The
 permanent signing identity was created on 2026-08-22; release-signing setup,
 hosted URLs, listing screenshots, store workflows, and independent
-physical-device verification remain release work.
+physical-device verification remain release work. **Phase two** (iOS 1.4
+parity: „Zusammen“ and the Geburtstags-Zufälle) was planned and approved on
+2026-11-02; see [Phase two](#phase-two-ios-14-parity).
 
 This plan was prepared on 2026-07-22 after inspecting the SwiftUI source,
 tests, screenshots, widgets, and project notes in the iOS repository. Durable
@@ -92,9 +94,9 @@ implementation and the owner approves the risk.
 
 ### Phase one
 
-Feature parity targets the shipped iOS 1.3 app. The newer “Zusammen” page is
-still under development on iOS and is not part of this Android phase; it can be
-reconsidered after the iOS behavior is finalized.
+Feature parity targets the shipped iOS 1.3 app. The “Zusammen” page shipped
+in iOS 1.4 and is ported in [phase two](#phase-two-ios-14-parity), together
+with the other iOS changes since 1.3.
 
 - Android phones.
 - Android tablets and resizable/foldable windows through adaptive layouts.
@@ -389,6 +391,190 @@ Expected verification tasks once they exist include:
 Do not claim a task or level of verification until the checked-in build
 actually defines and passes it.
 
+## Phase two: iOS 1.4 parity
+
+Planned and approved by the owner on 2026-11-02. Phase two ports everything the
+iOS app shipped after 1.3 and runs in the six steps below, in order. Record each
+completed step in [`docs/parity.md`](docs/parity.md) as usual.
+
+### Reference and scope
+
+- iOS reference: tag `v1.4.2-build19`, commit
+  `089cf5a960f4040d03a78cc052738479d4416bc1`. Pin this commit for the whole
+  phase so the target does not move; later iOS work is a separate decision.
+- The delta since the phase-one baseline `4f3ddc2` is 50 iOS commits, about
+  1,800 lines of production Swift and 49 new Swift tests (99 → 148 in
+  `MilestoneMathTests.swift`).
+- In scope:
+  - the “Zusammen” page with its three Wechselwirkungs-Kategorien
+    (`.doppelt`, `.zusammenSoAlt`, `.jahrhundert`) and the undated
+    “Konstellationen” section;
+  - the family-level row budget per category;
+  - share and calendar actions on Zusammen rows;
+  - the Geburtstags-Zufälle with the per-person „Geburtstag erwähnen“ switch;
+  - three small 1.4/1.4.1 UI changes (step 6).
+- Already at parity, no work: the written-out year in the „Demnächst“ clouds
+  (Android formats `d. MMM uuuu`) and civil-date milestone keys (Android's
+  `DayCountLogic.milestoneKey` already spells `target-yyyymmdd[-hhmm]`, like
+  iOS's `SharedDefaults.civilDayKey`).
+- Not ported, because they are iOS-only: the 1.4.1 pager rewrite for the
+  iPhone Duo / iOS 27 and the 1.4.2 pager fix for iOS 17/18.
+- Out of scope: iOS 1.5 (internationalisation, π and e days), which has not
+  started on iOS, and Wear OS, which stays deferred.
+
+The iOS `AGENTS.md` and `TODO.md` (sections *Wechselwirkungen*,
+*Geburtstags-Zufälle*, *Civil dates* and *Backlog from the 1.4 release audit*)
+are the specification. Most of the rules there are recorded decisions, not
+accidents of implementation; port them as stated.
+
+### 1. Prerequisites
+
+- Make sure a JDK 17 and the Android SDK are available on the machine doing the
+  work. On 2026-11-02 the second machine (`masamune`) had neither, so Gradle
+  could not run there; the documented setup is on `iMacM3-gelb`.
+- Commit the pending working-tree changes (the `Person` companion fix and the
+  2026-08-22/23 ledger entries).
+- Settle the open owner decision from `docs/code-review-2026-08-20.md` on
+  newer-schema and malformed records before step 2 changes the schema.
+
+### 2. Data model and page index (no visible UI)
+
+Every later step depends on this one.
+
+- Add `Person.mentionsBirthday: Boolean = true`. A missing field means on, as
+  on iOS: nobody opted out of something they had not seen.
+- Add family-level state to `PersistedAppState`:
+  - the row budget per Wechselwirkungs-Kategorie. A missing value means the
+    iOS default (`TogetherKind.defaultLimit`), and zero switches the category
+    off; the count is the switch, so there is no separate toggle.
+  - the „already in the calendar“ records for Zusammen rows, reusing
+    `AddedMilestoneRecord`, its cap and its pruning, because a Zusammen row
+    has no owning person to store them on.
+- Add a second trailing page at `people.size + 1`, present only from two people
+  onward. Introduce a single interpreter of the stored index (iOS:
+  `SharedDefaults.pageKind` and `lastPageIndex`) and route every site through
+  it:
+  - `ErdentageLimits.normalizeCurrentPersonIndex`, which today only preserves
+    `index <= count`;
+  - the `wasOverview` checks in `PeopleRepository` for move and delete; a
+    delete that leaves fewer than two people degrades Zusammen to „Demnächst“;
+  - the pager keys and the page indicator;
+  - `WidgetSelection`: a follow-current widget treats the Zusammen index like
+    „Demnächst“ and falls back to the first person.
+- Tests: the sentinel round trips through save, reorder, delete and restore,
+  plus the defaults for blobs written before phase two.
+
+### 3. Geburtstags-Zufälle
+
+- Port `BirthdayCoincidence` and the shared name helper
+  (`PersonName.ownerLast`, which puts „ich“ last in enumerations). Keep iOS's
+  four matching rules:
+  - `daysOffEarth` is ignored;
+  - the time of day is ignored;
+  - stored components match exactly, so 29 February matches only in leap
+    years;
+  - one ordinal or none: with more than one match, drop the ordinals.
+- German grammar: the owner's possessive declines („an meinem Geburtstag“ but
+  „Es ist mein Geburtstag“), and a name ending in an s-sound takes a bare
+  apostrophe („Lars’ Geburtstag“).
+- The switch belongs to the person whose birthday would be named, not to the
+  row doing the naming, and it only gates the note; it never adds, removes or
+  reorders a row.
+- Surfaces: the personal milestone rows (`caption`), the „Demnächst“ clouds
+  (`short`), the share texts (`sentence`), and the switch in the person
+  editor.
+- This is a complete feature on its own. It comes before Zusammen because the
+  Zusammen rows attach the same notes.
+
+### 4. Zusammen calculations (domain only)
+
+Port iOS `TogetherLogic.swift` as Android-free Kotlin in `domain/`, close to
+line for line. Keep the rules iOS `AGENTS.md` marks as load-bearing:
+
+- All arithmetic runs on date-only day indices with `daysOffEarth` folded into
+  each anchor. Each relation is a strictly monotone line, so every pair or
+  subset has exactly one crossing day; rows name the target, not the current
+  sum.
+- Pick the century multiple with a ceiling:
+  `k = max(1, ceilDiv(currentSum, 36_525))`.
+- Groups have at most three people (`cappedSubsetSize = 3`) at every family
+  size, up to the 20-person maximum. Do not reintroduce iOS's removed fallback
+  to pairs above twelve people.
+- Rank before phrasing: build cheap `(day, indices)` candidates, sort, cut to
+  each category's limit, and only then render German sentences and IDs.
+- Event IDs come from the sorted participant UUIDs, so reordering people does
+  not mint a new ID for an unchanged relation.
+- „Already added“ keys use the civil date (`yyyymmdd`), never a day index.
+- The Konstellations-Karte drops its second clause when the younger person's
+  `daysOffEarth` is non-zero, because the identity only holds without it.
+- Phrasing details from the 1.4 audit, for example „1 Tag auseinander“, not
+  „1 Tage auseinander“, and no „genau“ in the `.zusammenSoAlt` page hint.
+
+`LocalDate.toEpochDay()` is a suitable day index: unlike iOS's
+`startOfDay(Date(0))` it does not depend on the time zone. It must still never
+be persisted.
+
+Verification:
+
+- Add `shared-fixtures/together-math.json`, generated from iOS at the pinned
+  commit, with crossing dates, participants, and the **exact German sentences**
+  for representative families. The phrasing is the largest drift risk, so the
+  fixture pins it to the character.
+- Translate the 49 new Swift tests.
+- Compute off the main thread, as milestones already are, and cache by people,
+  current day, limits and time-zone ID. Measure at 20 people on the API 26
+  emulator.
+
+### 5. The Zusammen screen
+
+- Pager page with page-specific controls: Zusammen gets its own settings
+  button, and „Demnächst“ keeps none.
+- One section per category, rarest first and chronological within each; the
+  „Konstellationen“ section doubles as the empty state.
+- Each row has a share action and a calendar handoff (`ACTION_INSERT`, all-day;
+  the record means the handoff was launched, as for milestones), with the green
+  check next to the date.
+- TalkBack reads headline, caption, then the relative and absolute date, in
+  visual order (iOS fixed the VoiceOver equivalent in the 1.4 audit).
+- A family-level budget dialog: one count per category, each with its
+  explanation; zero switches the category off.
+- Visual checks on phone, tablet, landscape and 1.3× font, light and dark, on
+  API 26, 36 and 37. Re-check the open Android 17 tablet test from
+  `docs/parity.md` at the same time.
+
+### 6. Small UI changes and release material
+
+- „Person löschen“ in the person editor as well as in the people list (iOS
+  `67a0f88`).
+- Move the About footer (project line, version, mail, Mastodon) from the
+  person editor into the people list (iOS `35841ef`).
+- Change the Mastodon link to `https://mathe.social/@tomkalei` in the app and
+  in `docs/privacy-policy-de.md` (iOS `2317b43`).
+- Checks that are probably already fine and need only a test or a look:
+  - two actions per row in the people list (Android already offers edit and
+    delete per row);
+  - a birth time inside a DST gap, which `java.time` moves forward, as iOS has
+    since 1.4;
+  - cloud column spacing on tablets, which overlapped on iOS before `2b66dde`.
+- Release material:
+  - the privacy policy and `docs/play-data-safety.md` gain the family-level
+    data (row budgets, Zusammen calendar records), still stored only locally;
+  - the F-Droid description gains Zusammen;
+  - new screenshots;
+  - ledger rows in `docs/parity.md` referencing `089cf5a`.
+
+### Open owner decisions
+
+1. **Release order.** Recommended: finish phase two before the first public
+   Android release. Android has no users yet, and launching at the 1.3 level
+   would mean redoing screenshots, store text and the privacy policy within
+   weeks. Releasing first only pays off if an early F-Droid listing matters.
+2. **Version name.** Whether the first Android release is called 1.4 to match
+   the iOS feature level.
+3. **Fixture cross-check.** Whether the iOS repository gets a small test that
+   also checks `shared-fixtures/together-math.json`, so neither implementation
+   can drift without the other noticing.
+
 ## Decisions approved before starting
 
 The owner has approved:
@@ -403,6 +589,8 @@ The owner has approved:
    “saved” claim.
 7. Installation of Android Studio, SDK components, and ARM64 emulator images,
    and the start of implementation.
+8. Phase two, approved 2026-11-02: port the shipped iOS 1.4 features
+   („Zusammen“, Geburtstags-Zufälle, and the small UI changes up to iOS 1.4.2).
 
 The old Google Play developer account is confirmed closed, but replacing it is
 release preparation and does not block implementation. The planning hold was

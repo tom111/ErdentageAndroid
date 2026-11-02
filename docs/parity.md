@@ -11,9 +11,9 @@ deviations here.
 - Branch/worktree: `main`, clean
 - Approved shipped-1.3 parity baseline:
   `4f3ddc22f0b49d14ecf56d7af382ece0a3ca5f99`
-- Newer “Zusammen” behavior at current iOS HEAD remains outside the approved
-  Android scope
 - Inspected: 2026-08-20
+- Phase-two reference (iOS 1.4 parity, approved 2026-11-02): tag
+  `v1.4.2-build19`, commit `089cf5a960f4040d03a78cc052738479d4416bc1`
 
 ## Ledger
 
@@ -29,6 +29,11 @@ deviations here.
 | Settings and people | `df8d951` | Complete | Add/edit/delete/reorder/import flows, exact linked-footer spacing, and setting logic tested; phone and tablet first-run editors visibly checked | Accessible up/down commands replace iOS drag-edit mode; Android-native pickers |
 | Platform integrations | `4f3ddc2` | Complete | Sharesheet and milestone-copy Compose tests; permission-free calendar drafts and action history; selected-contact parser/fallback tests | Calendar record means handoff launched, never confirmation of save |
 | Home-screen widget | `4f3ddc2` | Complete | Selection/fallback JVM tests; real API 36 launcher registration, configuration, fixed/follow-current rendering, and live resize to wide layout | One responsive Glance widget; ordinary Android lock-screen host compatibility only where OEM exposes it |
+| Data model and page index (phase two) | `089cf5a` | Planned | — | — |
+| Geburtstags-Zufälle | `089cf5a` | Planned | — | — |
+| Zusammen calculations | `089cf5a` | Planned | — | — |
+| Zusammen screen and budgets | `089cf5a` | Planned | — | — |
+| Small 1.4/1.4.1 UI changes | `089cf5a` | Planned | — | — |
 | Release preparation | Android-specific | In progress | Unsigned APK/AAB build; metadata, privacy/data-safety drafts, adaptive icon, AOSP and Play-image smoke tests; permanent cross-store signing identity recorded | Signed/reproducible artifact, key backup confirmation, hosted URLs, screenshots, store submissions, Play account/closed test, and independent-device gate remain |
 
 ## Verification log
@@ -293,3 +298,9 @@ and not fixed. Android phase one targets the shipped iOS 1.3 feature set
 without “Zusammen”, retaining the single “Demnächst” sentinel at
 `people.size`. Reconsider the additional page only after its iOS behavior is
 finalized and separately approved.
+
+**Update 2026-11-02:** iOS shipped „Zusammen“ in 1.4, and the owner approved
+porting it together with the other iOS changes since 1.3 (the
+Geburtstags-Zufälle and three small UI changes). The reference is tag
+`v1.4.2-build19`. The steps are in `PLAN.md` under *Phase two: iOS 1.4
+parity*. The five phase-two rows in the ledger above track them.
