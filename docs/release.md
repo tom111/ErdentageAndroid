@@ -6,7 +6,7 @@ owner-approved public release.
 
 ## Completed in source
 
-- Permanent application ID `de.eigenraum.erdentage`, GPL-3.0-or-later license,
+- Permanent application ID `de.eigenraum.erdentage`, Apache-2.0 license,
   pinned dependencies, dependency locking, and checksum verification.
 - The same source and feature set build an Android App Bundle for Google Play
   and an APK suitable for later F-Droid work.
@@ -145,7 +145,7 @@ features, and dependency set.
 
 Already prepared:
 
-- `GPL-3.0-or-later`, the permanent application ID, and source-visible copyright
+- `Apache-2.0`, the permanent application ID, and source-visible copyright
   and asset-provenance records.
 - Kotlin/Compose production code with no Firebase, GMS/Play Services,
   advertising, analytics, tracking, or opaque checked-in AAR/JAR dependency.

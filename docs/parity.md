@@ -7,10 +7,10 @@ deviations here.
 ## Current reference
 
 - iOS repository: `/Users/tom/SynologyDrive/projects/ErdentageiOS`
-- Current iOS HEAD inspected: `9e52c6913f213f0cd93dc5c69b02b77e64dd9c63`
+- Current iOS HEAD inspected: `df8d951d7bb0e5da488e74be50fac17a55ea9e57`
 - Branch/worktree: `main`, clean
 - Approved shipped-1.3 parity baseline:
-  `95aa5b595ec8cad1ed8c7ebcf8c039e7a3588eae`
+  `4f3ddc22f0b49d14ecf56d7af382ece0a3ca5f99`
 - Newer “Zusammen” behavior at current iOS HEAD remains outside the approved
   Android scope
 - Inspected: 2026-08-20
@@ -19,16 +19,16 @@ deviations here.
 
 | Area | iOS reference | Android status | Verification | Deviation |
 | --- | --- | --- | --- | --- |
-| Project skeleton | `95aa5b5` | Complete | `test lint assembleDebug`; `assembleRelease bundleRelease`; API 36 instrumentation test; visible launch and screenshot inspected 2026-08-15 | Native Android build and lifecycle |
-| Domain model and day count | `95aa5b5` | Complete | JVM tests cover civil dates, invalid data, zone changes, DST gaps/overlaps, future dates, residual time, rollover, limits, UUIDs, and the overview sentinel | Uses `java.time` with injected clock/zone |
-| Milestone engine | `95aa5b5` | Complete | Shared fixture JSON plus JVM tests cover all kinds, strict-next boundaries, large values, current-day detection, filtering, same-target collapse, ordering, and dates | Pure optimized Kotlin port |
-| Persistence and repository | `95aa5b5` | Complete | File-backed JVM tests cover JSON schema, defaults, corruption replacement, concurrent transactions, cap, selection, reorder/delete, retention, and physically persisted backfill deltas | Typed app-private JSON DataStore; no obsolete iOS-key migration |
-| Theme and tint foundation | `95aa5b5` | Complete | Exact tint tests, rendered gradient pixels, light/dark review, phone/tablet/landscape and 1.3x font-scale emulator passes | Neutral Material scheme and Android system sans; screenshot harness waived by owner |
-| Person pager | `9e52c69` | Complete | Compose tests cover empty state, person render, sentinel, swipe, indicator, direct share/settings controls, milestone actions, management, and contact import | Material share/settings icons replace SF Symbols |
-| Demnächst overview | `95aa5b5` | Complete | Chronological 30-row cap, deterministic cloud-math test, visible phone/landscape/tablet renders, large-font correction | Compose shapes reproduce seeded wobble rather than SwiftUI paths verbatim |
-| Settings and people | `9e52c69` | Complete | Add/edit/delete/reorder/import flows, exact linked-footer spacing, and setting logic tested; phone and tablet first-run editors visibly checked | Accessible up/down commands replace iOS drag-edit mode; Android-native pickers |
-| Platform integrations | `95aa5b5` | Complete | Sharesheet and milestone-copy Compose tests; permission-free calendar drafts and action history; selected-contact parser/fallback tests | Calendar record means handoff launched, never confirmation of save |
-| Home-screen widget | `95aa5b5` | Complete | Selection/fallback JVM tests; real API 36 launcher registration, configuration, fixed/follow-current rendering, and live resize to wide layout | One responsive Glance widget; ordinary Android lock-screen host compatibility only where OEM exposes it |
+| Project skeleton | `4f3ddc2` | Complete | `test lint assembleDebug`; `assembleRelease bundleRelease`; API 36 instrumentation test; visible launch and screenshot inspected 2026-08-15 | Native Android build and lifecycle |
+| Domain model and day count | `4f3ddc2` | Complete | JVM tests cover civil dates, invalid data, zone changes, DST gaps/overlaps, future dates, residual time, rollover, limits, UUIDs, and the overview sentinel | Uses `java.time` with injected clock/zone |
+| Milestone engine | `4f3ddc2` | Complete | Shared fixture JSON plus JVM tests cover all kinds, strict-next boundaries, large values, current-day detection, filtering, same-target collapse, ordering, and dates | Pure optimized Kotlin port |
+| Persistence and repository | `4f3ddc2` | Complete | File-backed JVM tests cover JSON schema, defaults, corruption replacement, concurrent transactions, cap, selection, reorder/delete, retention, and physically persisted backfill deltas | Typed app-private JSON DataStore; no obsolete iOS-key migration |
+| Theme and tint foundation | `4f3ddc2` | Complete | Exact tint tests, rendered gradient pixels, light/dark review, phone/tablet/landscape and 1.3x font-scale emulator passes | Neutral Material scheme and Android system sans; screenshot harness waived by owner |
+| Person pager | `df8d951` | Complete | Compose tests cover empty state, person render, sentinel, swipe, indicator, direct share/settings controls, milestone actions, management, and contact import | Material share/settings icons replace SF Symbols |
+| Demnächst overview | `4f3ddc2` | Complete | Chronological 30-row cap, deterministic cloud-math test, visible phone/landscape/tablet renders, large-font correction | Compose shapes reproduce seeded wobble rather than SwiftUI paths verbatim |
+| Settings and people | `df8d951` | Complete | Add/edit/delete/reorder/import flows, exact linked-footer spacing, and setting logic tested; phone and tablet first-run editors visibly checked | Accessible up/down commands replace iOS drag-edit mode; Android-native pickers |
+| Platform integrations | `4f3ddc2` | Complete | Sharesheet and milestone-copy Compose tests; permission-free calendar drafts and action history; selected-contact parser/fallback tests | Calendar record means handoff launched, never confirmation of save |
+| Home-screen widget | `4f3ddc2` | Complete | Selection/fallback JVM tests; real API 36 launcher registration, configuration, fixed/follow-current rendering, and live resize to wide layout | One responsive Glance widget; ordinary Android lock-screen host compatibility only where OEM exposes it |
 | Release preparation | Android-specific | In progress | Unsigned APK/AAB build; metadata, privacy/data-safety drafts, adaptive icon, AOSP and Play-image smoke tests; permanent cross-store signing identity recorded | Signed/reproducible artifact, key backup confirmation, hosted URLs, screenshots, store submissions, Play account/closed test, and independent-device gate remain |
 
 ## Verification log
@@ -140,7 +140,7 @@ deviations here.
 
 ### 2026-08-20 — live parity polish and emulator fixtures
 
-- Inspected iOS HEAD `9e52c6913f213f0cd93dc5c69b02b77e64dd9c63`.
+- Inspected iOS HEAD `df8d951d7bb0e5da488e74be50fac17a55ea9e57`.
   Its current person chrome uses separate Share and Settings actions, and its
   milestone caption source includes the round-thousand kinds.
 - Replaced Android's two-item person overflow menu with separate Material Share
@@ -166,8 +166,8 @@ deviations here.
 
 ### 2026-08-20 — reviewed robustness pass
 
-- Triaged `docs/code-review-2026-08-20.md` against Android commit `947774d` and
-  iOS HEAD `9e52c6913f213f0cd93dc5c69b02b77e64dd9c63`; the report now records accepted,
+- Triaged `docs/code-review-2026-08-20.md` against Android commit `737726b` and
+  iOS HEAD `df8d951d7bb0e5da488e74be50fac17a55ea9e57`; the report now records accepted,
   partial, rejected, and owner-decision findings instead of treating every
   suggestion as a required change.
 - Corrected deterministic cloud jitter, retained cloud shapes across

@@ -1,5 +1,5 @@
 // SPDX-FileCopyrightText: 2026 Thomas Kahle
-// SPDX-License-Identifier: GPL-3.0-or-later
+// SPDX-License-Identifier: Apache-2.0
 
 package de.eigenraum.erdentage.domain
 
@@ -19,7 +19,7 @@ class MilestoneFixtureTest {
     @Test
     fun sharedFixtureMatchesCurrentIosReference() {
         assertEquals(1, fixture.schemaVersion)
-        assertEquals("95aa5b595ec8cad1ed8c7ebcf8c039e7a3588eae", fixture.referenceIosCommit)
+        assertEquals("4f3ddc22f0b49d14ecf56d7af382ece0a3ca5f99", fixture.referenceIosCommit)
     }
 
     @Test

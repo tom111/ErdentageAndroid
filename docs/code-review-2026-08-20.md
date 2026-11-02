@@ -1,7 +1,7 @@
 # Code review — Erdentage Android
 
 Date: 2026-08-20
-Reviewed commit: `4b974e3` (branch `master`, clean worktree at review start)
+Reviewed commit: `5fea510` (branch `master`, clean worktree at review start)
 Scope: all of `app/src` (~7 000 lines Kotlin), `AndroidManifest.xml`, resources,
 Gradle configuration, `AGENTS.md` behavioural contracts, and the test suite.
 Baseline: `./gradlew --offline testDebugUnitTest` passes.
@@ -299,8 +299,8 @@ The pure domain layer holds up well under scrutiny:
 
 ## 7. Maintainer disposition
 
-Validated on 2026-08-20 against Android commit `947774d` and current iOS HEAD
-`9e52c6913f213f0cd93dc5c69b02b77e64dd9c63`. Findings were reproduced before
+Validated on 2026-08-20 against Android commit `737726b` and current iOS HEAD
+`df8d951d7bb0e5da488e74be50fac17a55ea9e57`. Findings were reproduced before
 changes were made; suggestions were not applied wholesale.
 
 | Finding | Disposition | Result |

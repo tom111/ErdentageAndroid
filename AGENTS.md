@@ -36,7 +36,7 @@ The reference implementation is the adjacent iOS repository:
 - Requested path: `/Users/tom/projectsS/ErdentageiOS`
 - Synology path: `/Users/tom/SynologyDrive/projects/ErdentageiOS`
 - Initial audit baseline: commit
-  `95aa5b595ec8cad1ed8c7ebcf8c039e7a3588eae`, branch `main`, clean worktree,
+  `4f3ddc22f0b49d14ecf56d7af382ece0a3ca5f99`, branch `main`, clean worktree,
   iOS version 1.3 build 16, inspected on 2026-07-22
 
 The iOS app is being developed in parallel. The commit above is historical
@@ -353,10 +353,11 @@ not abstraction layers around every Kotlin function.
 
 ## F-Droid and store constraints
 
-The iOS repository had no `LICENSE` file at the initial audit. The owner has
-chosen `GPL-3.0-or-later` for the Android app, with `Thomas Kahle` as the
-personal copyright holder. The canonical license text and
-`Copyright (C) 2026 Thomas Kahle` notice are checked in. Official F-Droid
+Both Erdentage repositories are licensed `Apache-2.0`, with `Thomas Kahle` as
+the personal copyright holder. The Android app started under
+`GPL-3.0-or-later` and was relicensed before its first publication, on
+2026-11-02, when the iOS repository received the same license. The canonical
+license text and a `NOTICE` (`Copyright 2026 Thomas Kahle`) are checked in. Official F-Droid
 inclusion requires the complete app and its dependencies to be free software.
 
 Hard rules:
@@ -491,7 +492,8 @@ The owner has approved:
 
 - Kotlin + Jetpack Compose with API 26 minimum and API 36 compile/target.
 - Phone + tablet + widgets for phase one, with Wear OS deferred.
-- `GPL-3.0-or-later`, held personally by Thomas Kahle.
+- `Apache-2.0` (relicensed from `GPL-3.0-or-later` on 2026-11-02 to match the
+  iOS repository), held personally by Thomas Kahle.
 - The permanent application ID `de.eigenraum.erdentage`.
 - Installation of the required Android development tools and the start of
   implementation. The planning hold was lifted with the project skeleton on

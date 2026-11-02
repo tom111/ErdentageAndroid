@@ -20,6 +20,6 @@ Deine Eingaben bleiben lokal in der App. Kein Konto, kein eigener Server, keine 
 
 KOSTENLOS UND FREIE SOFTWARE
 
-Erdentage ist kostenlos und unter GPL-3.0-or-later als freie Software veröffentlicht.
+Erdentage ist kostenlos und als freie Software unter der Apache-Lizenz 2.0 veröffentlicht.
 
 Ein Familienprojekt aus Magdeburg, Deutschland.

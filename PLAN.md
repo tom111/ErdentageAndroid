@@ -37,7 +37,7 @@ The live source of truth is:
 - Equivalent Synology path:
   `/Users/tom/SynologyDrive/projects/ErdentageiOS`
 - Audited baseline commit:
-  `95aa5b595ec8cad1ed8c7ebcf8c039e7a3588eae`
+  `4f3ddc22f0b49d14ecf56d7af382ece0a3ca5f99`
 - Baseline state: `main`, clean, iOS 1.3 build 16
 
 The iOS app continues to change. Each Android parity task must inspect the
@@ -263,10 +263,11 @@ framework preemptively.
 
 ## F-Droid and signing plan
 
-The audited iOS repository has no `LICENSE` file. The owner chose
-`GPL-3.0-or-later` for the Android app and publishes personally as Thomas
-Kahle. The Android repository includes the canonical license text and a
-`Copyright (C) 2026 Thomas Kahle` notice. Official F-Droid inclusion requires
+Both Erdentage repositories are licensed `Apache-2.0`, published personally
+by Thomas Kahle. The Android app started under `GPL-3.0-or-later` and was
+relicensed on 2026-11-02, before its first publication, when the iOS
+repository received the same license. The Android repository includes the
+canonical license text and a `Copyright 2026 Thomas Kahle` notice. Official F-Droid inclusion requires
 a FLOSS license for the application, dependencies, and distributable assets.
 
 Distribution rules:
@@ -395,7 +396,8 @@ The owner has approved:
 1. Kotlin and Jetpack Compose.
 2. Minimum API 26 and compile/target API 36.
 3. Phone + tablet + widgets for phase one, with Wear OS deferred.
-4. `GPL-3.0-or-later`, held personally by Thomas Kahle.
+4. `Apache-2.0` (originally `GPL-3.0-or-later`, relicensed 2026-11-02), held
+   personally by Thomas Kahle.
 5. Permanent application ID `de.eigenraum.erdentage`.
 6. Permission-free calendar handoff with an action record but no unreliable
    “saved” claim.

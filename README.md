@@ -32,5 +32,5 @@ Publication preparation and remaining external gates are documented in
 
 ## License
 
-Copyright (C) 2026 Thomas Kahle. Licensed under
-[`GPL-3.0-or-later`](LICENSE).
+Copyright 2026 Thomas Kahle. Licensed under the
+[Apache License 2.0](LICENSE).
