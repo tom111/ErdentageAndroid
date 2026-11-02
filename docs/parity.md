@@ -6,7 +6,8 @@ deviations here.
 
 ## Current reference
 
-- iOS repository: `/Users/tom/SynologyDrive/projects/ErdentageiOS`
+- iOS repository: https://github.com/tom111/ErdentageiOS, cloned as
+  `../ErdentageiOS`
 - Current iOS HEAD inspected: `df8d951d7bb0e5da488e74be50fac17a55ea9e57`
 - Branch/worktree: `main`, clean
 - Approved shipped-1.3 parity baseline:

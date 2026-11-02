@@ -29,12 +29,53 @@ potentially other free-software Android stores). The app must therefore be
 useful without Google Play Services and buildable entirely from published
 source.
 
+## Parity with the iOS app
+
+| App | Repository | Maintainer |
+| --- | --- | --- |
+| iOS, iPadOS, watchOS | https://github.com/tom111/ErdentageiOS | Thomas Kahle |
+| Android | https://github.com/tom111/ErdentageAndroid | Moritz Firsching |
+
+Clone both repositories side by side in the same parent folder, so that
+`../ErdentageiOS` resolves from here and `../ErdentageAndroid` from there.
+
+Both apps are meant to stay at feature parity. The rules, identical in both
+repositories' `AGENTS.md`:
+
+- **One product, two apps.** A feature is defined by whichever app ships it
+  first; the other app ports it. Shipped behavior is the reference. A feature
+  still in development on one side is not final and is not ported yet.
+- **Every release with new or changed behavior opens a porting issue** in the
+  other repository, labelled `parity`, titled like „Port iOS 1.4: Zusammen“.
+  It links the release tag and the commits or docs that specify the behavior.
+  A release that only adapts to its own platform (an OS fix, a new device)
+  needs no issue.
+- **Version numbers match the feature level.** The same `x.y` on both
+  platforms means the same features. Patch numbers (1.4.1, 1.4.2) are free for
+  platform-only releases.
+- **Changing shared behavior differently needs agreement first.** That covers
+  the milestone math, the Wechselwirkungen, the German wording and the stored
+  data. Discuss it in an issue in the repository that would deviate.
+- **Cross-repository references:** in issues, pull requests and commit
+  messages, write `tom111/ErdentageiOS#12` or `tom111/ErdentageiOS@089cf5a`
+  (and the same with `ErdentageAndroid`); GitHub links both directions. In
+  checked-in files, use full URLs.
+- **Where parity is recorded:** Android keeps the per-area ledger in
+  `docs/parity.md`. The shared test fixtures live in
+  `ErdentageAndroid/shared-fixtures/` and are generated from the app that
+  defined the behavior.
+
+For this repository that means: work through the open `parity` issues, and
+when an Android release ships behavior iOS does not have yet, open the porting
+issue in `tom111/ErdentageiOS`. Everything iOS shipped up to 1.4.2 is ported
+under the phases in `PLAN.md`.
+
 ## Live source of truth
 
-The reference implementation is the adjacent iOS repository:
+For everything iOS has shipped, the reference implementation is the iOS
+repository, https://github.com/tom111/ErdentageiOS, cloned next to this one as
+`../ErdentageiOS`:
 
-- Requested path: `/Users/tom/projectsS/ErdentageiOS`
-- Synology path: `/Users/tom/SynologyDrive/projects/ErdentageiOS`
 - Initial audit baseline: commit
   `4f3ddc22f0b49d14ecf56d7af382ece0a3ca5f99`, branch `main`, clean worktree,
   iOS version 1.3 build 16, inspected on 2026-07-22
@@ -44,7 +85,7 @@ context, not a permanently frozen specification. At the start of every parity
 task:
 
 1. Read this file and the iOS repository's `AGENTS.md` completely.
-2. Record `git -C /Users/tom/projectsS/ErdentageiOS rev-parse HEAD` in the
+2. Record `git -C ../ErdentageiOS rev-parse HEAD` in the
    task notes or parity ledger.
 3. Inspect the current Swift source and tests for the feature being ported.
 4. Never modify the iOS repository unless the user explicitly requests it.

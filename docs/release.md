@@ -21,9 +21,9 @@ owner-approved public release.
 
 ## Required before the first public artifact
 
-1. Create the public source repository under the owner's GitHub account
-   `tom111`, enable its issue tracker, and publish maintainer/support contact and
-   the privacy policy at stable HTTPS URLs.
+1. Make the source repository public. It exists since 2026-11-02 as the
+   private `tom111/ErdentageAndroid`. Enable its issue tracker, and publish
+   maintainer/support contact and the privacy policy at stable HTTPS URLs.
 2. Review the publisher postal/contact details in the privacy policy.
 3. Choose the public `versionName`/`versionCode`. The project deliberately
    remains `0.1.0` / `1` until that release decision.
@@ -205,10 +205,9 @@ Start here after 2026-08-22:
 1. Confirm that both the encrypted `.p12` and public `.pem` are attached to the
    owner's password-manager item; arrange an independent offline backup later,
    before the first public artifact.
-2. Confirm the GitHub repository name under `tom111`, create the public
-   repository with Issues enabled, and add its source/issue URLs to metadata.
-   Repository creation and pushing are external actions requiring owner
-   confirmation.
+2. Make `tom111/ErdentageAndroid` (private since 2026-11-02) public with
+   Issues enabled, and add its source/issue URLs to metadata. Changing the
+   visibility is an external action requiring owner confirmation.
 3. Choose the first public version (`versionName` and monotonically increasing
    `versionCode`).
 4. Add owner-approved Fastlane images, configure local signing without tracked

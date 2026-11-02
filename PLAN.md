@@ -35,9 +35,8 @@ without Google Play Services.
 
 The live source of truth is:
 
-- `/Users/tom/projectsS/ErdentageiOS`
-- Equivalent Synology path:
-  `/Users/tom/SynologyDrive/projects/ErdentageiOS`
+- https://github.com/tom111/ErdentageiOS, cloned next to this repository as
+  `../ErdentageiOS`
 - Audited baseline commit:
   `4f3ddc22f0b49d14ecf56d7af382ece0a3ca5f99`
 - Baseline state: `main`, clean, iOS 1.3 build 16
@@ -430,10 +429,9 @@ accidents of implementation; port them as stated.
 ### 1. Prerequisites
 
 - Make sure a JDK 17 and the Android SDK are available on the machine doing the
-  work. On 2026-11-02 the second machine (`masamune`) had neither, so Gradle
-  could not run there; the documented setup is on `iMacM3-gelb`.
-- Commit the pending working-tree changes (the `Person` companion fix and the
-  2026-08-22/23 ledger entries).
+  work; `docs/emulators.md` lists the emulator matrix.
+- Done 2026-11-02: the pending working-tree changes (the `Person` companion fix
+  and the 2026-08-22/23 ledger entries) are committed as `a94a230`.
 - Settle the open owner decision from `docs/code-review-2026-08-20.md` on
   newer-schema and malformed records before step 2 changes the schema.
 
@@ -569,8 +567,9 @@ Verification:
    Android release. Android has no users yet, and launching at the 1.3 level
    would mean redoing screenshots, store text and the privacy policy within
    weeks. Releasing first only pays off if an early F-Droid listing matters.
-2. **Version name.** Whether the first Android release is called 1.4 to match
-   the iOS feature level.
+2. **Version name.** Decided 2026-11-02: version numbers match the feature
+   level on both platforms (see *Parity with the iOS app* in `AGENTS.md`). The
+   first Android release is therefore 1.3 or 1.4, depending on decision 1.
 3. **Fixture cross-check.** Whether the iOS repository gets a small test that
    also checks `shared-fixtures/together-math.json`, so neither implementation
    can drift without the other noticing.
