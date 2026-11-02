@@ -61,8 +61,8 @@ data class Person(
         }
     }
 
-    private companion object {
-        fun isCanonicalUuid(value: String): Boolean = runCatching {
+    companion object {
+        private fun isCanonicalUuid(value: String): Boolean = runCatching {
             UUID.fromString(value).toString().equals(value, ignoreCase = true)
         }.getOrDefault(false)
     }

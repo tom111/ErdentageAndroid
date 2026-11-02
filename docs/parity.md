@@ -186,6 +186,104 @@ deviations here.
   newer-schema/malformed-record data-loss policy remains an explicit owner
   decision before its serializer behavior changes.
 
+### 2026-08-22 — Android 17 gate and a blocking serialization defect
+
+Added `Erdentage_API_37` and `Erdentage_API_37_Tablet` (Android 17 / API 37.1,
+Google APIs, 16 KB pages, ARM64), each mirroring the device profile, RAM, heap,
+and resolution of its API 36 counterpart so that only the operating system
+differs. See `docs/emulators.md`.
+
+Running the suite against them surfaced a defect that predates them and is not
+Android-version specific. At HEAD `d2e87bf`, five of twelve instrumentation
+tests fail on Android 16 and Android 17 alike, and on the phone profile the app
+process crashes and aborts the run outright:
+
+    java.lang.IllegalAccessError: Field
+    'de.eigenraum.erdentage.domain.Person.Companion' is inaccessible to class
+    'de.eigenraum.erdentage.ui.PersonEditorStateCodec'
+        at PersonEditorStateCodec.encode(PersonEditorStateCodec.kt:29)
+
+Cause: `Person` declares a `private companion object` for `isCanonicalUuid`.
+The `@Serializable` plugin places the generated `serializer()` into that same
+private companion. `PersonEditorStateCodec` then calls the reified
+`ErdentageJson.encodeToString(person)` and `decodeFromString<Person>(value)`,
+which inline a direct reference to `Person.Companion` at the call site in
+another class. The Kotlin compiler accepts this; ART rejects it at runtime.
+
+`PersonEditorStateCodec.kt` was introduced by `d19514e` on 2026-08-20 at 21:52.
+The build outputs present in the working tree were produced at 20:31 the same
+evening, before that commit, so the previously recorded green runs were made
+against an APK that did not yet contain the file. The suite had never been run
+against `d19514e`.
+
+Impact is not confined to tests: the affected path is the person editor's
+`rememberSaveable` saver, so any real save or restore of an in-progress editor
+hits it.
+
+Candidate fix, not yet applied: drop `private` from `Person`'s companion and
+keep `isCanonicalUuid` private inside it, which preserves the encapsulation the
+private companion was meant to provide while making the generated `serializer()`
+reachable. Alternatives are passing `Person.serializer()` explicitly at every
+call site, or moving the helper out of the companion entirely.
+
+Re-run the full suite on `Erdentage_API_37`, `Erdentage_API_37_Tablet`, and
+`Erdentage_API_36` after the fix. Until then no statement about Android 17
+compatibility is supported by evidence — the observation so far is only that no
+failure unique to Android 17 has appeared.
+
+The fix was applied and measured on 2026-08-23; see the next entry.
+
+### 2026-08-23 — serialization fix applied, Android 17 measured
+
+`Person`'s companion is no longer private, and `isCanonicalUuid` is private
+inside it. The helper has exactly one caller, the `init` block of `Person`
+itself, and a private member of a companion stays reachable from the containing
+class, so the encapsulation the private companion provided is unchanged while
+the generated `serializer()` becomes reachable from `PersonEditorStateCodec`.
+`./gradlew test lint assembleDebug` passes.
+
+Full suite after the fix, one device at a time:
+
+| Device | Android | Result |
+| --- | --- | --- |
+| `Erdentage_API_36` | 16 | 12 of 12 |
+| `Erdentage_API_36_Tablet` | 16 | 12 of 12 |
+| `Erdentage_API_37` | 17 | 12 of 12 |
+| `Erdentage_API_37_Tablet` | 17 | 11 of 12 |
+
+The `IllegalAccessError` is gone everywhere. One residual remains, and it is the
+first observation in this project that separates Android 17 from Android 16:
+`editorDraftAndManagerReturnSurviveStateRestoration` fails intermittently and
+only on the Android 17 large-screen profile.
+
+    java.lang.AssertionError: Failed to perform text input.
+    Failed to assert the following: (is enabled)
+    The node is no longer in the tree, last known semantics:
+    Node #1366 ... Tag: 'days_off_earth_input'
+
+Post-fix tally: Android 17 tablet failed 3 of 6 runs; Android 16 tablet failed 0
+of 6; the Android 17 phone passed. The same test was also the single failure on
+the Android 17 tablet in the first pre-fix run of 2026-08-22, while the Android
+17 phone passed that run, so the asymmetry predates the fix and is not an
+artifact of it.
+
+Reading, explicitly not proven: the composable is removed from the tree while
+the test is still interacting with it, which is what an activity recreation
+arriving at a different moment would look like. Android 17 makes resizability
+mandatory on large screens, so a configuration change the app did not previously
+receive on a tablet is the obvious candidate. The sample is small and the effect
+is intermittent, so this is a lead, not a diagnosis.
+
+Open, in order: raise the repetition count until the failure rate is stable;
+then determine whether the test races a configuration change or the app genuinely
+loses editor state. No user-visible defect has been demonstrated — a Compose test
+losing a node is not by itself evidence that a person's unsaved edits are lost on
+a real tablet.
+
+Verdict: Android 17 is clean on the phone profile. The large-screen profile has
+one open intermittent question, which is a release note for the tablet claim in
+the ledger, not a blocker for the phone.
+
 ## Scope decisions
 
 The current committed iOS source contains a second trailing `TogetherPageView`
