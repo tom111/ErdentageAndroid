@@ -10,18 +10,20 @@ keine Analytics, keine Werbung, kein Konto und keinen eigenen Cloud-Dienst.
 
 ## Verantwortliche Stelle
 
-Verantwortlich im Sinne von Art. 4 Abs. 7 DSGVO:
+Erdentage für Android wird von Moritz Firsching bei Google Play und F-Droid
+veröffentlicht. Verantwortlich im Sinne von Art. 4 Abs. 7 DSGVO ist daher:
 
-**Thomas Kahle**<br>
-Otto-von-Guericke-Universität Magdeburg<br>
-Fakultät für Mathematik<br>
-Universitätsplatz 2<br>
-39106 Magdeburg<br>
+**Moritz Firsching**<br>
+[Postanschrift einsetzen]<br>
 Deutschland
 
-E-Mail: thomas.kahle@jpberlin.de<br>
-Web: https://thomas-kahle.de<br>
-Mastodon: https://mathe.social/@tomkalei
+E-Mail: [E-Mail-Adresse einsetzen]
+
+Die App ist ein Projekt von Thomas Kahle (https://thomas-kahle.de), der auch
+die iOS-Version veröffentlicht. Feedback zur App erreicht ihn per E-Mail
+(thomas.kahle@jpberlin.de) oder Mastodon (https://mathe.social/@tomkalei);
+Fragen zum Datenschutz richte bitte an die oben genannte verantwortliche
+Stelle.
 
 ## Lokal verarbeitete Daten
 

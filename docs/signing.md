@@ -8,13 +8,25 @@ Play artifacts, so users can move between stores in place.
 
 ## Current state (2026-11-03)
 
-The Android maintainer (Moritz Firsching) creates and holds the signing key
-for `com.firsching.erdentage`. Record its public identity here once it
-exists: alias, key type and size, validity, subject, and the certificate
-SHA-256 fingerprint (`keytool -list -v`), plus the SHA-256 of the encrypted
-keystore file. The private key and its password stay outside Git; keep a
-password-manager copy and an independent offline backup before the first
-public artifact.
+The Android maintainer (Moritz Firsching) created and holds the signing key
+for `com.firsching.erdentage` on 2026-11-03. Public identity:
+
+- Alias: `erdentage`
+- Container: PKCS#12
+- Key: RSA 4096 bit, self-signed certificate SHA384withRSA
+- Subject: `CN=Moritz Firsching, OU=Erdentage, O=Moritz Firsching, C=DE`
+- Validity: 2026-11-03 through 2126-10-10
+- Certificate SHA-256 fingerprint:
+  `E2:93:80:D0:66:E5:DD:64:9B:A0:99:8D:B9:A7:1C:A9:96:CC:8A:98:D5:75:15:7C:21:B8:28:99:67:9D:54:AA`
+- Initial encrypted PKCS#12 SHA-256 checksum:
+  `55bbd90e4058667a41719546a6f15179933b725b1acda361201841fd40f53688`
+
+The private key and its password stay outside Git; keep a password-manager
+copy and an independent offline backup before the first public artifact.
+The first signed build from this identity (`assembleRelease bundleRelease`
+on 2026-11-03, version 0.1.0 (1), v2 and v3 signatures, apksigner from
+build-tools 36.0.0) verified with that certificate; it is a dry run, not a
+release.
 
 The identity Thomas Kahle generated on 2026-08-22 for `de.eigenraum.erdentage`
 (RSA 4096, alias `erdentage-app`, certificate SHA-256

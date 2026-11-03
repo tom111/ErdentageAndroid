@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 2,
+  "people": [
+    {
+      "id": "aaaaaaaa-0000-4000-8000-000000000001",
+      "name": "Anne",
+      "birthYear": 1980,
+      "birthMonth": 11,
+      "birthDay": 8,
+      "birthHour": 0,
+      "birthMinute": 0,
+      "hasTime": false,
+      "daysOffEarth": 0,
+      "addedMilestones": [],
+      "enabledMilestones": [
+        "tausender",
+        "zehntausender",
+        "primzahl",
+        "palindrom",
+        "quadrat",
+        "zweierpotenz",
+        "ziffernfolge",
+        "catalan",
+        "fibonacci"
+      ],
+      "tint": "sand",
+      "mentionsBirthday": true
+    },
+    {
+      "id": "aaaaaaaa-0000-4000-8000-000000000002",
+      "name": "Bernd",
+      "birthYear": 1996,
+      "birthMonth": 6,
+      "birthDay": 2,
+      "birthHour": 0,
+      "birthMinute": 0,
+      "hasTime": false,
+      "daysOffEarth": 0,
+      "addedMilestones": [],
+      "enabledMilestones": [
+        "tausender",
+        "zehntausender",
+        "primzahl",
+        "palindrom",
+        "quadrat",
+        "zweierpotenz",
+        "ziffernfolge",
+        "catalan",
+        "fibonacci"
+      ],
+      "tint": "sky",
+      "mentionsBirthday": true
+    },
+    {
+      "id": "aaaaaaaa-0000-4000-8000-000000000003",
+      "name": "Caro",
+      "birthYear": 1998,
+      "birthMonth": 8,
+      "birthDay": 21,
+      "birthHour": 7,
+      "birthMinute": 42,
+      "hasTime": true,
+      "daysOffEarth": 0,
+      "addedMilestones": [],
+      "enabledMilestones": [
+        "tausender",
+        "zehntausender",
+        "primzahl",
+        "palindrom",
+        "quadrat",
+        "zweierpotenz",
+        "ziffernfolge",
+        "catalan",
+        "fibonacci"
+      ],
+      "tint": "mint",
+      "mentionsBirthday": true
+    },
+    {
+      "id": "aaaaaaaa-0000-4000-8000-000000000004",
+      "name": "Mia",
+      "birthYear": 2021,
+      "birthMonth": 3,
+      "birthDay": 26,
+      "birthHour": 0,
+      "birthMinute": 0,
+      "hasTime": false,
+      "daysOffEarth": 0,
+      "addedMilestones": [],
+      "enabledMilestones": [
+        "tausender",
+        "zehntausender",
+        "primzahl",
+        "palindrom",
+        "quadrat",
+        "zweierpotenz",
+        "ziffernfolge",
+        "catalan",
+        "fibonacci"
+      ],
+      "tint": "rose",
+      "mentionsBirthday": true
+    }
+  ],
+  "currentPersonIndex": 0,
+  "milestoneBackfillVersion": 2,
+  "togetherLimits": {},
+  "togetherAddedEvents": []
+}

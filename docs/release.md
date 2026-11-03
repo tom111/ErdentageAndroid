@@ -37,10 +37,10 @@ owner-approved public release.
    owner's password manager, create a second independent offline backup, and
    configure release signing without placing paths, passwords, or key material
    in Git.
-5. Capture owner-approved phone and tablet listing screenshots and add the
-   selected icon/screenshots below the Fastlane image directory. The automated
-   screenshot harness was waived; store images are a manual owner-review
-   artifact.
+5. Review the listing images under `fastlane/metadata/android/de-DE/images/`
+   (icon, feature graphic, phone and tablet screenshots, captured 2026-11-03
+   as described in `docs/screenshots.md`) and replace any the owner wants
+   changed.
 6. Re-run the full build gate from a clean checkout, sign the release APK with
    the recorded identity, record checksums, and verify reproducibility before
    uploading it to GitHub Releases.
