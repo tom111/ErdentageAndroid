@@ -6,7 +6,8 @@ owner-approved public release.
 
 ## Completed in source
 
-- Permanent application ID `de.eigenraum.erdentage`, Apache-2.0 license,
+- Permanent application ID `ch.firsching.erdentage` (changed from
+  `de.eigenraum.erdentage` on 2026-11-03, unpublished), Apache-2.0 license,
   pinned dependencies, dependency locking, and checksum verification.
 - The same source and feature set build an Android App Bundle for Google Play
   and an APK suitable for later F-Droid work.
@@ -24,17 +25,23 @@ owner-approved public release.
 1. Make the source repository public. It exists since 2026-11-02 as the
    private `tom111/ErdentageAndroid`. Enable its issue tracker, and publish
    maintainer/support contact and the privacy policy at stable HTTPS URLs.
+   Intended home: https://thomas-kahle.de/erdentage/ (the iOS product page);
+   the Android policy from `docs/privacy-policy-de.md` needs its own page
+   there, for example `/erdentage/datenschutz-android/`, because Google Play
+   requires a privacy-policy URL on the listing and the iOS page describes
+   App-Group and Watch specifics that do not apply.
 2. Review the publisher postal/contact details in the privacy policy.
-3. Choose the public `versionName`/`versionCode`. The project deliberately
-   remains `0.1.0` / `1` until that release decision.
+3. The first public release is `1.4.0` / version code `1`, set on
+   2026-11-03 (version numbers follow the iOS feature level, see
+   `AGENTS.md`). Raise the version code with every later upload.
 4. Confirm that the encrypted PKCS#12 file and password are recoverable from the
    owner's password manager, create a second independent offline backup, and
    configure release signing without placing paths, passwords, or key material
    in Git.
-5. Capture owner-approved phone and tablet listing screenshots and add the
-   selected icon/screenshots below the Fastlane image directory. The automated
-   screenshot harness was waived; store images are a manual owner-review
-   artifact.
+5. Review the listing images under `fastlane/metadata/android/de-DE/images/`
+   (icon, feature graphic, phone and tablet screenshots, captured 2026-11-03
+   as described in `docs/screenshots.md`) and replace any the owner wants
+   changed.
 6. Re-run the full build gate from a clean checkout, sign the release APK with
    the recorded identity, record checksums, and verify reproducibility before
    uploading it to GitHub Releases.
@@ -166,11 +173,11 @@ Before submitting to `fdroiddata`:
    Test a clean checkout with the exact JDK, Android SDK, and Gradle invocation
    that the F-Droid build recipe will use.
 5. Fork the public `fdroid/fdroiddata` GitLab repository and add
-   `metadata/de.eigenraum.erdentage.yml`. Pin its build entry to the release tag
+   `metadata/ch.firsching.erdentage.yml`. Pin its build entry to the release tag
    or commit, add source/issue/license/contact fields, and configure update
    detection. Derive the exact YAML from the then-current fdroiddata schema; do
    not copy a generic flavor example into this single-variant project.
-6. Run `fdroid build de.eigenraum.erdentage:<versionCode>` in the supported
+6. Run `fdroid build ch.firsching.erdentage:<versionCode>` in the supported
    F-Droid environment and make the fdroiddata CI build pass. The inclusion
    merge request must also record policy compliance, related request-for-
    packaging issues, and that the upstream author submitted or accepts it.

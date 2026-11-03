@@ -20,11 +20,17 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -89,7 +95,23 @@ class MainActivity : ComponentActivity() {
         setContent {
             ErdentageTheme {
                 val state by viewModel.state.collectAsStateWithLifecycle()
-                if (state == null) {
+                val loadError by viewModel.loadError.collectAsStateWithLifecycle()
+                if (loadError != null) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.background)
+                            .safeDrawingPadding(),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            text = getString(R.string.state_newer_schema),
+                            modifier = Modifier.padding(32.dp),
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+                    }
+                } else if (state == null) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -119,6 +141,21 @@ class MainActivity : ComponentActivity() {
                                 ).show()
                             }
                         },
+                        onTogetherCalendarHandoff = { action ->
+                            if (launchCalendarHandoff(this@MainActivity, action.event)) {
+                                viewModel.recordTogetherCalendarHandoff(
+                                    key = action.addedKey,
+                                    visibleKeys = action.visibleKeys,
+                                )
+                            } else {
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    R.string.calendar_app_missing,
+                                    Toast.LENGTH_LONG,
+                                ).show()
+                            }
+                        },
+                        onSetTogetherLimit = viewModel::setTogetherLimit,
                         contactDraft = contactDraft,
                         onPickContact = ::launchContactPicker,
                         onContactDraftConsumed = { contactDraft = null },

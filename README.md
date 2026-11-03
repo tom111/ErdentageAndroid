@@ -6,7 +6,9 @@ preserving behavior and visual identity from the iOS source.
 
 The phase-one Android feature set is implemented: multi-person day counts,
 milestones, the custom “Demnächst” overview, settings, contact import, sharing,
-calendar handoff, and configurable responsive home-screen widgets. See
+calendar handoff, and configurable responsive home-screen widgets. Phase two
+adds the iOS 1.4 features: the “Zusammen” page with the Wechselwirkungen
+between people and the Geburtstags-Zufälle. See
 [`PLAN.md`](PLAN.md) for the roadmap,
 [`docs/parity.md`](docs/parity.md) for parity status, and
 [`docs/emulators.md`](docs/emulators.md) for the local Android test matrix.
@@ -15,7 +17,9 @@ calendar handoff, and configurable responsive home-screen widgets. See
 
 Prerequisites:
 
-- JDK 17
+- JDK 17 (the build pins a Java 17 toolchain; on a machine with only a newer
+  JDK, point Gradle at a JDK 17 through `org.gradle.java.installations.paths`
+  in `~/.gradle/gradle.properties`)
 - Android SDK Platform 36
 - Android SDK Build Tools 36.0.0
 

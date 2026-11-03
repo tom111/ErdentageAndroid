@@ -22,3 +22,11 @@
 The small group, minus, widget-preview, and launcher vectors in `app/src/main/res`
 were created for this Android application by Thomas Kahle/OpenAI Codex and are
 licensed Apache-2.0 with the application.
+
+## Store listing graphics
+
+`fastlane/metadata/android/de-DE/images/icon.png` and `featureGraphic.png`
+were generated on 2026-11-03 from the launcher vector above with ImageMagick
+and Pillow; the wordmark uses the Inter typeface (SIL Open Font License),
+which is not redistributed. Screenshots and their reproduction are described
+in `docs/screenshots.md`. Same Apache-2.0 license as the application.

@@ -6,7 +6,6 @@ package de.eigenraum.erdentage.ui.settings
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
-import android.os.Build
 import android.text.format.DateFormat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -33,7 +32,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -55,7 +57,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -98,6 +99,7 @@ fun PersonSettingsDialog(
     person: Person,
     onDismiss: () -> Unit,
     onSave: (Person) -> Unit,
+    onDelete: (() -> Unit)? = null,
 ) {
     var draft by rememberSaveable(
         person.id,
@@ -105,7 +107,31 @@ fun PersonSettingsDialog(
     ) {
         mutableStateOf(person)
     }
+    var confirmDelete by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
+
+    if (confirmDelete && onDelete != null) {
+        AlertDialog(
+            onDismissRequest = { confirmDelete = false },
+            title = { Text(stringResource(R.string.delete_person_title, person.displayName)) },
+            text = { Text(stringResource(R.string.delete_person_message)) },
+            dismissButton = {
+                TextButton(onClick = { confirmDelete = false }) {
+                    Text(stringResource(R.string.cancel))
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        confirmDelete = false
+                        onDelete()
+                    },
+                ) {
+                    Text(stringResource(R.string.delete))
+                }
+            },
+        )
+    }
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -224,6 +250,21 @@ fun PersonSettingsDialog(
                             },
                         )
                     }
+                        item {
+                        ListItem(
+                            headlineContent = {
+                                Text(stringResource(R.string.settings_mentions_birthday))
+                            },
+                            trailingContent = {
+                                Switch(
+                                    checked = draft.mentionsBirthday,
+                                    onCheckedChange = { enabled ->
+                                        draft = draft.copy(mentionsBirthday = enabled)
+                                    },
+                                )
+                            },
+                        )
+                    }
                         if (draft.hasTime) {
                             item {
                             SettingsValueRow(
@@ -308,8 +349,24 @@ fun PersonSettingsDialog(
                     }
                         item { SettingsSupportingText(R.string.settings_milestones_footer) }
 
-                        item { SettingsSectionTitle(R.string.settings_about_section) }
-                        item { AboutText() }
+                        // „Person löschen“ is in the editor as well as in the
+                        // people list: the two presentations look identical,
+                        // and a delete behind only one of them read as a bug.
+                        if (onDelete != null) {
+                            item {
+                                TextButton(
+                                    onClick = { confirmDelete = true },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 24.dp),
+                                    colors = ButtonDefaults.textButtonColors(
+                                        contentColor = MaterialTheme.colorScheme.error,
+                                    ),
+                                ) {
+                                    Text(stringResource(R.string.delete_person))
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -516,65 +573,6 @@ private fun MilestoneToggle(
 }
 
 @Composable
-private fun AboutText() {
-    val context = LocalContext.current
-    val uriHandler = LocalUriHandler.current
-    val packageInfo = remember(context) {
-        context.packageManager.getPackageInfo(context.packageName, 0)
-    }
-    val versionCode = if (Build.VERSION.SDK_INT >= 28) {
-        packageInfo.longVersionCode
-    } else {
-        @Suppress("DEPRECATION")
-        packageInfo.versionCode.toLong()
-    }
-    val linkColor = MaterialTheme.colorScheme.primary
-    val feedback = buildAnnotatedString {
-        append(stringResource(R.string.settings_feedback_prefix))
-        append(' ')
-        withLink(
-            LinkAnnotation.Url(
-                url = FeedbackMailUri,
-                linkInteractionListener = { uriHandler.openUri(FeedbackMailUri) },
-            ),
-        ) {
-            pushStyle(SpanStyle(color = linkColor))
-            append(stringResource(R.string.settings_feedback_mail))
-            pop()
-        }
-        append(' ')
-        append(stringResource(R.string.settings_feedback_or))
-        append(' ')
-        withLink(
-            LinkAnnotation.Url(
-                url = MastodonUri,
-                linkInteractionListener = { uriHandler.openUri(MastodonUri) },
-            ),
-        ) {
-            pushStyle(SpanStyle(color = linkColor))
-            append(stringResource(R.string.settings_feedback_mastodon))
-            pop()
-        }
-    }
-    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        Text(
-            text = stringResource(
-                R.string.settings_about,
-                packageInfo.versionName ?: "?",
-                versionCode,
-            ),
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.bodySmall,
-        )
-        Text(
-            text = feedback,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            style = MaterialTheme.typography.bodySmall,
-        )
-    }
-}
-
-@Composable
 private fun milestoneExplanation(kind: MilestoneKind): androidx.compose.ui.text.AnnotatedString {
     val source = stringResource(kind.explanationResource)
     val markerAndUrl = when (kind) {
@@ -666,6 +664,3 @@ private val SettingsTimeFormatter = DateTimeFormatter
     .ofLocalizedTime(FormatStyle.SHORT)
     .withLocale(Locale.GERMANY)
 
-private const val FeedbackMailUri =
-    "mailto:thomas.kahle@jpberlin.de?subject=Feedback%20Erdentage"
-private const val MastodonUri = "https://machteburch.social/@tomkalei"

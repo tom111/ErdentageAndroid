@@ -44,7 +44,9 @@ class PersonTest {
     }
 
     @Test
-    fun nonexistentDstWallTimeIsRejected() {
+    fun birthTimeInsideADstGapKeepsThePersonAndStepsOverTheHole() {
+        // Berlin skipped 02:00–03:00 on 2024-03-31. The birthday survives;
+        // the hour moves forward, which is what the wall clock did that night.
         val skippedTime = person(
             birthYear = 2024,
             birthMonth = 3,
@@ -54,7 +56,14 @@ class PersonTest {
             hasTime = true,
         )
 
-        assertNull(skippedTime.birthDateTime(berlin))
+        val birth = skippedTime.birthDateTime(berlin)
+        assertEquals(31, birth?.dayOfMonth)
+        assertEquals(3, birth?.hour)
+        assertEquals(30, birth?.minute)
+        // A day either side is untouched.
+        assertEquals(2, person(birthYear = 2024, birthMonth = 3, birthDay = 30, birthHour = 2, birthMinute = 30, hasTime = true).birthDateTime(berlin)?.hour)
+        // The corruption guard is untouched: a day that does not exist stays rejected.
+        assertNull(person(birthYear = 2024, birthMonth = 2, birthDay = 31, birthHour = 12, hasTime = true).birthDateTime(berlin))
     }
 
     @Test
@@ -132,7 +141,7 @@ class PersonTest {
         val decoded = ErdentageJson.decodeFromString<PersistedAppState>(encoded)
 
         assertEquals(original, decoded)
-        assertEquals(1, decoded.schemaVersion)
+        assertEquals(PersistedAppState.CURRENT_SCHEMA_VERSION, decoded.schemaVersion)
         assertEquals("11111111-2222-3333-4444-555555555555", decoded.people.single().id)
     }
 
@@ -146,8 +155,24 @@ class PersonTest {
 
         assertEquals(ErdentageLimits.MAX_PEOPLE, state.people.size)
         assertEquals(state.people.size, state.currentPersonIndex)
+        assertEquals(21, state.copy(currentPersonIndex = 21).normalized().currentPersonIndex)
         assertEquals(19, state.copy(currentPersonIndex = 999).normalized().currentPersonIndex)
         assertEquals(0, PersistedAppState(currentPersonIndex = 9).normalized().currentPersonIndex)
+    }
+
+    @Test
+    fun personBlobWithoutMentionsBirthdayDecodesWithTheMentionOn() {
+        val raw = """
+            {"id":"11111111-2222-3333-4444-555555555555","name":"Oskar",
+             "birthYear":2018,"birthMonth":11,"birthDay":29,
+             "birthHour":0,"birthMinute":0,"hasTime":false,"daysOffEarth":0,
+             "addedMilestones":[],"enabledMilestones":["tausender"],"tint":null}
+        """.trimIndent()
+
+        val decoded = ErdentageJson.decodeFromString<Person>(raw)
+
+        assertTrue(decoded.mentionsBirthday)
+        assertFalse(decoded.copy(mentionsBirthday = false).normalizedForStorage().mentionsBirthday)
     }
 
     @Test

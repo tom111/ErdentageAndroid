@@ -2,6 +2,10 @@ Wie viele Tage hast du schon auf der Erde erlebt? Erdentage zählt mit.
 
 Trag dein Geburtsdatum ein, optional auch die Uhrzeit, und sieh deine aktuelle Zahl an Erdentagen. Mehrere Personen lassen sich mit eigenen Farben und Einstellungen verwalten. Die Seite „Demnächst“ führt die nächsten Meilensteine der ganzen Familie chronologisch zusammen.
 
+ZUSAMMEN
+
+Ab zwei Personen zeigt die Seite „Zusammen“, was zwischen ihnen passiert: der Tag, an dem jemand genau doppelt so viele Erdentage hat wie ein anderer; der Tag, an dem zwei oder drei Personen zusammen so alt sind wie eine weitere; und die Tage, an denen eine Gruppe zusammen auf 100 Jahre kommt – 36.525 Tage. Wie viele Zeilen jede Kategorie zeigt, stellst du selbst ein.
+
 MEILENSTEINE
 
 Entdecke runde Zahlen, Primzahlen und Zwillingsprimzahlen, Palindrome, Quadratzahlen, Zweierpotenzen, Ziffernfolgen, Catalan-Zahlen und Fibonacci-Zahlen. Welche Zahlenarten angezeigt werden, entscheidest du für jede Person selbst.

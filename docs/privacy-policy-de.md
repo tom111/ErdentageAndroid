@@ -1,12 +1,12 @@
 # Datenschutzerklärung - Erdentage für Android
 
-**Stand: 16. August 2026**
+<!-- Veröffentlicht unter https://thomas-kahle.de/erdentage/datenschutz-android/ ; beide Fassungen gleich halten. -->
+
+**Stand: 3. November 2026** (ab Version 1.4)
 
 ## Auf einen Blick
 
-Erdentage erhebt keine personenbezogenen Daten und sendet nichts an eigene oder
-fremde Server. Deine Eingaben bleiben lokal in der App. Es gibt kein Tracking,
-keine Analytics, keine Werbung, kein Konto und keinen eigenen Cloud-Dienst.
+Erdentage erhebt keine personenbezogenen Daten und sendet nichts an Server. Alles, was du in die App eingibst, bleibt auf deinem Gerät — es sei denn, du hast das Android-Backup aktiviert (siehe unten). Kein Tracking, keine Analytics, keine Werbung, keine Konten, kein eigener Cloud-Dienst.
 
 ## Verantwortliche Stelle
 
@@ -20,75 +20,92 @@ Universitätsplatz 2<br>
 Deutschland
 
 E-Mail: thomas.kahle@jpberlin.de<br>
-Web: https://thomas-kahle.de<br>
-Mastodon: https://machteburch.social/@tomkalei
+Web: <https://thomas-kahle.de><br>
+Mastodon: <https://mathe.social/@tomkalei>
 
-## Lokal verarbeitete Daten
+Die Android-Version wird von Moritz Firsching bei Google Play und F-Droid veröffentlicht; für die Datenverarbeitung in der App gilt diese Erklärung unverändert.
 
-Du kannst freiwillig Daten für bis zu 20 Personen eingeben: Name oder
-Bezeichnung, Geburtsdatum, optional Geburtsuhrzeit, Tage außerhalb der Erde,
-Farbe, aktive Meilensteinarten und eine lokale Historie der an eine Kalender-App
-übergebenen Meilensteine. Die App speichert außerdem die zuletzt geöffnete Seite
-und die Konfiguration ihrer Startbildschirm-Widgets.
+## Welche Daten werden verarbeitet?
 
-Diese Angaben werden ausschließlich für Tageszähler, Meilensteine, Übersicht
-und Widgets verarbeitet. Wenn du Daten anderer Personen eingibst, tu dies bitte
-nur mit deren Einverständnis. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO
-(Bereitstellung der von dir angeforderten Funktion).
+Du gibst in der App freiwillig folgende Daten ein, ggfs. für bis zu 20 Personen (z.B. Familienmitglieder), die du in der App anlegst:
 
-## Android-Backup und Geräteübertragung
+- **Geburtsdatum** (Jahr, Monat, Tag) — pro Person,
+- _optional_ die **Geburtsuhrzeit** (Stunde, Minute) — pro Person,
+- _optional_ der **Name oder die Bezeichnung** der Person, frei vergeben,
+- _optional_ die Anzahl der **Tage außerhalb der Erde** ("Astronauten-Modus") — pro Person,
+- _optional_ eine Auswahl, welche **Meilenstein-Arten** angezeigt werden (z.B. Primzahlen, Catalan-Zahlen) — pro Person,
+- _optional_ eine **Hintergrundfarbe** aus einer festen Palette — pro Person,
+- _optional_ die Einstellung, ob der **Geburtstag** einer Person genannt werden darf, wenn ein Meilenstein oder ein gemeinsamer Tag auf dieses Datum fällt — pro Person,
+- _optional_ eine interne Liste der Meilensteine, die du **an eine Kalender-App übergeben** hast — pro Person,
+- _optional_ eine Auswahl, wie viele **Wechselwirkungen** je Kategorie auf der Seite "Zusammen" erscheinen, sowie die interne Liste der von dort **an eine Kalender-App übergebenen gemeinsamen Termine** — diese beiden Angaben gelten für alle angelegten Personen gemeinsam, weil eine Wechselwirkung immer mehrere Personen betrifft.
 
-Wenn Android-Backup oder Geräteübertragung auf deinem Gerät aktiviert ist, darf
-Android die lokal gespeicherten Personendaten über den von dir gewählten
-System-Backup-Anbieter sichern und auf einem eigenen Gerät wiederherstellen.
-Erdentage betreibt dafür keinen Dienst und erhält keinen Zugriff auf die
-Sicherung. Widget-Instanzkennungen werden nicht gesichert, weil sie nur auf dem
-jeweiligen Startbildschirm gültig sind. Ob und wie lange eine Sicherung erhalten
-bleibt, richtet sich nach den Einstellungen und Bedingungen deines
-Backup-Anbieters.
+Außerdem merkt sich die App die zuletzt geöffnete Seite und die Einstellungen deiner **Startbildschirm-Widgets** (z.B. welche Person ein Widget zeigt).
 
-## Kontaktimport
+Diese Daten werden ausschließlich lokal auf deinem Gerät gespeichert. Sie werden nicht an Server gesendet und nicht an Dritte weitergegeben. Die einzige Ausnahme ist das Android-Backup, falls du es aktiviert hast (siehe unten).
 
-„Aus Kontakten…“ öffnet die Android-Systemauswahl. Erdentage fordert keine
-allgemeine Kontakteberechtigung an und kann das Adressbuch nicht durchsuchen.
-Android gewährt nur vorübergehend Zugriff auf den einen ausgewählten Kontakt;
-daraus liest die App einen verwendbaren Namen und, soweit vorhanden, den
-Geburtstag. Fehlt ein vollständiges Datum, fragt die App danach. Bei Abbruch
-wird keine Person angelegt.
+Wenn du Personen anlegst, gibst du gegebenenfalls auch Daten Dritter ein (z.B. das Geburtsdatum eines Familienmitglieds). Bitte tu das nur mit deren Einverständnis. Die App verarbeitet diese Daten ausschließlich lokal auf deinem Gerät und gibt sie nicht weiter.
+
+## Zweck und Rechtsgrundlage
+
+Die Verarbeitung dient ausschließlich der Anzeige des Tageszählers, der Meilensteine, der Übersicht "Demnächst", der Wechselwirkungen zwischen den von dir angelegten Personen auf der Seite "Zusammen" und der zugehörigen Widgets. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Erbringung der angeforderten Funktion).
 
 ## Kalender
 
-„Zum Kalender hinzufügen“ übergibt Titel und Zeitpunkt des vorgeschlagenen
-Meilensteins mit einer Android-Systemaktion an eine installierte Kalender-App.
-Erdentage besitzt keine Lese- oder Schreibberechtigung für deinen Kalender und
-kann nicht feststellen, ob du den Termin dort speicherst. Lokal wird nur
-vermerkt, dass diese Übergabe gestartet wurde.
+Wenn du in der App auf "Zum Kalender hinzufügen" tippst, übergibt Erdentage Titel und Datum des Meilensteins oder des gemeinsamen Termins von der Seite "Zusammen" an eine **installierte Kalender-App**. Erdentage
+
+- **fragt keine** Kalender-Berechtigung an,
+- **liest keine** vorhandenen Termine und **schreibt selbst keine** — ob du den Termin speicherst, entscheidest du in der Kalender-App,
+- vermerkt lokal nur, **dass** die Übergabe gestartet wurde, weil Android der App nicht mitteilt, ob der Termin tatsächlich gespeichert wurde.
+
+## Kontakte-Import
+
+Beim Anlegen einer Person kannst du über "Aus Kontakten…" einen Eintrag aus deinem Adressbuch auswählen, um Name und Geburtsdatum zu übernehmen. Dabei
+
+- öffnet Android die **systemeigene Kontaktauswahl**; die App selbst erhält **keinen Zugriff** auf dein Adressbuch und liest es nicht aus,
+- gewährt Android vorübergehend Zugriff auf den **einen Kontakt, den du antippst**; die App liest daraus nur Name und Geburtsdatum,
+- wird **keine Kontakte-Berechtigung** abgefragt, weil die App das Adressbuch nicht selbst durchsucht.
+
+Fehlt im Kontakt ein vollständiges Geburtsdatum, fragt die App dich danach. Brichst du ab, wird keine Person angelegt. Die übernommenen Angaben werden anschließend wie alle anderen Personendaten ausschließlich lokal auf deinem Gerät gespeichert. Bitte importiere die Daten anderer Personen nur mit deren Einverständnis.
 
 ## Teilen
 
-Eine Teilen-Aktion öffnet das Android-Teilen-Menü mit einem vorbereiteten Text.
-Erst du wählst, ob und an welche App er weitergegeben wird. Die weitere
-Verarbeitung richtet sich nach der gewählten App. Erdentage selbst sendet den
-Text an keinen Server.
+Wenn du in der App auf "Teilen…" tippst, öffnet Android das **systemeigene Teilen-Menü**. Erst dann
 
-## Weitergabe, Speicherdauer und Löschung
+- entscheidest **du**, ob und an welche App du den vorbereiteten Text weitergibst (z.B. Nachrichten, Mail),
+- enthält der Text ausschließlich die von dir gewählte Angabe (Tageszahl, Datum, Art; bei einer Wechselwirkung oder einem Geburtstags-Zufall zusätzlich die Namen der beteiligten Personen, so wie du sie vergeben hast),
+- findet **ohne** dein Antippen und ohne deine Auswahl eines Ziels **keine** Weitergabe statt.
 
-Der Entwickler erhält keine App-Daten und gibt keine an Dritte weiter. Es sind
-keine Werbe-, Analyse-, Tracking- oder proprietären Dienste eingebunden.
-Personen können in der App gelöscht werden. Eine Deinstallation entfernt die
-lokalen App-Daten; bereits vom System angelegte Sicherungen unterliegen den
-Einstellungen und Löschfristen des jeweiligen Backup-Anbieters.
+Was nach dem Versand mit dem Text passiert, richtet sich nach der Datenschutzerklärung der von dir gewählten App bzw. der Empfänger:in. Erdentage selbst sendet nichts an eigene Server.
 
-## Deine Rechte
+## Android-Backup und Geräteübertragung
 
-Da der Entwickler keine App-Daten erhält, kann er dazu keine serverseitige
-Auskunft oder Löschung durchführen. Du kannst deine lokalen Angaben direkt in
-der App berichtigen oder löschen. Die Rechte aus Art. 15 ff. DSGVO bleiben
-unberührt. Eine Beschwerde ist bei einer Datenschutzaufsichtsbehörde möglich,
-insbesondere beim Landesbeauftragten für den Datenschutz Sachsen-Anhalt:
-https://datenschutz.sachsen-anhalt.de
+Wenn das Android-Backup oder die Datenübertragung auf ein neues Gerät auf deinem Gerät aktiviert ist, kann Android die lokal gespeicherten Personendaten über den von dir gewählten System-Backup-Anbieter sichern und auf einem deiner Geräte wiederherstellen. Erdentage betreibt dafür keinen Dienst und erhält keinen Zugriff auf die Sicherung. Die Widget-Einstellungen werden nicht gesichert, weil sie nur auf dem jeweiligen Startbildschirm gelten.
 
-## Änderungen
+Ob und wie lange eine Sicherung erhalten bleibt, richtet sich nach den Einstellungen und Bedingungen deines Backup-Anbieters. Du kannst das Backup jederzeit in den Android-Einstellungen abschalten.
 
-Wenn sich Funktionen oder Datenverarbeitung ändern, wird diese Erklärung
-aktualisiert. Das Datum oben zeigt den Stand der Fassung.
+## Weitergabe an Dritte
+
+Es findet **keine Datenweitergabe** an Dritte statt. Es werden keine Analytics-, Werbe-, Tracking- oder sonstigen proprietären SDKs eingesetzt. Es gibt keinen Server, kein Konto und keinen eigenen Cloud-Dienst.
+
+## Speicherdauer
+
+Deine Daten bleiben auf dem Gerät, bis du sie in der App änderst oder löschst oder Erdentage deinstallierst. Mit der Deinstallation entfernt Android die lokalen App-Daten; bereits angelegte System-Sicherungen unterliegen den Löschfristen deines Backup-Anbieters.
+
+## Deine Rechte (Art. 15 ff. DSGVO)
+
+Auch wenn ich als Anbieter keine Daten erhalte, hast du folgende Rechte:
+
+- **Auskunft** (Art. 15) — die Daten liegen ausschließlich bei dir auf dem Gerät; ich kann dazu keine Auskunft erteilen, weil ich nichts speichere.
+- **Berichtigung** (Art. 16) — direkt in der App durch Bearbeiten der Eingaben.
+- **Löschung** (Art. 17) — durch Löschen der Person in der App oder durch Deinstallation.
+- **Beschwerde** bei einer Aufsichtsbehörde (Art. 77) — zuständig ist der _Landesbeauftragte für den Datenschutz Sachsen-Anhalt_ (<https://datenschutz.sachsen-anhalt.de>).
+
+## Google-Play-Datensicherheit
+
+Für den Abschnitt "Datensicherheit" bei Google Play bedeutet das: Die App erhebt keine Daten und gibt keine Daten an Dritte weiter.
+
+## Änderungen dieser Erklärung
+
+Wenn sich Funktionen oder Datenverarbeitung ändern, aktualisiere ich diesen Text. Das Datum oben zeigt den jeweils aktuellen Stand.
+
+Die Datenschutzerklärung für die iOS-App steht unter <https://thomas-kahle.de/erdentage/datenschutz/>.

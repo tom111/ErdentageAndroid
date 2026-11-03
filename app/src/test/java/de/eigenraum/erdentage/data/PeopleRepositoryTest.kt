@@ -9,6 +9,7 @@ import de.eigenraum.erdentage.domain.ErdentageLimits
 import de.eigenraum.erdentage.domain.MilestoneKind
 import de.eigenraum.erdentage.domain.Person
 import de.eigenraum.erdentage.domain.PersonTint
+import de.eigenraum.erdentage.domain.TogetherKind
 import java.io.File
 import java.io.IOException
 import java.time.Instant
@@ -23,6 +24,7 @@ import kotlinx.serialization.encodeToString
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -203,6 +205,104 @@ class PeopleRepositoryTest {
         assertTrue(repository.deletePerson(uuid(1)))
         val state = repository.state.first()
         assertEquals(state.people.size, state.currentPersonIndex)
+    }
+
+    @Test
+    fun moveAndDeletePreserveZusammenSentinelAndDegradeItBelowTwoPeople() = runTest {
+        val (_, repository) = repository("together-page")
+        repeat(3) { repository.addPerson(person(it)) }
+        repository.setCurrentPersonIndex(4)
+        assertEquals(4, repository.state.first().currentPersonIndex)
+
+        assertTrue(repository.movePerson(fromIndex = 2, toIndex = 0))
+        assertEquals(4, repository.state.first().currentPersonIndex)
+
+        assertTrue(repository.deletePerson(uuid(1)))
+        var state = repository.state.first()
+        assertEquals(2, state.people.size)
+        assertEquals(3, state.currentPersonIndex)
+
+        // Dropping below two people degrades Zusammen to Demnächst.
+        assertTrue(repository.deletePerson(uuid(2)))
+        state = repository.state.first()
+        assertEquals(1, state.people.size)
+        assertEquals(1, state.currentPersonIndex)
+
+        // A single person cannot select Zusammen at all.
+        repository.setCurrentPersonIndex(2)
+        assertEquals(0, repository.state.first().currentPersonIndex)
+        assertTrue(repository.addPerson(person(5)))
+        repository.setCurrentPersonIndex(3)
+        assertEquals(3, repository.state.first().currentPersonIndex)
+    }
+
+    @Test
+    fun togetherLimitsClampToRangeAndMissingMeansDefault() = runTest {
+        val (_, repository) = repository("together-limits")
+
+        var state = repository.state.first()
+        for (kind in TogetherKind.entries) {
+            assertEquals(kind.defaultLimit, state.togetherLimit(kind))
+        }
+
+        repository.setTogetherLimit(TogetherKind.JAHRHUNDERT, 0)
+        repository.setTogetherLimit(TogetherKind.DOPPELT, 99)
+        repository.setTogetherLimit(TogetherKind.ZUSAMMEN_SO_ALT, -1)
+        state = repository.state.first()
+        assertEquals(0, state.togetherLimit(TogetherKind.JAHRHUNDERT))
+        assertEquals(TogetherKind.LIMIT_RANGE.last, state.togetherLimit(TogetherKind.DOPPELT))
+        assertEquals(0, state.togetherLimit(TogetherKind.ZUSAMMEN_SO_ALT))
+    }
+
+    @Test
+    fun togetherCalendarHandoffHistoryCapsRecordsAndPreservesVisibleKeys() = runTest {
+        val (_, repository) = repository("together-history")
+
+        for (index in 0..201) {
+            repository.recordTogetherCalendarHandoff(
+                key = "pair-$index@20490101",
+                launchedAt = Instant.ofEpochSecond(index.toLong()),
+                visibleKeys = emptySet(),
+            )
+        }
+        var records = repository.state.first().togetherAddedEvents
+        assertEquals(ErdentageLimits.ADDED_MILESTONES_CAP, records.size)
+        assertFalse(records.any { it.key == "pair-0@20490101" })
+
+        repository.recordTogetherCalendarHandoff(
+            key = "pair-202@20490101",
+            launchedAt = Instant.ofEpochSecond(202),
+            visibleKeys = setOf("pair-2@20490101"),
+        )
+        records = repository.state.first().togetherAddedEvents
+        assertEquals(ErdentageLimits.ADDED_MILESTONES_CAP, records.size)
+        assertTrue(records.any { it.key == "pair-2@20490101" })
+        assertTrue(records.any { it.key == "pair-202@20490101" })
+    }
+
+    @Test
+    fun newerSchemaIsNotRetriedAsATransientFailure() = runTest {
+        var subscriptions = 0
+        val dataStore = object : DataStore<PersistedAppState> {
+            override val data = flow<PersistedAppState> {
+                subscriptions++
+                // DataStore wraps the serializer's exception in its own IOException.
+                throw IOException("Inoperable file", NewerSchemaException(99))
+            }
+
+            override suspend fun updateData(
+                transform: suspend (t: PersistedAppState) -> PersistedAppState,
+            ): PersistedAppState = error("not used")
+        }
+        val repository = DataStorePeopleRepository(dataStore)
+
+        try {
+            repository.state.first()
+            fail("Expected NewerSchemaException")
+        } catch (_: NewerSchemaException) {
+            // Expected.
+        }
+        assertEquals(1, subscriptions)
     }
 
     @Test

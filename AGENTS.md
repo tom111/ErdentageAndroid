@@ -10,7 +10,7 @@ contracts; `PLAN.md` records proposed choices, phases, and owner decisions.
 
 The repository owner lifted the planning hold on 2026-08-15. Phase-one feature
 implementation was completed on 2026-08-16, including the documented Android
-emulator matrix. Normal implementation, testing, dependency downloads, and
+emulator matrix. Phase two (iOS 1.4 parity) was implemented on 2026-11-03. Normal implementation, testing, dependency downloads, and
 emulator work described by this file and `PLAN.md` are authorized. Signing
 operations, store-account actions, publication assets, and any expansion of
 product scope still require their documented approvals.
@@ -125,7 +125,7 @@ These decisions govern the project unless the owner explicitly changes them.
 | Widgets | Jetpack Glance, stable release only, with responsive home-screen layouts and per-instance person configuration |
 | Build | Gradle Kotlin DSL, Gradle wrapper, version catalog, JDK 17, pinned dependency versions |
 | SDK | `compileSdk = 36`, `targetSdk = 36`, `minSdk = 26` |
-| App ID | `de.eigenraum.erdentage` (lowercase and permanent once published) |
+| App ID | `ch.firsching.erdentage` (lowercase and permanent once published; changed from `de.eigenraum.erdentage` on 2026-11-03 by the Android maintainer, unpublished; the code namespace stays `de.eigenraum.erdentage`) |
 | Tests | JUnit pure-domain tests, repository tests, Compose UI/semantics tests, focused rendered-pixel checks, and emulator instrumentation |
 | Dependency injection | A small manual `AppContainer`; do not add Hilt/Koin for this app unless complexity proves it necessary |
 
@@ -170,11 +170,15 @@ sync strategy.
 ### In-scope iOS behavior
 
 Phase-one parity targets the shipped iOS 1.3 feature set. Phase two, approved
-on 2026-11-02, extends it to the shipped iOS 1.4 features at tag
-`v1.4.2-build19`: the “Zusammen” page (`TogetherPageView`, a second trailing
-page at `people.size + 1` from two people onward), its family-level row
-budgets, and the Geburtstags-Zufälle. The steps and the rules to keep are in
-`PLAN.md` under *Phase two: iOS 1.4 parity*.
+on 2026-11-02 and implemented on 2026-11-03, extends it to the shipped iOS 1.4
+features at tag `v1.4.2-build19`: the “Zusammen” page (`TogetherPageView`, a
+second trailing page at `people.size + 1` from two people onward), its
+family-level row budgets, and the Geburtstags-Zufälle. The steps and the rules
+to keep are in `PLAN.md` under *Phase two: iOS 1.4 parity*. On Android the
+Wechselwirkungs-Arithmetik and its German phrasing live in
+`domain/TogetherLogic.kt` (phrasing deliberately not in string resources, so
+`shared-fixtures/together-math.json` can pin it), the page index is read only
+through `ErdentageLimits.pageKind`, and the persisted schema is 2.
 
 - Up to 20 tracked people.
 - A horizontal pager with one page per person and a trailing “Demnächst” page.
@@ -538,7 +542,9 @@ The owner has approved:
 - Phone + tablet + widgets for phase one, with Wear OS deferred.
 - `Apache-2.0` (relicensed from `GPL-3.0-or-later` on 2026-11-02 to match the
   iOS repository), held personally by Thomas Kahle.
-- The permanent application ID `de.eigenraum.erdentage`.
+- The permanent application ID, originally `de.eigenraum.erdentage`; changed
+  to `ch.firsching.erdentage` on 2026-11-03 for the Android maintainer's own
+  store listing, before publication.
 - Installation of the required Android development tools and the start of
   implementation. The planning hold was lifted with the project skeleton on
   2026-08-15.

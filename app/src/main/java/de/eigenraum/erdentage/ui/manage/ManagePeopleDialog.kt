@@ -47,11 +47,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import de.eigenraum.erdentage.R
+import de.eigenraum.erdentage.ui.AboutFooter
 import de.eigenraum.erdentage.domain.ErdentageLimits
 import de.eigenraum.erdentage.domain.Person
 import de.eigenraum.erdentage.ui.icons.ErdentageIcons
@@ -155,6 +157,7 @@ fun ManagePeopleDialog(
                 ) {
                     LazyColumn(
                         modifier = Modifier
+                            .testTag("people_list")
                             .widthIn(max = 720.dp)
                             .fillMaxWidth()
                             .fillMaxHeight(),
@@ -191,6 +194,13 @@ fun ManagePeopleDialog(
                                     style = MaterialTheme.typography.bodySmall,
                                 )
                             }
+                        }
+                        item {
+                            AboutFooter(
+                                modifier = Modifier
+                                    .testTag("about_footer")
+                                    .padding(horizontal = 20.dp, vertical = 24.dp),
+                            )
                         }
                     }
                 }

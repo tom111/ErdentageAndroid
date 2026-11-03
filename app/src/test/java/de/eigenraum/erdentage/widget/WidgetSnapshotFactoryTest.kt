@@ -53,7 +53,14 @@ class WidgetSnapshotFactoryTest {
             at = Instant.parse("2026-08-16T12:00:00Z"),
             zoneId = ZoneId.of("Europe/Berlin"),
         )
+        val together = WidgetSnapshotFactory.create(
+            state = PersistedAppState(people = people, currentPersonIndex = people.size + 1),
+            selection = WidgetSelection.FollowCurrent,
+            at = Instant.parse("2026-08-16T12:00:00Z"),
+            zoneId = ZoneId.of("Europe/Berlin"),
+        )
         assertEquals("Bernd", current.personName)
         assertEquals("Anne", overview.personName)
+        assertEquals("Anne", together.personName)
     }
 }

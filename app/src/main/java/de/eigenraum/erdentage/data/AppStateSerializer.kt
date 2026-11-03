@@ -5,24 +5,48 @@ package de.eigenraum.erdentage.data
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
+import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import kotlinx.serialization.SerializationException
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.decodeFromJsonElement
+import kotlinx.serialization.json.intOrNull
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
+
+/**
+ * The stored file was written by a newer release of the app. It is not
+ * corrupt, so it must not be replaced: an upgrade will read it again. The
+ * repository does not retry on this, and the UI explains it instead of
+ * showing an empty family.
+ */
+class NewerSchemaException(val storedSchemaVersion: Int) : IOException(
+    "App state schema $storedSchemaVersion is newer than the supported " +
+        "schema ${PersistedAppState.CURRENT_SCHEMA_VERSION}",
+)
 
 object AppStateSerializer : Serializer<PersistedAppState> {
     override val defaultValue: PersistedAppState = PersistedAppState()
 
     override suspend fun readFrom(input: InputStream): PersistedAppState {
+        val text = input.bufferedReader(Charsets.UTF_8).use { it.readText() }
         try {
-            val state = ErdentageJson.decodeFromString<PersistedAppState>(
-                input.bufferedReader(Charsets.UTF_8).use { it.readText() },
-            )
-            if (state.schemaVersion != PersistedAppState.CURRENT_SCHEMA_VERSION) {
-                throw CorruptionException("Unsupported app-state schema ${state.schemaVersion}")
+            // Check the version before decoding the rest: a newer release may
+            // have changed a field's shape, and that must read as "newer", not
+            // as corruption.
+            val element = ErdentageJson.parseToJsonElement(text)
+            val schemaVersion = element.jsonObject["schemaVersion"]?.jsonPrimitive?.intOrNull
+                ?: throw CorruptionException("App state has no schema version")
+            if (schemaVersion > PersistedAppState.CURRENT_SCHEMA_VERSION) {
+                throw NewerSchemaException(schemaVersion)
             }
-            return state
+            if (schemaVersion < OLDEST_SUPPORTED_SCHEMA_VERSION) {
+                throw CorruptionException("Unsupported app-state schema $schemaVersion")
+            }
+            // Older schemas are additive: every later field has a default, and
+            // `normalized()` stamps the current version on the next write.
+            return ErdentageJson.decodeFromJsonElement<PersistedAppState>(element)
         } catch (error: CorruptionException) {
             throw error
         } catch (error: SerializationException) {
@@ -36,4 +60,6 @@ object AppStateSerializer : Serializer<PersistedAppState> {
         val encoded = ErdentageJson.encodeToString(t.normalized())
         output.write(encoded.toByteArray(Charsets.UTF_8))
     }
+
+    private const val OLDEST_SUPPORTED_SCHEMA_VERSION = 1
 }

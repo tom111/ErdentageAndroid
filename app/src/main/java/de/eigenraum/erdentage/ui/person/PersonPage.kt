@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.eigenraum.erdentage.R
 import de.eigenraum.erdentage.domain.DayCountSnapshot
+import de.eigenraum.erdentage.domain.BirthdayNote
 import de.eigenraum.erdentage.domain.DayCountLogic
 import de.eigenraum.erdentage.domain.MilestoneCandidate
 import de.eigenraum.erdentage.domain.Person
@@ -86,6 +87,7 @@ fun PersonPage(
                     person = person,
                     snapshot = state.snapshot,
                     todayKinds = state.todayKinds,
+                    birthdayNotes = state.birthdayNotes,
                     onShare = onShare,
                     onCalendarHandoff = onCalendarHandoff,
                     modifier = contentModifier,
@@ -95,6 +97,7 @@ fun PersonPage(
                     person = person,
                     snapshot = state.snapshot,
                     todayKinds = state.todayKinds,
+                    birthdayNotes = state.birthdayNotes,
                     onShare = onShare,
                     onCalendarHandoff = onCalendarHandoff,
                     modifier = contentModifier,
@@ -109,6 +112,7 @@ private fun PortraitPersonContent(
     person: Person,
     snapshot: DayCountSnapshot,
     todayKinds: List<de.eigenraum.erdentage.domain.MilestoneKind>,
+    birthdayNotes: Map<Int, BirthdayNote>,
     onShare: (String) -> Unit,
     onCalendarHandoff: (MilestoneCalendarAction) -> Unit,
     modifier: Modifier = Modifier,
@@ -127,6 +131,7 @@ private fun PortraitPersonContent(
         MilestoneList(
             person = person,
             milestones = snapshot.milestones,
+            birthdayNotes = birthdayNotes,
             onShare = onShare,
             onCalendarHandoff = onCalendarHandoff,
             modifier = Modifier
@@ -141,6 +146,7 @@ private fun CompactPersonContent(
     person: Person,
     snapshot: DayCountSnapshot,
     todayKinds: List<de.eigenraum.erdentage.domain.MilestoneKind>,
+    birthdayNotes: Map<Int, BirthdayNote>,
     onShare: (String) -> Unit,
     onCalendarHandoff: (MilestoneCalendarAction) -> Unit,
     modifier: Modifier = Modifier,
@@ -166,6 +172,7 @@ private fun CompactPersonContent(
             MilestoneList(
                 person = person,
                 milestones = snapshot.milestones,
+                birthdayNotes = birthdayNotes,
                 onShare = onShare,
                 onCalendarHandoff = onCalendarHandoff,
                 modifier = Modifier
@@ -276,6 +283,7 @@ private fun CountCluster(
 private fun MilestoneList(
     person: Person,
     milestones: List<MilestoneCandidate>,
+    birthdayNotes: Map<Int, BirthdayNote>,
     onShare: (String) -> Unit,
     onCalendarHandoff: (MilestoneCalendarAction) -> Unit,
     modifier: Modifier = Modifier,
@@ -304,6 +312,7 @@ private fun MilestoneList(
             MilestoneRow(
                 person = person,
                 milestone = milestone,
+                birthday = birthdayNotes[milestone.target],
                 visibleKeys = visibleKeys,
                 recorded = DayCountLogic.milestoneKey(
                     milestone.target,
@@ -321,6 +330,7 @@ private fun MilestoneList(
 private fun MilestoneRow(
     person: Person,
     milestone: MilestoneCandidate,
+    birthday: BirthdayNote?,
     visibleKeys: Set<String>,
     recorded: Boolean,
     onShare: (String) -> Unit,
@@ -344,7 +354,7 @@ private fun MilestoneRow(
     val tagSuffix = tags.takeIf(List<String>::isNotEmpty)
         ?.joinToString(", ", prefix = " (", postfix = ")")
         .orEmpty()
-    val shareText = if (PersonName.isOwner(person.name)) {
+    val baseShareText = if (PersonName.isOwner(person.name)) {
         stringResource(R.string.share_upcoming_owner, longDate, count, tagSuffix)
     } else {
         stringResource(
@@ -355,6 +365,9 @@ private fun MilestoneRow(
             tagSuffix,
         )
     }
+    // The Geburtstags-Zufall is the most shareable thing about such a row,
+    // so it follows as its own sentence. The calendar title stays without it.
+    val shareText = if (birthday == null) baseShareText else "$baseShareText ${birthday.sentence}"
     val baseTitle = if (tags.isEmpty()) {
         stringResource(R.string.calendar_title_base, count)
     } else {
@@ -400,12 +413,22 @@ private fun MilestoneRow(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(2.dp),
         ) {
-            if (captionKinds.isEmpty()) {
+            if (captionKinds.isEmpty() && birthday == null) {
                 Text(" ", style = MaterialTheme.typography.bodySmall)
             } else {
                 captionKinds.forEach { kind ->
                     Text(
                         text = stringResource(kind.captionResource),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.52f),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
+                // Last, because it is a property of the date, while the kind
+                // captions explain the number above them.
+                if (birthday != null) {
+                    Text(
+                        text = birthday.caption,
                         color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.52f),
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.bodySmall,
