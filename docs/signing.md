@@ -9,7 +9,7 @@ Play artifacts, so users can move between stores in place.
 ## Current state (2026-11-03)
 
 The Android maintainer (Moritz Firsching) created and holds the signing key
-for `com.firsching.erdentage` on 2026-11-03. Public identity:
+for `ch.firsching.erdentage` on 2026-11-03. Public identity:
 
 - Alias: `erdentage`
 - Container: PKCS#12

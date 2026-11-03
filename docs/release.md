@@ -6,7 +6,7 @@ owner-approved public release.
 
 ## Completed in source
 
-- Permanent application ID `com.firsching.erdentage` (changed from
+- Permanent application ID `ch.firsching.erdentage` (changed from
   `de.eigenraum.erdentage` on 2026-11-03, unpublished), Apache-2.0 license,
   pinned dependencies, dependency locking, and checksum verification.
 - The same source and feature set build an Android App Bundle for Google Play
@@ -173,11 +173,11 @@ Before submitting to `fdroiddata`:
    Test a clean checkout with the exact JDK, Android SDK, and Gradle invocation
    that the F-Droid build recipe will use.
 5. Fork the public `fdroid/fdroiddata` GitLab repository and add
-   `metadata/com.firsching.erdentage.yml`. Pin its build entry to the release tag
+   `metadata/ch.firsching.erdentage.yml`. Pin its build entry to the release tag
    or commit, add source/issue/license/contact fields, and configure update
    detection. Derive the exact YAML from the then-current fdroiddata schema; do
    not copy a generic flavor example into this single-variant project.
-6. Run `fdroid build com.firsching.erdentage:<versionCode>` in the supported
+6. Run `fdroid build ch.firsching.erdentage:<versionCode>` in the supported
    F-Droid environment and make the fdroiddata CI build pass. The inclusion
    merge request must also record policy compliance, related request-for-
    packaging issues, and that the upstream author submitted or accepts it.

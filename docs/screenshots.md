@@ -38,10 +38,10 @@ new shoot, and Mia's next prime then lands on Anne's birthday, which shows
 the Geburtstags-Zufall in the „Demnächst“ clouds.
 
 ```sh
-adb shell am force-stop com.firsching.erdentage
+adb shell am force-stop ch.firsching.erdentage
 adb push docs/screenshot-family.json /data/local/tmp/seed.json
-adb shell run-as com.firsching.erdentage mkdir -p files/datastore
-adb shell run-as com.firsching.erdentage sh -c \
+adb shell run-as ch.firsching.erdentage mkdir -p files/datastore
+adb shell run-as ch.firsching.erdentage sh -c \
   'cat /data/local/tmp/seed.json > files/datastore/erdentage-state.json'
 adb shell settings put global sysui_demo_allowed 1
 adb shell am broadcast -a com.android.systemui.demo -e command enter
@@ -51,7 +51,7 @@ adb shell am broadcast -a com.android.systemui.demo -e command network -e mobile
 adb shell am broadcast -a com.android.systemui.demo -e command network -e wifi show -e level 4 -e fully true
 adb shell am broadcast -a com.android.systemui.demo -e command notifications -e visible false
 adb shell wm size 1080x2160            # 2560x1600 + density 320 for 10", 1200x1920 for 7"
-adb shell am start -n com.firsching.erdentage/de.eigenraum.erdentage.MainActivity
+adb shell am start -n ch.firsching.erdentage/de.eigenraum.erdentage.MainActivity
 adb exec-out screencap -p -d <display id> > 1.png   # id from: dumpsys SurfaceFlinger --display-id
 adb shell wm size reset; adb shell wm density reset
 adb shell am broadcast -a com.android.systemui.demo -e command exit
