@@ -6,7 +6,9 @@ store.
 
 Public identity:
 
-- Application ID: `de.eigenraum.erdentage`
+- Application ID: `com.firsching.erdentage` (changed from `de.eigenraum.erdentage`
+  on 2026-11-03, before any artifact was signed or enrolled; the key itself
+  is not tied to the package name)
 - Alias: `erdentage-app`
 - Container: PKCS#12
 - Key: RSA 4096 bit

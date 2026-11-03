@@ -59,7 +59,7 @@ Android should port current tested behavior, not freeze the July 2026 snapshot.
 | Widgets | Stable Jetpack Glance with responsive layouts and per-instance configuration |
 | Build | Gradle Kotlin DSL, Gradle wrapper, version catalog, JDK 17 |
 | Android versions | Minimum API 26; compile and target API 36 |
-| Application ID | `de.eigenraum.erdentage` |
+| Application ID | `com.firsching.erdentage` (code namespace `de.eigenraum.erdentage`) |
 | Dependency injection | Small manual `AppContainer`; no DI framework initially |
 | Tests | JUnit, repository tests, Compose semantics/UI tests, focused rendered-pixel checks, emulator instrumentation |
 
@@ -591,7 +591,8 @@ The owner has approved:
 3. Phone + tablet + widgets for phase one, with Wear OS deferred.
 4. `Apache-2.0` (originally `GPL-3.0-or-later`, relicensed 2026-11-02), held
    personally by Thomas Kahle.
-5. Permanent application ID `de.eigenraum.erdentage`.
+5. Permanent application ID `de.eigenraum.erdentage`, changed to
+   `com.firsching.erdentage` on 2026-11-03 before publication.
 6. Permission-free calendar handoff with an action record but no unreliable
    “saved” claim.
 7. Installation of Android Studio, SDK components, and ARM64 emulator images,

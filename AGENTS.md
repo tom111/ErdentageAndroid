@@ -125,7 +125,7 @@ These decisions govern the project unless the owner explicitly changes them.
 | Widgets | Jetpack Glance, stable release only, with responsive home-screen layouts and per-instance person configuration |
 | Build | Gradle Kotlin DSL, Gradle wrapper, version catalog, JDK 17, pinned dependency versions |
 | SDK | `compileSdk = 36`, `targetSdk = 36`, `minSdk = 26` |
-| App ID | `de.eigenraum.erdentage` (lowercase and permanent once published) |
+| App ID | `com.firsching.erdentage` (lowercase and permanent once published; changed from `de.eigenraum.erdentage` on 2026-11-03 by the Android maintainer, unpublished; the code namespace stays `de.eigenraum.erdentage`) |
 | Tests | JUnit pure-domain tests, repository tests, Compose UI/semantics tests, focused rendered-pixel checks, and emulator instrumentation |
 | Dependency injection | A small manual `AppContainer`; do not add Hilt/Koin for this app unless complexity proves it necessary |
 
@@ -542,7 +542,9 @@ The owner has approved:
 - Phone + tablet + widgets for phase one, with Wear OS deferred.
 - `Apache-2.0` (relicensed from `GPL-3.0-or-later` on 2026-11-02 to match the
   iOS repository), held personally by Thomas Kahle.
-- The permanent application ID `de.eigenraum.erdentage`.
+- The permanent application ID, originally `de.eigenraum.erdentage`; changed
+  to `com.firsching.erdentage` on 2026-11-03 for the Android maintainer's own
+  store listing, before publication.
 - Installation of the required Android development tools and the start of
   implementation. The planning hold was lifted with the project skeleton on
   2026-08-15.

@@ -10,7 +10,11 @@ android {
     buildToolsVersion = "36.0.0"
 
     defaultConfig {
-        applicationId = "de.eigenraum.erdentage"
+        // The installed package name; the code namespace above stays
+        // de.eigenraum.erdentage. Chosen for the Android maintainer's own
+        // Play/F-Droid listing on 2026-11-03, replacing the earlier
+        // de.eigenraum.erdentage; permanent once published.
+        applicationId = "com.firsching.erdentage"
         minSdk = 26
         targetSdk = 36
         versionCode = 1
