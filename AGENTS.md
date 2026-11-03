@@ -10,7 +10,7 @@ contracts; `PLAN.md` records proposed choices, phases, and owner decisions.
 
 The repository owner lifted the planning hold on 2026-08-15. Phase-one feature
 implementation was completed on 2026-08-16, including the documented Android
-emulator matrix. Normal implementation, testing, dependency downloads, and
+emulator matrix. Phase two (iOS 1.4 parity) was implemented on 2026-11-03. Normal implementation, testing, dependency downloads, and
 emulator work described by this file and `PLAN.md` are authorized. Signing
 operations, store-account actions, publication assets, and any expansion of
 product scope still require their documented approvals.
@@ -170,11 +170,15 @@ sync strategy.
 ### In-scope iOS behavior
 
 Phase-one parity targets the shipped iOS 1.3 feature set. Phase two, approved
-on 2026-11-02, extends it to the shipped iOS 1.4 features at tag
-`v1.4.2-build19`: the “Zusammen” page (`TogetherPageView`, a second trailing
-page at `people.size + 1` from two people onward), its family-level row
-budgets, and the Geburtstags-Zufälle. The steps and the rules to keep are in
-`PLAN.md` under *Phase two: iOS 1.4 parity*.
+on 2026-11-02 and implemented on 2026-11-03, extends it to the shipped iOS 1.4
+features at tag `v1.4.2-build19`: the “Zusammen” page (`TogetherPageView`, a
+second trailing page at `people.size + 1` from two people onward), its
+family-level row budgets, and the Geburtstags-Zufälle. The steps and the rules
+to keep are in `PLAN.md` under *Phase two: iOS 1.4 parity*. On Android the
+Wechselwirkungs-Arithmetik and its German phrasing live in
+`domain/TogetherLogic.kt` (phrasing deliberately not in string resources, so
+`shared-fixtures/together-math.json` can pin it), the page index is read only
+through `ErdentageLimits.pageKind`, and the persisted schema is 2.
 
 - Up to 20 tracked people.
 - A horizontal pager with one page per person and a trailing “Demnächst” page.

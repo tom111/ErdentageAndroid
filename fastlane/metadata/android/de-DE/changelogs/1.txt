@@ -2,6 +2,8 @@ Erste Android-Version von Erdentage.
 
 • Mehrere Personen mit eigenen Farben und Meilensteinen
 • Gemeinsame „Demnächst“-Übersicht
+• Seite „Zusammen“ mit den Wechselwirkungen zwischen Personen
+• Geburtstags-Zufälle auf Zeilen, die auf einen Geburtstag fallen
 • Import eines ausgewählten Kontakts
 • Teilen und datensparsamer Kalender-Handoff
 • Konfigurierbares, responsives Startbildschirm-Widget

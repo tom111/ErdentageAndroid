@@ -1,11 +1,12 @@
 # Erdentage Android port plan
 
-Status: **phase-one feature implementation complete** on 2026-08-16. The
-permanent signing identity was created on 2026-08-22; release-signing setup,
-hosted URLs, listing screenshots, store workflows, and independent
-physical-device verification remain release work. **Phase two** (iOS 1.4
-parity: „Zusammen“ and the Geburtstags-Zufälle) was planned and approved on
-2026-11-02; see [Phase two](#phase-two-ios-14-parity).
+Status: **phase-one feature implementation complete** on 2026-08-16 and
+**phase-two implementation complete** on 2026-11-03 (iOS 1.4 parity:
+„Zusammen“, the Geburtstags-Zufälle and the small UI changes; see
+[Phase two](#phase-two-ios-14-parity)). The permanent signing identity was
+created on 2026-08-22; release-signing setup, hosted URLs, listing
+screenshots, store workflows, and independent physical-device verification
+remain release work.
 
 This plan was prepared on 2026-07-22 after inspecting the SwiftUI source,
 tests, screenshots, widgets, and project notes in the iOS repository. Durable
@@ -392,9 +393,10 @@ actually defines and passes it.
 
 ## Phase two: iOS 1.4 parity
 
-Planned and approved by the owner on 2026-11-02. Phase two ports everything the
-iOS app shipped after 1.3 and runs in the six steps below, in order. Record each
-completed step in [`docs/parity.md`](docs/parity.md) as usual.
+Planned and approved by the owner on 2026-11-02 and implemented on 2026-11-03
+(all six steps; the ledger rows and the verification entry are in
+[`docs/parity.md`](docs/parity.md)). The steps below are kept as the record of
+what was ported and which rules were kept.
 
 ### Reference and scope
 
@@ -572,7 +574,13 @@ Verification:
    first Android release is therefore 1.3 or 1.4, depending on decision 1.
 3. **Fixture cross-check.** Whether the iOS repository gets a small test that
    also checks `shared-fixtures/together-math.json`, so neither implementation
-   can drift without the other noticing.
+   can drift without the other noticing. The fixture currently comes from
+   `shared-fixtures/tools/generate-together-math.py`, an independent
+   re-implementation written because the Android machine has no Swift
+   toolchain; an iOS-generated file should replace it.
+4. **Store screenshots.** Phase two changed the first-release screenshot set
+   (five pages with the three-person seed, the Zusammen page); they remain an
+   owner artifact.
 
 ## Decisions approved before starting
 

@@ -1,6 +1,6 @@
 # Datenschutzerklärung - Erdentage für Android
 
-**Stand: 16. August 2026**
+**Stand: 3. November 2026 (ab Version 1.4)**
 
 ## Auf einen Blick
 
@@ -21,18 +21,24 @@ Deutschland
 
 E-Mail: thomas.kahle@jpberlin.de<br>
 Web: https://thomas-kahle.de<br>
-Mastodon: https://machteburch.social/@tomkalei
+Mastodon: https://mathe.social/@tomkalei
 
 ## Lokal verarbeitete Daten
 
 Du kannst freiwillig Daten für bis zu 20 Personen eingeben: Name oder
 Bezeichnung, Geburtsdatum, optional Geburtsuhrzeit, Tage außerhalb der Erde,
-Farbe, aktive Meilensteinarten und eine lokale Historie der an eine Kalender-App
-übergebenen Meilensteine. Die App speichert außerdem die zuletzt geöffnete Seite
-und die Konfiguration ihrer Startbildschirm-Widgets.
+Farbe, aktive Meilensteinarten, ob der Geburtstag der Person auf anderen
+Zeilen erwähnt werden darf, und eine lokale Historie der an eine Kalender-App
+übergebenen Meilensteine. Auf Familienebene speichert die App außerdem, wie
+viele Zeilen jede Kategorie der Seite „Zusammen“ zeigt, und eine lokale
+Historie der an eine Kalender-App übergebenen gemeinsamen Termine. Dazu kommen
+die zuletzt geöffnete Seite und die Konfiguration der Startbildschirm-Widgets.
 
-Diese Angaben werden ausschließlich für Tageszähler, Meilensteine, Übersicht
-und Widgets verarbeitet. Wenn du Daten anderer Personen eingibst, tu dies bitte
+Diese Angaben werden ausschließlich für Tageszähler, Meilensteine, die
+Übersichten „Demnächst“ und „Zusammen“ sowie die Widgets verarbeitet. Die Seite
+„Zusammen“ berechnet aus den Geburtsdaten mehrerer Personen gemeinsame Termine
+(zum Beispiel den Tag, an dem eine Person doppelt so viele Erdentage hat wie
+eine andere); auch das geschieht nur lokal auf dem Gerät. Wenn du Daten anderer Personen eingibst, tu dies bitte
 nur mit deren Einverständnis. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO
 (Bereitstellung der von dir angeforderten Funktion).
 
@@ -59,14 +65,16 @@ wird keine Person angelegt.
 ## Kalender
 
 „Zum Kalender hinzufügen“ übergibt Titel und Zeitpunkt des vorgeschlagenen
-Meilensteins mit einer Android-Systemaktion an eine installierte Kalender-App.
+Meilensteins oder gemeinsamen Termins mit einer Android-Systemaktion an eine
+installierte Kalender-App.
 Erdentage besitzt keine Lese- oder Schreibberechtigung für deinen Kalender und
 kann nicht feststellen, ob du den Termin dort speicherst. Lokal wird nur
 vermerkt, dass diese Übergabe gestartet wurde.
 
 ## Teilen
 
-Eine Teilen-Aktion öffnet das Android-Teilen-Menü mit einem vorbereiteten Text.
+Eine Teilen-Aktion öffnet das Android-Teilen-Menü mit einem vorbereiteten Text,
+etwa zu einer Tageszahl, einem Meilenstein oder einem gemeinsamen Termin.
 Erst du wählst, ob und an welche App er weitergegeben wird. Die weitere
 Verarbeitung richtet sich nach der gewählten App. Erdentage selbst sendet den
 Text an keinen Server.

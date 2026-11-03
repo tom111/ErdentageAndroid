@@ -10,6 +10,10 @@ questionnaire wording immediately before submission.
   identifiers, contacts, calendar contents, or other user data.
 - The app has no account, backend, analytics, advertising, tracking, crash
   reporting, or `INTERNET` permission.
+- Family-level values added in 1.4 (the „Zusammen“ row budgets per category
+  and the history of „Zusammen“ calendar handoffs) are stored in the same
+  local file as the people and leave the device only through the OS backup
+  described below.
 - Android OS-managed backup or device transfer may copy the local app data to
   the backup provider chosen by the user. This is platform storage controlled
   by the user/OS and not collection by Thomas Kahle. Widget-instance IDs are
@@ -20,8 +24,9 @@ questionnaire wording immediately before submission.
 - Contact import uses the system picker and a temporary URI grant for exactly
   one selected contact. Erdentage reads only a usable display name and birthday
   and requests no broad contacts permission.
-- Calendar handoff launches `ACTION_INSERT`; the calendar app receives the
-  proposed title and date only after the user chooses that action. Erdentage
+- Calendar handoff launches `ACTION_INSERT` for personal milestones and for
+  „Zusammen“ rows alike; the calendar app receives the proposed title and date
+  only after the user chooses that action. Erdentage
   requests no calendar permission and does not claim the event was saved.
 - Sharing launches the Android Sharesheet. Data goes to another app only after
   the user invokes sharing and chooses a destination.
