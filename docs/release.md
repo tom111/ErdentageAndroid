@@ -31,8 +31,9 @@ owner-approved public release.
    requires a privacy-policy URL on the listing and the iOS page describes
    App-Group and Watch specifics that do not apply.
 2. Review the publisher postal/contact details in the privacy policy.
-3. Choose the public `versionName`/`versionCode`. The project deliberately
-   remains `0.1.0` / `1` until that release decision.
+3. The first public release is `1.4.0` / version code `1`, set on
+   2026-11-03 (version numbers follow the iOS feature level, see
+   `AGENTS.md`). Raise the version code with every later upload.
 4. Confirm that the encrypted PKCS#12 file and password are recoverable from the
    owner's password manager, create a second independent offline backup, and
    configure release signing without placing paths, passwords, or key material
