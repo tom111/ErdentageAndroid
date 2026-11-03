@@ -9,10 +9,12 @@ import de.eigenraum.erdentage.domain.AddedMilestoneRecord
 import de.eigenraum.erdentage.domain.ErdentageLimits
 import de.eigenraum.erdentage.domain.Person
 import de.eigenraum.erdentage.domain.PersonTint
+import de.eigenraum.erdentage.domain.TogetherKind
 import java.io.IOException
 import java.time.Instant
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.retryWhen
@@ -32,14 +34,24 @@ interface PeopleRepository {
         launchedAt: Instant,
         visibleKeys: Set<String>,
     ): Boolean
+    suspend fun setTogetherLimit(kind: TogetherKind, limit: Int)
+    suspend fun recordTogetherCalendarHandoff(
+        key: String,
+        launchedAt: Instant,
+        visibleKeys: Set<String>,
+    )
 }
 
 class DataStorePeopleRepository(
     private val dataStore: DataStore<PersistedAppState>,
 ) : PeopleRepository {
     override val state: Flow<PersistedAppState> = dataStore.data
+        // DataStore wraps a serializer failure in its own IOException; surface
+        // the newer-schema case unwrapped so nobody downstream retries it.
+        .catch { cause -> throw cause.newerSchemaOrSelf() }
         .retryWhen { cause, attempt ->
-            if (cause !is IOException) return@retryWhen false
+            // A file from a newer release is not transient; let it surface.
+            if (cause !is IOException || cause is NewerSchemaException) return@retryWhen false
             delay(readRetryDelayMillis(attempt))
             true
         }
@@ -110,12 +122,13 @@ class DataStorePeopleRepository(
             val removedIndex = current.people.indexOfFirst { it.id == personId }
             if (removedIndex < 0) return@updateData current
 
-            val wasOverview = current.currentPersonIndex == current.people.size
+            val pageKind = ErdentageLimits.pageKind(current.currentPersonIndex, current.people.size)
             val selectedId = current.people.getOrNull(current.currentPersonIndex)?.id
             val people = current.people.toMutableList().apply { removeAt(removedIndex) }
+            val trailingIndex = ErdentageLimits.restoredTrailingIndex(pageKind, people.size)
             val newIndex = when {
                 people.isEmpty() -> 0
-                wasOverview -> people.size
+                trailingIndex != null -> trailingIndex
                 selectedId != null && people.any { it.id == selectedId } ->
                     people.indexOfFirst { it.id == selectedId }
                 else -> current.currentPersonIndex.coerceIn(0, people.lastIndex)
@@ -134,13 +147,14 @@ class DataStorePeopleRepository(
                 return@updateData current
             }
 
-            val wasOverview = current.currentPersonIndex == current.people.size
+            val pageKind = ErdentageLimits.pageKind(current.currentPersonIndex, current.people.size)
             val selectedId = current.people.getOrNull(current.currentPersonIndex)?.id
             val people = current.people.toMutableList()
             val person = people.removeAt(fromIndex)
             people.add(toIndex, person)
+            val trailingIndex = ErdentageLimits.restoredTrailingIndex(pageKind, people.size)
             val newIndex = when {
-                wasOverview -> people.size
+                trailingIndex != null -> trailingIndex
                 selectedId != null -> people.indexOfFirst { it.id == selectedId }
                 else -> 0
             }
@@ -179,7 +193,37 @@ class DataStorePeopleRepository(
             ),
         )
     }
+
+    override suspend fun setTogetherLimit(kind: TogetherKind, limit: Int) {
+        dataStore.updateData { stored ->
+            val current = stored.normalized()
+            val clamped = TogetherKind.clampLimit(limit)
+            if (current.togetherLimit(kind) == clamped && kind in current.togetherLimits) {
+                return@updateData current
+            }
+            current.copy(togetherLimits = current.togetherLimits + (kind to clamped))
+        }
+    }
+
+    override suspend fun recordTogetherCalendarHandoff(
+        key: String,
+        launchedAt: Instant,
+        visibleKeys: Set<String>,
+    ) {
+        dataStore.updateData { stored ->
+            val current = stored.normalized()
+            current.copy(
+                togetherAddedEvents = AddedMilestoneHistory.prune(
+                    records = current.togetherAddedEvents + AddedMilestoneRecord(key, launchedAt),
+                    visibleKeys = visibleKeys + key,
+                ),
+            )
+        }
+    }
 }
+
+private fun Throwable.newerSchemaOrSelf(): Throwable =
+    generateSequence(this) { it.cause }.firstOrNull { it is NewerSchemaException } ?: this
 
 private fun readRetryDelayMillis(attempt: Long): Long =
     (100L shl attempt.coerceAtMost(8).toInt()).coerceAtMost(30_000L)

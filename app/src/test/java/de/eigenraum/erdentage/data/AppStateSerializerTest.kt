@@ -6,8 +6,12 @@ package de.eigenraum.erdentage.data
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
+import de.eigenraum.erdentage.domain.AddedMilestoneRecord
 import de.eigenraum.erdentage.domain.MilestoneKind
 import de.eigenraum.erdentage.domain.Person
+import de.eigenraum.erdentage.domain.TogetherKind
+import java.io.File
+import java.time.Instant
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import kotlinx.coroutines.flow.first
@@ -15,7 +19,9 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.encodeToString
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -55,22 +61,135 @@ class AppStateSerializerTest {
 
         val decoded = AppStateSerializer.readFrom(ByteArrayInputStream(json.toByteArray()))
 
-        assertEquals(PersistedAppState(), decoded)
+        assertEquals(PersistedAppState(schemaVersion = 1), decoded)
+        assertEquals(PersistedAppState(), decoded.normalized())
     }
 
     @Test
-    fun malformedJsonAndUnsupportedSchemaAreCorruption() = runTest {
+    fun schemaOneFileReadsWithPhaseTwoDefaultsAndIsRewrittenAtSchemaTwo() = runTest {
+        val json = """
+            {
+              "schemaVersion": 1,
+              "people": [
+                {"id":"11111111-2222-3333-4444-555555555555","name":"Lisa",
+                 "birthYear":1990,"birthMonth":3,"birthDay":15,
+                 "birthHour":0,"birthMinute":0,"hasTime":false,"daysOffEarth":0,
+                 "addedMilestones":[],"enabledMilestones":["tausender"],"tint":"sand"}
+              ],
+              "currentPersonIndex": 1,
+              "milestoneBackfillVersion": 2
+            }
+        """.trimIndent()
+
+        val decoded = AppStateSerializer.readFrom(ByteArrayInputStream(json.toByteArray()))
+
+        assertEquals(1, decoded.schemaVersion)
+        assertTrue(decoded.people.single().mentionsBirthday)
+        assertTrue(decoded.togetherLimits.isEmpty())
+        assertTrue(decoded.togetherAddedEvents.isEmpty())
+        assertEquals(TogetherKind.DOPPELT.defaultLimit, decoded.togetherLimit(TogetherKind.DOPPELT))
+
+        val output = ByteArrayOutputStream()
+        AppStateSerializer.writeTo(decoded, output)
+        val rewritten = output.toString(Charsets.UTF_8.name())
+        assertTrue(rewritten.contains("\"schemaVersion\":2"))
+        assertTrue(rewritten.contains("\"mentionsBirthday\":true"))
+    }
+
+    @Test
+    fun togetherStateRoundTripsWithIosSpelledKindsAndNormalizes() = runTest {
+        val state = PersistedAppState(
+            people = listOf(person()),
+            togetherLimits = mapOf(TogetherKind.JAHRHUNDERT to 99, TogetherKind.DOPPELT to 0),
+            togetherAddedEvents = listOf(
+                AddedMilestoneRecord("pair@20490101", Instant.ofEpochSecond(1)),
+                AddedMilestoneRecord("pair@20490101", Instant.ofEpochSecond(2)),
+            ),
+        )
+        val output = ByteArrayOutputStream()
+
+        AppStateSerializer.writeTo(state, output)
+        val encoded = output.toString(Charsets.UTF_8.name())
+        val decoded = AppStateSerializer.readFrom(ByteArrayInputStream(encoded.toByteArray()))
+
+        assertTrue(encoded.contains("\"jahrhundert\":10"))
+        assertTrue(encoded.contains("\"doppelt\":0"))
+        assertEquals(10, decoded.togetherLimit(TogetherKind.JAHRHUNDERT))
+        assertEquals(0, decoded.togetherLimit(TogetherKind.DOPPELT))
+        assertEquals(TogetherKind.ZUSAMMEN_SO_ALT.defaultLimit, decoded.togetherLimit(TogetherKind.ZUSAMMEN_SO_ALT))
+        assertEquals(1, decoded.togetherAddedEvents.size)
+        assertEquals(Instant.ofEpochSecond(2), decoded.togetherAddedEvents.single().addedAt)
+    }
+
+    @Test
+    fun malformedJsonAndPrehistoricSchemaAreCorruption() = runTest {
         assertCorruption("not json")
+        assertCorruption("{\"people\": []}")
         assertCorruption(
             """
                 {
-                  "schemaVersion": 99,
+                  "schemaVersion": 0,
                   "people": [],
                   "currentPersonIndex": 0,
                   "milestoneBackfillVersion": 2
                 }
             """.trimIndent(),
         )
+    }
+
+    @Test
+    fun newerSchemaIsRejectedWithoutBeingTreatedAsCorruption() = runTest {
+        val json = """
+            {
+              "schemaVersion": 99,
+              "people": {"shape": "changed"},
+              "currentPersonIndex": 0,
+              "milestoneBackfillVersion": 2
+            }
+        """.trimIndent()
+        try {
+            AppStateSerializer.readFrom(ByteArrayInputStream(json.toByteArray()))
+            fail("Expected NewerSchemaException")
+        } catch (error: NewerSchemaException) {
+            assertEquals(99, error.storedSchemaVersion)
+        }
+    }
+
+    @Test
+    fun dataStoreLeavesNewerSchemaFileUntouched() = runTest {
+        val original = """{"schemaVersion":99,"people":[],"currentPersonIndex":0,"milestoneBackfillVersion":2}"""
+        val file = temporaryFolder.newFile("newer-state.json").apply { writeText(original) }
+        val dataStore = DataStoreFactory.create(
+            serializer = AppStateSerializer,
+            corruptionHandler = AppStateDataStore.corruptionHandler(file),
+            scope = backgroundScope,
+            produceFile = { file },
+        )
+
+        try {
+            dataStore.data.first()
+            fail("Expected NewerSchemaException")
+        } catch (error: Exception) {
+            // DataStore wraps the serializer's exception in its own IOException.
+            assertTrue(generateSequence<Throwable>(error) { it.cause }.any { it is NewerSchemaException })
+        }
+        assertEquals(original, file.readText())
+        assertFalse(File(file.parentFile, AppStateDataStore.CORRUPT_COPY_NAME).exists())
+    }
+
+    @Test
+    fun corruptionHandlerKeepsACopyBeforeReplacingTheFile() = runTest {
+        val file = temporaryFolder.newFile("corrupt-state.json").apply { writeText("broken") }
+        val dataStore = DataStoreFactory.create(
+            serializer = AppStateSerializer,
+            corruptionHandler = AppStateDataStore.corruptionHandler(file),
+            scope = backgroundScope,
+            produceFile = { file },
+        )
+
+        assertEquals(PersistedAppState(), dataStore.data.first())
+        assertTrue(file.readText().contains("\"schemaVersion\":2"))
+        assertEquals("broken", File(file.parentFile, AppStateDataStore.CORRUPT_COPY_NAME).readText())
     }
 
     @Test
@@ -86,7 +205,7 @@ class AppStateSerializerTest {
         )
 
         assertEquals(PersistedAppState(), dataStore.data.first())
-        assertTrue(file.readText().contains("\"schemaVersion\":1"))
+        assertTrue(file.readText().contains("\"schemaVersion\":2"))
     }
 
     @Test

@@ -1,0 +1,1077 @@
+{
+  "schemaVersion": 1,
+  "referenceIosCommit": "089cf5a960f4040d03a78cc052738479d4416bc1",
+  "generatedBy": "shared-fixtures/tools/generate-together-math.py (interim, independent re-implementation; replace with an iOS-generated file)",
+  "cases": [
+    {
+      "name": "Kai, Albert und Oskar: the Verdopplungstag on Oskars 31. Geburtstag",
+      "today": "2026-08-23",
+      "limits": {
+        "doppelt": 10,
+        "zusammenSoAlt": 10,
+        "jahrhundert": 10
+      },
+      "people": [
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000001",
+          "name": "Kai",
+          "birthYear": 1975,
+          "birthMonth": 3,
+          "birthDay": 11,
+          "daysOffEarth": 0,
+          "mentionsBirthday": true
+        },
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000002",
+          "name": "Albert",
+          "birthYear": 2012,
+          "birthMonth": 7,
+          "birthDay": 20,
+          "daysOffEarth": 0,
+          "mentionsBirthday": true
+        },
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000003",
+          "name": "Oskar",
+          "birthYear": 2018,
+          "birthMonth": 11,
+          "birthDay": 29,
+          "daysOffEarth": 0,
+          "mentionsBirthday": true
+        }
+      ],
+      "events": [
+        {
+          "kind": "doppelt",
+          "date": "2049-11-29",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002"
+          ],
+          "headline": "Kai ist doppelt so alt wie Albert",
+          "caption": "so alt, wie Kai war, als Albert geboren wurde",
+          "shareText": "Am Montag, 29. November 2049 ist Kai doppelt so alt wie Albert. 🌍",
+          "calendarTitle": "Kai ist doppelt so alt wie Albert",
+          "id": "doppelt-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002",
+          "addedKey": "doppelt-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002@20491129",
+          "birthdayCaption": "🎂 an Oskars 31. Geburtstag",
+          "shareMessage": "Am Montag, 29. November 2049 ist Kai doppelt so alt wie Albert. 🌍 Es ist Oskars 31. Geburtstag. 🎂"
+        },
+        {
+          "kind": "doppelt",
+          "date": "2062-08-19",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Kai ist doppelt so alt wie Oskar",
+          "caption": "so alt, wie Kai war, als Oskar geboren wurde",
+          "shareText": "Am Samstag, 19. August 2062 ist Kai doppelt so alt wie Oskar. 🌍",
+          "calendarTitle": "Kai ist doppelt so alt wie Oskar",
+          "id": "doppelt-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003",
+          "addedKey": "doppelt-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003@20620819",
+          "birthdayCaption": null,
+          "shareMessage": "Am Samstag, 19. August 2062 ist Kai doppelt so alt wie Oskar. 🌍"
+        },
+        {
+          "kind": "zusammenSoAlt",
+          "date": "2056-04-09",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000001"
+          ],
+          "headline": "Albert und Oskar sind zusammen so alt wie Kai",
+          "caption": null,
+          "shareText": "Am Sonntag, 9. April 2056 sind Albert und Oskar zusammen so alt wie Kai. 🌍",
+          "calendarTitle": "Albert und Oskar sind zusammen so alt wie Kai",
+          "id": "summe-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000001",
+          "addedKey": "summe-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000001@20560409",
+          "birthdayCaption": null,
+          "shareMessage": "Am Sonntag, 9. April 2056 sind Albert und Oskar zusammen so alt wie Kai. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2035-07-20",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Alle zusammen: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Freitag, 20. Juli 2035 sind alle zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Alle zusammen: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003@20350720",
+          "birthdayCaption": "🎂 an Alberts 23. Geburtstag",
+          "shareMessage": "Am Freitag, 20. Juli 2035 sind alle zusammen 100 Jahre alt. 🌍 Es ist Alberts 23. Geburtstag. 🎂"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2043-11-14",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002"
+          ],
+          "headline": "Alle außer Oskar: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Samstag, 14. November 2043 sind alle außer Oskar zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Alle außer Oskar: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002@20431114",
+          "birthdayCaption": null,
+          "shareMessage": "Am Samstag, 14. November 2043 sind alle außer Oskar zusammen 100 Jahre alt. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2047-01-19",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Alle außer Albert: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Samstag, 19. Januar 2047 sind alle außer Albert zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Alle außer Albert: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003@20470119",
+          "birthdayCaption": null,
+          "shareMessage": "Am Samstag, 19. Januar 2047 sind alle außer Albert zusammen 100 Jahre alt. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2065-09-24",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Alle außer Kai: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Donnerstag, 24. September 2065 sind alle außer Kai zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Alle außer Kai: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003@20650924",
+          "birthdayCaption": null,
+          "shareMessage": "Am Donnerstag, 24. September 2065 sind alle außer Kai zusammen 100 Jahre alt. 🌍"
+        }
+      ],
+      "constellations": [
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000002",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000003",
+          "gap": 2323,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Albert & Oskar",
+          "detail": "2.323 Tage auseinander — so alt war Albert, als Oskar geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003"
+        },
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000001",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000002",
+          "gap": 13646,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002"
+          ],
+          "headline": "Kai & Albert",
+          "detail": "13.646 Tage auseinander — so alt war Kai, als Albert geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002"
+        },
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000001",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000003",
+          "gap": 15969,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Kai & Oskar",
+          "detail": "15.969 Tage auseinander — so alt war Kai, als Oskar geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003"
+        }
+      ]
+    },
+    {
+      "name": "Owner with Bernd, Mia and Opa at default limits",
+      "today": "2026-08-15",
+      "limits": null,
+      "people": [
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000001",
+          "name": "",
+          "birthYear": 1990,
+          "birthMonth": 3,
+          "birthDay": 15,
+          "daysOffEarth": 0,
+          "mentionsBirthday": true
+        },
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000002",
+          "name": "Bernd",
+          "birthYear": 2015,
+          "birthMonth": 6,
+          "birthDay": 2,
+          "daysOffEarth": 0,
+          "mentionsBirthday": true
+        },
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000003",
+          "name": "Mia",
+          "birthYear": 2018,
+          "birthMonth": 11,
+          "birthDay": 20,
+          "daysOffEarth": 0,
+          "mentionsBirthday": true
+        },
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000004",
+          "name": "Opa",
+          "birthYear": 1955,
+          "birthMonth": 1,
+          "birthDay": 10,
+          "daysOffEarth": 0,
+          "mentionsBirthday": true
+        }
+      ],
+      "events": [
+        {
+          "kind": "doppelt",
+          "date": "2040-08-19",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002"
+          ],
+          "headline": "Ich bin doppelt so alt wie Bernd",
+          "caption": "so alt, wie ich war, als Bernd geboren wurde",
+          "shareText": "Am Sonntag, 19. August 2040 bin ich doppelt so alt wie Bernd. 🌍",
+          "calendarTitle": "Ich bin doppelt so alt wie Bernd",
+          "id": "doppelt-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002",
+          "addedKey": "doppelt-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002@20400819",
+          "birthdayCaption": null,
+          "shareMessage": "Am Sonntag, 19. August 2040 bin ich doppelt so alt wie Bernd. 🌍"
+        },
+        {
+          "kind": "doppelt",
+          "date": "2047-07-28",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Ich bin doppelt so alt wie Mia",
+          "caption": "so alt, wie ich war, als Mia geboren wurde",
+          "shareText": "Am Sonntag, 28. Juli 2047 bin ich doppelt so alt wie Mia. 🌍",
+          "calendarTitle": "Ich bin doppelt so alt wie Mia",
+          "id": "doppelt-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003",
+          "addedKey": "doppelt-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003@20470728",
+          "birthdayCaption": null,
+          "shareMessage": "Am Sonntag, 28. Juli 2047 bin ich doppelt so alt wie Mia. 🌍"
+        },
+        {
+          "kind": "doppelt",
+          "date": "2075-10-23",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000004",
+            "aaaaaaaa-0000-4000-8000-000000000002"
+          ],
+          "headline": "Opa ist doppelt so alt wie Bernd",
+          "caption": "so alt, wie Opa war, als Bernd geboren wurde",
+          "shareText": "Am Mittwoch, 23. Oktober 2075 ist Opa doppelt so alt wie Bernd. 🌍",
+          "calendarTitle": "Opa ist doppelt so alt wie Bernd",
+          "id": "doppelt-aaaaaaaa-0000-4000-8000-000000000004-aaaaaaaa-0000-4000-8000-000000000002",
+          "addedKey": "doppelt-aaaaaaaa-0000-4000-8000-000000000004-aaaaaaaa-0000-4000-8000-000000000002@20751023",
+          "birthdayCaption": null,
+          "shareMessage": "Am Mittwoch, 23. Oktober 2075 ist Opa doppelt so alt wie Bernd. 🌍"
+        },
+        {
+          "kind": "doppelt",
+          "date": "2082-09-30",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000004",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Opa ist doppelt so alt wie Mia",
+          "caption": "so alt, wie Opa war, als Mia geboren wurde",
+          "shareText": "Am Mittwoch, 30. September 2082 ist Opa doppelt so alt wie Mia. 🌍",
+          "calendarTitle": "Opa ist doppelt so alt wie Mia",
+          "id": "doppelt-aaaaaaaa-0000-4000-8000-000000000004-aaaaaaaa-0000-4000-8000-000000000003",
+          "addedKey": "doppelt-aaaaaaaa-0000-4000-8000-000000000004-aaaaaaaa-0000-4000-8000-000000000003@20820930",
+          "birthdayCaption": null,
+          "shareMessage": "Am Mittwoch, 30. September 2082 ist Opa doppelt so alt wie Mia. 🌍"
+        },
+        {
+          "kind": "zusammenSoAlt",
+          "date": "2034-09-27",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000004"
+          ],
+          "headline": "Bernd, Mia und ich sind zusammen so alt wie Opa",
+          "caption": null,
+          "shareText": "Am Mittwoch, 27. September 2034 sind Bernd, Mia und ich zusammen so alt wie Opa. 🌍",
+          "calendarTitle": "Bernd, Mia und ich sind zusammen so alt wie Opa",
+          "id": "summe-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000004",
+          "addedKey": "summe-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000004@20340927",
+          "birthdayCaption": null,
+          "shareMessage": "Am Mittwoch, 27. September 2034 sind Bernd, Mia und ich zusammen so alt wie Opa. 🌍"
+        },
+        {
+          "kind": "zusammenSoAlt",
+          "date": "2044-02-07",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000001"
+          ],
+          "headline": "Bernd und Mia sind zusammen so alt wie ich",
+          "caption": null,
+          "shareText": "Am Sonntag, 7. Februar 2044 sind Bernd und Mia zusammen so alt wie ich. 🌍",
+          "calendarTitle": "Bernd und Mia sind zusammen so alt wie ich",
+          "id": "summe-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000001",
+          "addedKey": "summe-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000001@20440207",
+          "birthdayCaption": null,
+          "shareMessage": "Am Sonntag, 7. Februar 2044 sind Bernd und Mia zusammen so alt wie ich. 🌍"
+        },
+        {
+          "kind": "zusammenSoAlt",
+          "date": "2050-08-05",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000004"
+          ],
+          "headline": "Bernd und ich sind zusammen so alt wie Opa",
+          "caption": null,
+          "shareText": "Am Freitag, 5. August 2050 sind Bernd und ich zusammen so alt wie Opa. 🌍",
+          "calendarTitle": "Bernd und ich sind zusammen so alt wie Opa",
+          "id": "summe-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000004",
+          "addedKey": "summe-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000004@20500805",
+          "birthdayCaption": null,
+          "shareMessage": "Am Freitag, 5. August 2050 sind Bernd und ich zusammen so alt wie Opa. 🌍"
+        },
+        {
+          "kind": "zusammenSoAlt",
+          "date": "2054-01-23",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000004"
+          ],
+          "headline": "Mia und ich sind zusammen so alt wie Opa",
+          "caption": null,
+          "shareText": "Am Freitag, 23. Januar 2054 sind Mia und ich zusammen so alt wie Opa. 🌍",
+          "calendarTitle": "Mia und ich sind zusammen so alt wie Opa",
+          "id": "summe-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000004",
+          "addedKey": "summe-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000004@20540123",
+          "birthdayCaption": null,
+          "shareMessage": "Am Freitag, 23. Januar 2054 sind Mia und ich zusammen so alt wie Opa. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2029-10-10",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000004"
+          ],
+          "headline": "Alle außer mir: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Mittwoch, 10. Oktober 2029 sind alle außer mir zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Alle außer mir: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000004",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000004@20291010",
+          "birthdayCaption": null,
+          "shareMessage": "Am Mittwoch, 10. Oktober 2029 sind alle außer mir zusammen 100 Jahre alt. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2035-03-22",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000004"
+          ],
+          "headline": "Bernd und Opa: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Donnerstag, 22. März 2035 sind Bernd und Opa zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Bernd und Opa: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000004",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000004@20350322",
+          "birthdayCaption": null,
+          "shareMessage": "Am Donnerstag, 22. März 2035 sind Bernd und Opa zusammen 100 Jahre alt. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2036-12-15",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000004"
+          ],
+          "headline": "Mia und Opa: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Montag, 15. Dezember 2036 sind Mia und Opa zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Mia und Opa: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000004",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000004@20361215",
+          "birthdayCaption": null,
+          "shareMessage": "Am Montag, 15. Dezember 2036 sind Mia und Opa zusammen 100 Jahre alt. 🌍"
+        }
+      ],
+      "constellations": [
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000002",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000003",
+          "gap": 1267,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Bernd & Mia",
+          "detail": "1.267 Tage auseinander — so alt war Bernd, als Mia geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003"
+        },
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000001",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000002",
+          "gap": 9210,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000001"
+          ],
+          "headline": "Bernd & ich",
+          "detail": "9.210 Tage auseinander — so alt war ich, als Bernd geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002"
+        },
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000001",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000003",
+          "gap": 10477,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000001"
+          ],
+          "headline": "Mia & ich",
+          "detail": "10.477 Tage auseinander — so alt war ich, als Mia geboren wurde.",
+          "tags": [
+            "primzahl"
+          ],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003"
+        },
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000004",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000001",
+          "gap": 12848,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000004",
+            "aaaaaaaa-0000-4000-8000-000000000001"
+          ],
+          "headline": "Opa & ich",
+          "detail": "12.848 Tage auseinander — so alt war Opa, als ich geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000004-aaaaaaaa-0000-4000-8000-000000000001"
+        },
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000004",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000002",
+          "gap": 22058,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000004",
+            "aaaaaaaa-0000-4000-8000-000000000002"
+          ],
+          "headline": "Opa & Bernd",
+          "detail": "22.058 Tage auseinander — so alt war Opa, als Bernd geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000004-aaaaaaaa-0000-4000-8000-000000000002"
+        },
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000004",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000003",
+          "gap": 23325,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000004",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Opa & Mia",
+          "detail": "23.325 Tage auseinander — so alt war Opa, als Mia geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000004-aaaaaaaa-0000-4000-8000-000000000003"
+        }
+      ]
+    },
+    {
+      "name": "Anne and an astronaut Bernd: the second reading is dropped",
+      "today": "2026-08-15",
+      "limits": null,
+      "people": [
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000001",
+          "name": "Anne",
+          "birthYear": 1984,
+          "birthMonth": 5,
+          "birthDay": 22,
+          "daysOffEarth": 0,
+          "mentionsBirthday": true
+        },
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000002",
+          "name": "Bernd",
+          "birthYear": 1987,
+          "birthMonth": 1,
+          "birthDay": 30,
+          "daysOffEarth": 12,
+          "mentionsBirthday": true
+        }
+      ],
+      "events": [
+        {
+          "kind": "jahrhundert",
+          "date": "2035-10-02",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002"
+          ],
+          "headline": "Alle zusammen: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Dienstag, 2. Oktober 2035 sind alle zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Alle zusammen: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002@20351002",
+          "birthdayCaption": null,
+          "shareMessage": "Am Dienstag, 2. Oktober 2035 sind alle zusammen 100 Jahre alt. 🌍"
+        }
+      ],
+      "constellations": [
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000001",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000002",
+          "gap": 995,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002"
+          ],
+          "headline": "Anne & Bernd",
+          "detail": "995 Tage auseinander.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002"
+        }
+      ]
+    },
+    {
+      "name": "Three people sharing a birthday, one of them the owner, one opted out",
+      "today": "2026-08-15",
+      "limits": {
+        "doppelt": 10,
+        "zusammenSoAlt": 0,
+        "jahrhundert": 10
+      },
+      "people": [
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000001",
+          "name": "",
+          "birthYear": 1996,
+          "birthMonth": 6,
+          "birthDay": 4,
+          "daysOffEarth": 0,
+          "mentionsBirthday": true
+        },
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000002",
+          "name": "Lars",
+          "birthYear": 1990,
+          "birthMonth": 6,
+          "birthDay": 4,
+          "daysOffEarth": 0,
+          "mentionsBirthday": true
+        },
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000003",
+          "name": "Mia",
+          "birthYear": 2001,
+          "birthMonth": 6,
+          "birthDay": 4,
+          "daysOffEarth": 0,
+          "mentionsBirthday": false
+        },
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000004",
+          "name": "Max",
+          "birthYear": 2010,
+          "birthMonth": 6,
+          "birthDay": 4,
+          "daysOffEarth": 0,
+          "mentionsBirthday": true
+        }
+      ],
+      "events": [
+        {
+          "kind": "doppelt",
+          "date": "2030-06-04",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000004"
+          ],
+          "headline": "Lars ist doppelt so alt wie Max",
+          "caption": "so alt, wie Lars war, als Max geboren wurde",
+          "shareText": "Am Dienstag, 4. Juni 2030 ist Lars doppelt so alt wie Max. 🌍",
+          "calendarTitle": "Lars ist doppelt so alt wie Max",
+          "id": "doppelt-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000004",
+          "addedKey": "doppelt-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000004@20300604",
+          "birthdayCaption": "🎂 an Lars’, Max’ und meinem Geburtstag",
+          "shareMessage": "Am Dienstag, 4. Juni 2030 ist Lars doppelt so alt wie Max. 🌍 Es ist Lars’, Max’ und mein Geburtstag. 🎂"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2029-06-04",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Alle außer Max: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Montag, 4. Juni 2029 sind alle außer Max zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Alle außer Max: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003@20290604",
+          "birthdayCaption": "🎂 an Lars’, Max’ und meinem Geburtstag",
+          "shareMessage": "Am Montag, 4. Juni 2029 sind alle außer Max zusammen 100 Jahre alt. 🌍 Es ist Lars’, Max’ und mein Geburtstag. 🎂"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2032-06-03",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000004"
+          ],
+          "headline": "Alle außer Mia: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Donnerstag, 3. Juni 2032 sind alle außer Mia zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Alle außer Mia: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000004",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000004@20320603",
+          "birthdayCaption": null,
+          "shareMessage": "Am Donnerstag, 3. Juni 2032 sind alle außer Mia zusammen 100 Jahre alt. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2034-02-02",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000004"
+          ],
+          "headline": "Alle außer mir: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Donnerstag, 2. Februar 2034 sind alle außer mir zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Alle außer mir: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000004",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000004@20340202",
+          "birthdayCaption": null,
+          "shareMessage": "Am Donnerstag, 2. Februar 2034 sind alle außer mir zusammen 100 Jahre alt. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2036-02-03",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000004"
+          ],
+          "headline": "Alle außer Lars: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Sonntag, 3. Februar 2036 sind alle außer Lars zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Alle außer Lars: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000004",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000004@20360203",
+          "birthdayCaption": null,
+          "shareMessage": "Am Sonntag, 3. Februar 2036 sind alle außer Lars zusammen 100 Jahre alt. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2043-06-04",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002"
+          ],
+          "headline": "Lars und ich: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Donnerstag, 4. Juni 2043 sind Lars und ich zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Lars und ich: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002@20430604",
+          "birthdayCaption": "🎂 an Lars’, Max’ und meinem Geburtstag",
+          "shareMessage": "Am Donnerstag, 4. Juni 2043 sind Lars und ich zusammen 100 Jahre alt. 🌍 Es ist Lars’, Max’ und mein Geburtstag. 🎂"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2045-12-03",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Lars und Mia: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Sonntag, 3. Dezember 2045 sind Lars und Mia zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Lars und Mia: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003@20451203",
+          "birthdayCaption": null,
+          "shareMessage": "Am Sonntag, 3. Dezember 2045 sind Lars und Mia zusammen 100 Jahre alt. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2048-12-03",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Mia und ich: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Donnerstag, 3. Dezember 2048 sind Mia und ich zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Mia und ich: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003@20481203",
+          "birthdayCaption": null,
+          "shareMessage": "Am Donnerstag, 3. Dezember 2048 sind Mia und ich zusammen 100 Jahre alt. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2049-09-03",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000004"
+          ],
+          "headline": "Alle zusammen: 200 Jahre",
+          "caption": "73.050 Erdentage",
+          "shareText": "Am Freitag, 3. September 2049 sind alle zusammen 200 Jahre alt. 🌍",
+          "calendarTitle": "Alle zusammen: 200 Jahre (73.050 Erdentage)",
+          "id": "jahrhundert-2-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000004",
+          "addedKey": "jahrhundert-2-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000004@20490903",
+          "birthdayCaption": null,
+          "shareMessage": "Am Freitag, 3. September 2049 sind alle zusammen 200 Jahre alt. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2050-06-04",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000004"
+          ],
+          "headline": "Lars und Max: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Samstag, 4. Juni 2050 sind Lars und Max zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Lars und Max: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000004",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000004@20500604",
+          "birthdayCaption": "🎂 an Lars’, Max’ und meinem Geburtstag",
+          "shareMessage": "Am Samstag, 4. Juni 2050 sind Lars und Max zusammen 100 Jahre alt. 🌍 Es ist Lars’, Max’ und mein Geburtstag. 🎂"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2053-06-04",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000004"
+          ],
+          "headline": "Max und ich: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Mittwoch, 4. Juni 2053 sind Max und ich zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Max und ich: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000004",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000004@20530604",
+          "birthdayCaption": "🎂 an Lars’, Max’ und meinem Geburtstag",
+          "shareMessage": "Am Mittwoch, 4. Juni 2053 sind Max und ich zusammen 100 Jahre alt. 🌍 Es ist Lars’, Max’ und mein Geburtstag. 🎂"
+        }
+      ],
+      "constellations": [
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000001",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000003",
+          "gap": 1826,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000001"
+          ],
+          "headline": "Mia & ich",
+          "detail": "1.826 Tage auseinander — so alt war ich, als Mia geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003"
+        },
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000002",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000001",
+          "gap": 2192,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000001"
+          ],
+          "headline": "Lars & ich",
+          "detail": "2.192 Tage auseinander — so alt war Lars, als ich geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000001"
+        },
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000003",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000004",
+          "gap": 3287,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000004"
+          ],
+          "headline": "Mia & Max",
+          "detail": "3.287 Tage auseinander — so alt war Mia, als Max geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000004"
+        },
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000002",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000003",
+          "gap": 4018,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Lars & Mia",
+          "detail": "4.018 Tage auseinander — so alt war Lars, als Mia geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003"
+        },
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000001",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000004",
+          "gap": 5113,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000004",
+            "aaaaaaaa-0000-4000-8000-000000000001"
+          ],
+          "headline": "Max & ich",
+          "detail": "5.113 Tage auseinander — so alt war ich, als Max geboren wurde.",
+          "tags": [
+            "primzahl"
+          ],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000004"
+        },
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000002",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000004",
+          "gap": 7305,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000004"
+          ],
+          "headline": "Lars & Max",
+          "detail": "7.305 Tage auseinander — so alt war Lars, als Max geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000004"
+        }
+      ]
+    },
+    {
+      "name": "Reordered family keeps the same ids and added keys",
+      "today": "2026-08-20",
+      "limits": {
+        "doppelt": 10,
+        "zusammenSoAlt": 10,
+        "jahrhundert": 10
+      },
+      "people": [
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000003",
+          "name": "Mia",
+          "birthYear": 2018,
+          "birthMonth": 11,
+          "birthDay": 20,
+          "daysOffEarth": 0,
+          "mentionsBirthday": true
+        },
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000001",
+          "name": "Anne",
+          "birthYear": 1985,
+          "birthMonth": 4,
+          "birthDay": 12,
+          "daysOffEarth": 0,
+          "mentionsBirthday": true
+        },
+        {
+          "id": "aaaaaaaa-0000-4000-8000-000000000002",
+          "name": "Bernd",
+          "birthYear": 2015,
+          "birthMonth": 7,
+          "birthDay": 3,
+          "daysOffEarth": 0,
+          "mentionsBirthday": true
+        }
+      ],
+      "events": [
+        {
+          "kind": "doppelt",
+          "date": "2045-09-22",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002"
+          ],
+          "headline": "Anne ist doppelt so alt wie Bernd",
+          "caption": "so alt, wie Anne war, als Bernd geboren wurde",
+          "shareText": "Am Freitag, 22. September 2045 ist Anne doppelt so alt wie Bernd. 🌍",
+          "calendarTitle": "Anne ist doppelt so alt wie Bernd",
+          "id": "doppelt-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002",
+          "addedKey": "doppelt-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002@20450922",
+          "birthdayCaption": null,
+          "shareMessage": "Am Freitag, 22. September 2045 ist Anne doppelt so alt wie Bernd. 🌍"
+        },
+        {
+          "kind": "doppelt",
+          "date": "2052-06-29",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Anne ist doppelt so alt wie Mia",
+          "caption": "so alt, wie Anne war, als Mia geboren wurde",
+          "shareText": "Am Samstag, 29. Juni 2052 ist Anne doppelt so alt wie Mia. 🌍",
+          "calendarTitle": "Anne ist doppelt so alt wie Mia",
+          "id": "doppelt-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003",
+          "addedKey": "doppelt-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003@20520629",
+          "birthdayCaption": null,
+          "shareMessage": "Am Samstag, 29. Juni 2052 ist Anne doppelt so alt wie Mia. 🌍"
+        },
+        {
+          "kind": "zusammenSoAlt",
+          "date": "2049-02-09",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000001"
+          ],
+          "headline": "Mia und Bernd sind zusammen so alt wie Anne",
+          "caption": null,
+          "shareText": "Am Dienstag, 9. Februar 2049 sind Mia und Bernd zusammen so alt wie Anne. 🌍",
+          "calendarTitle": "Mia und Bernd sind zusammen so alt wie Anne",
+          "id": "summe-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000001",
+          "addedKey": "summe-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003-aaaaaaaa-0000-4000-8000-000000000001@20490209",
+          "birthdayCaption": null,
+          "shareMessage": "Am Dienstag, 9. Februar 2049 sind Mia und Bernd zusammen so alt wie Anne. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2039-11-21",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002"
+          ],
+          "headline": "Alle zusammen: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Montag, 21. November 2039 sind alle zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Alle zusammen: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003@20391121",
+          "birthdayCaption": null,
+          "shareMessage": "Am Montag, 21. November 2039 sind alle zusammen 100 Jahre alt. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2050-05-23",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002"
+          ],
+          "headline": "Alle außer Mia: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Montag, 23. Mai 2050 sind alle außer Mia zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Alle außer Mia: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002@20500523",
+          "birthdayCaption": null,
+          "shareMessage": "Am Montag, 23. Mai 2050 sind alle außer Mia zusammen 100 Jahre alt. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2052-01-31",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000001"
+          ],
+          "headline": "Alle außer Bernd: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Mittwoch, 31. Januar 2052 sind alle außer Bernd zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Alle außer Bernd: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003@20520131",
+          "birthdayCaption": null,
+          "shareMessage": "Am Mittwoch, 31. Januar 2052 sind alle außer Bernd zusammen 100 Jahre alt. 🌍"
+        },
+        {
+          "kind": "jahrhundert",
+          "date": "2067-03-12",
+          "participantIds": [
+            "aaaaaaaa-0000-4000-8000-000000000003",
+            "aaaaaaaa-0000-4000-8000-000000000002"
+          ],
+          "headline": "Alle außer Anne: 100 Jahre",
+          "caption": "36.525 Erdentage",
+          "shareText": "Am Samstag, 12. März 2067 sind alle außer Anne zusammen 100 Jahre alt. 🌍",
+          "calendarTitle": "Alle außer Anne: 100 Jahre (36.525 Erdentage)",
+          "id": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003",
+          "addedKey": "jahrhundert-1-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003@20670312",
+          "birthdayCaption": null,
+          "shareMessage": "Am Samstag, 12. März 2067 sind alle außer Anne zusammen 100 Jahre alt. 🌍"
+        }
+      ],
+      "constellations": [
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000002",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000003",
+          "gap": 1236,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000002",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Bernd & Mia",
+          "detail": "1.236 Tage auseinander — so alt war Bernd, als Mia geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000002-aaaaaaaa-0000-4000-8000-000000000003"
+        },
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000001",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000002",
+          "gap": 11039,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000002"
+          ],
+          "headline": "Anne & Bernd",
+          "detail": "11.039 Tage auseinander — so alt war Anne, als Bernd geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000002"
+        },
+        {
+          "olderId": "aaaaaaaa-0000-4000-8000-000000000001",
+          "youngerId": "aaaaaaaa-0000-4000-8000-000000000003",
+          "gap": 12275,
+          "displayIds": [
+            "aaaaaaaa-0000-4000-8000-000000000001",
+            "aaaaaaaa-0000-4000-8000-000000000003"
+          ],
+          "headline": "Anne & Mia",
+          "detail": "12.275 Tage auseinander — so alt war Anne, als Mia geboren wurde.",
+          "tags": [],
+          "id": "konstellation-aaaaaaaa-0000-4000-8000-000000000001-aaaaaaaa-0000-4000-8000-000000000003"
+        }
+      ]
+    }
+  ]
+}
