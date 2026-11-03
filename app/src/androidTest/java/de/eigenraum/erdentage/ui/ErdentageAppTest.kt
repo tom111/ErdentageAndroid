@@ -37,6 +37,7 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.text.NumberFormat
 import java.util.Locale
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -111,6 +112,58 @@ class ErdentageAppTest {
     }
 
     @Test
+    fun twoPeopleGetAZusammenPageWithRowsAndBudgetDialog() {
+        val state = PersistedAppState(
+            people = listOf(
+                Person(
+                    id = "11111111-1111-4111-8111-111111111111",
+                    name = "Anne",
+                    birthYear = 1980,
+                    birthMonth = 7,
+                    birthDay = 12,
+                    tint = PersonTint.SKY,
+                ),
+                Person(
+                    id = "22222222-2222-4222-8222-222222222222",
+                    name = "Bernd",
+                    birthYear = 2012,
+                    birthMonth = 3,
+                    birthDay = 4,
+                    tint = PersonTint.CORAL,
+                ),
+            ),
+            currentPersonIndex = 3,
+        )
+        var limitChange: Pair<de.eigenraum.erdentage.domain.TogetherKind, Int>? = null
+        composeRule.setContent {
+            ErdentageTheme(darkTheme = false) {
+                ErdentageApp(
+                    state = uiState(state),
+                    onAddFirstPerson = {},
+                    onAddPerson = {},
+                    onUpdatePerson = {},
+                    onDeletePerson = {},
+                    onMovePerson = { _, _ -> },
+                    onPageSelected = {},
+                    onCalendarHandoff = {},
+                    onShare = {},
+                    onSetTogetherLimit = { kind, limit -> limitChange = kind to limit },
+                )
+            }
+        }
+
+        composeRule.onNodeWithText("Zusammen").assertIsDisplayed()
+        composeRule.onNodeWithContentDescription("Seite 4 von 4").assertIsDisplayed()
+        composeRule.onNodeWithText("Anne ist doppelt so alt wie Bernd").assertIsDisplayed()
+        composeRule.onNodeWithText("Anne & Bernd").assertIsDisplayed()
+
+        composeRule.onNodeWithContentDescription("Einstellungen für Zusammen").performClick()
+        composeRule.onNodeWithText("Wie viele pro Kategorie").assertIsDisplayed()
+        composeRule.onNodeWithContentDescription("Weniger Zeilen für Doppelt so alt").performClick()
+        assertEquals(de.eigenraum.erdentage.domain.TogetherKind.DOPPELT to 3, limitChange)
+    }
+
+    @Test
     fun personTopControlsShareAndOpenSettings() {
         var sharedText: String? = null
         composeRule.setContent {
@@ -158,10 +211,18 @@ class ErdentageAppTest {
         }
 
         val feedback = "Feedback gerne per Mail oder Mastodon"
-        composeRule.onNodeWithContentDescription("Einstellungen").performClick()
-        composeRule.onNodeWithTag("person_settings_list")
+        // The About footer lives in the people list since iOS 1.4.1, not in
+        // the person editor.
+        composeRule.onNodeWithContentDescription("Personen verwalten").performClick()
+        composeRule.onNodeWithTag("people_list")
             .performScrollToNode(hasText(feedback))
         composeRule.onNodeWithText(feedback).assertIsDisplayed()
+
+        composeRule.onNodeWithContentDescription("Schließen").performClick()
+        composeRule.onNodeWithContentDescription("Einstellungen").performClick()
+        composeRule.onNodeWithTag("person_settings_list")
+            .performScrollToNode(hasText("Person löschen"))
+        composeRule.onNodeWithText("Person löschen").assertIsDisplayed()
     }
 
     @Test

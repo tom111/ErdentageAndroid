@@ -29,6 +29,7 @@ class ErdentageViewModelMergeTest {
             enabledMilestones = setOf(MilestoneKind.PALINDROM),
             tint = PersonTint.CORAL,
             addedMilestones = emptyList(),
+            mentionsBirthday = false,
         )
 
         val merged = stored.withEditorValues(edited)
@@ -43,6 +44,7 @@ class ErdentageViewModelMergeTest {
         assertEquals(7, merged.daysOffEarth)
         assertEquals(setOf(MilestoneKind.PALINDROM), merged.enabledMilestones)
         assertEquals(PersonTint.CORAL, merged.tint)
+        assertEquals(false, merged.mentionsBirthday)
         assertEquals(history, merged.addedMilestones)
         assertEquals(stored.id, merged.id)
     }

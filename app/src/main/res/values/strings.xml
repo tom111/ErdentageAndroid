@@ -24,6 +24,39 @@
     <string name="no_milestones">Keine Meilensteine aktiv</string>
     <string name="upcoming_title">Demnächst</string>
     <string name="no_upcoming_milestones">Noch keine Meilensteine</string>
+    <string name="together_title">Zusammen</string>
+    <string name="together_settings">Einstellungen für Zusammen</string>
+    <string name="together_settings_title">Zusammen</string>
+    <string name="together_limits_section">Wie viele pro Kategorie</string>
+    <string name="together_limits_footer">Angezeigt werden jeweils die nächstliegenden. 0 blendet die Kategorie aus.</string>
+    <string name="together_limit_off">aus</string>
+    <plurals name="together_limit_rows">
+        <item quantity="one">%1$d Zeile</item>
+        <item quantity="other">%1$d Zeilen</item>
+    </plurals>
+    <string name="together_fewer_rows">Weniger Zeilen für %1$s</string>
+    <string name="together_more_rows">Mehr Zeilen für %1$s</string>
+    <string name="together_kind_double">Doppelt so alt</string>
+    <string name="together_kind_sum">Zusammen so alt wie</string>
+    <string name="together_kind_century">Jahrhundert-Summen</string>
+    <string name="together_hint_double">An diesem Tag ist die jüngere Person genau so alt, wie die ältere bei ihrer Geburt war.</string>
+    <string name="together_hint_sum">Die Erdentage der Gruppe ergeben zusammen die einer weiteren Person.</string>
+    <string name="together_hint_century">100 Jahre sind 36.525 Tage. Die Summe wird im Laufe des angegebenen Tages erreicht.</string>
+    <string name="together_explanation_double">Der Tag, an dem eine Person genau doppelt so viele Erdentage hat wie eine andere – und damit genau so alt ist, wie die ältere war, als die jüngere geboren wurde.</string>
+    <string name="together_explanation_sum">Der Tag, an dem zwei oder drei Personen zusammengezählt so viele Erdentage haben wie eine weitere Person.</string>
+    <string name="together_explanation_century">Der Tag, an dem die Erdentage einer Gruppe zusammen 100 Jahre ergeben – 36.525 Tage, gerechnet mit 365,25 Tagen pro Jahr. Danach 200 Jahre, 300 Jahre und so weiter.</string>
+    <string name="together_constellations">Konstellationen</string>
+    <string name="together_empty">Noch nichts zu zeigen.</string>
+    <string name="together_share">Teilen…</string>
+    <string name="together_actions">Aktionen</string>
+    <string name="together_added">Bereits im Kalender</string>
+    <string name="together_spoken_when">%1$s, am %2$s</string>
+    <string name="together_distance_today">heute</string>
+    <string name="together_distance_tomorrow">morgen</string>
+    <string name="together_distance_days" tools:ignore="PluralsCandidate">in %1$d Tagen</string>
+    <string name="together_distance_months" tools:ignore="PluralsCandidate">in %1$d Monaten</string>
+    <string name="together_distance_years" tools:ignore="PluralsCandidate">in %1$d Jahren</string>
+    <string name="state_newer_schema">Die gespeicherten Daten stammen von einer neueren Version von Erdentage. Bitte die App aktualisieren – die Daten bleiben erhalten.</string>
     <string name="page_indicator" tools:ignore="PluralsCandidate">Seite %1$d von %2$d</string>
 
     <string name="manage_people">Personen verwalten</string>
@@ -51,7 +84,7 @@
     <string name="move_down">Nach unten</string>
     <string name="delete_person">Person löschen</string>
     <string name="delete_person_title">%1$s löschen?</string>
-    <string name="delete_person_message">Die Person und ihre gespeicherten Einstellungen werden dauerhaft entfernt.</string>
+    <string name="delete_person_message">Der Zähler und die eingetragenen Meilensteine dieser Person gehen verloren. Kalendereinträge bleiben.</string>
     <string name="cancel">Abbrechen</string>
     <string name="apply">Übernehmen</string>
     <string name="delete">Löschen</string>
@@ -66,6 +99,7 @@
     <string name="settings_date_label">Datum</string>
     <string name="settings_time_known">Uhrzeit bekannt</string>
     <string name="settings_time_label">Uhrzeit</string>
+    <string name="settings_mentions_birthday">Geburtstag erwähnen</string>
     <string name="settings_astronaut_section">Astronaut:innen</string>
     <string name="settings_days_off_earth">Tage außerhalb der Erde</string>
     <string name="settings_decrease_days">Tage verringern</string>
@@ -75,7 +109,6 @@
     <string name="settings_milestones_section">Meilensteine</string>
     <string name="settings_milestones_footer">Aktive Meilensteine erscheinen auf der Hauptseite, in der „Demnächst“-Übersicht und im Widget.</string>
     <string name="settings_twin_only">Nur Zwillinge</string>
-    <string name="settings_about_section">Über</string>
     <string name="settings_about">Familienprojekt aus Magdeburg. Version %1$s (%2$d).</string>
     <string name="settings_feedback_prefix">Feedback gerne per</string>
     <string name="settings_feedback_mail">Mail</string>

@@ -6,10 +6,12 @@ package de.eigenraum.erdentage.app
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import de.eigenraum.erdentage.data.NewerSchemaException
 import de.eigenraum.erdentage.data.PeopleRepository
 import de.eigenraum.erdentage.data.PersistedAppState
 import de.eigenraum.erdentage.domain.Person
 import de.eigenraum.erdentage.domain.PersonTint
+import de.eigenraum.erdentage.domain.TogetherKind
 import java.time.Duration
 import java.time.Instant
 import java.time.LocalDate
@@ -21,6 +23,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -30,13 +33,24 @@ class ErdentageViewModel(
 ) : ViewModel() {
     private val mutableState = MutableStateFlow<ErdentageUiState?>(null)
     val state: StateFlow<ErdentageUiState?> = mutableState.asStateFlow()
+    private val mutableLoadError = MutableStateFlow<NewerSchemaException?>(null)
+
+    /**
+     * Set when the stored file was written by a newer release. The data is
+     * left untouched; the UI explains the situation instead of showing an
+     * empty family.
+     */
+    val loadError: StateFlow<NewerSchemaException?> = mutableLoadError.asStateFlow()
     private val uiActive = MutableStateFlow(false)
     private val refreshCounter = MutableStateFlow(0L)
+    private val togetherCache = TogetherContentCache()
 
     init {
         viewModelScope.launch {
             combine(repository.state, uiActive, refreshCounter) { persisted, active, _ ->
                 persisted to active
+            }.catch { cause ->
+                if (cause is NewerSchemaException) mutableLoadError.value = cause else throw cause
             }.collectLatest { (persisted, active) ->
                 if (active) {
                     publishLiveUiState(persisted)
@@ -113,6 +127,20 @@ class ErdentageViewModel(
         }
     }
 
+    fun setTogetherLimit(kind: TogetherKind, limit: Int) {
+        viewModelScope.launch { repository.setTogetherLimit(kind, limit) }
+    }
+
+    fun recordTogetherCalendarHandoff(key: String, visibleKeys: Set<String>) {
+        viewModelScope.launch {
+            repository.recordTogetherCalendarHandoff(
+                key = key,
+                launchedAt = Instant.now(),
+                visibleKeys = visibleKeys,
+            )
+        }
+    }
+
     private suspend fun publishLiveUiState(persisted: PersistedAppState) {
         while (true) {
             val now = Instant.now()
@@ -145,7 +173,7 @@ class ErdentageViewModel(
         at: Instant,
         zoneId: ZoneId,
     ): ErdentageUiState = withContext(Dispatchers.Default) {
-        ErdentageUiState.create(persisted, at, zoneId)
+        ErdentageUiState.create(persisted, at, zoneId, togetherCache)
     }
 
     class Factory(
@@ -170,4 +198,5 @@ internal fun Person.withEditorValues(edited: Person): Person = copy(
     daysOffEarth = edited.daysOffEarth,
     enabledMilestones = edited.enabledMilestones,
     tint = edited.tint,
+    mentionsBirthday = edited.mentionsBirthday,
 )

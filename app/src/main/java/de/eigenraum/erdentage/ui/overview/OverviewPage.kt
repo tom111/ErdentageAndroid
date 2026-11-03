@@ -249,6 +249,15 @@ private fun CloudBubble(
                     style = MaterialTheme.typography.labelSmall,
                 )
             }
+            event.birthday?.let { birthday ->
+                Text(
+                    text = birthday.short,
+                    color = ink.copy(alpha = 0.7f),
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    style = MaterialTheme.typography.labelSmall,
+                )
+            }
         }
     }
 }
@@ -282,7 +291,7 @@ private fun EmptyCloud(darkTheme: Boolean) {
     }
 }
 
-private fun overviewSky(darkTheme: Boolean): Brush {
+internal fun overviewSky(darkTheme: Boolean): Brush {
     val colors = if (darkTheme) {
         listOf(Color(0xFF0A0F2E), Color(0xFF121738), Color(0xFF2E2138))
     } else {
@@ -296,7 +305,7 @@ private fun overviewSky(darkTheme: Boolean): Brush {
     )
 }
 
-private fun cloudShape(seed: Long): Shape = GenericShape { size, _ ->
+internal fun cloudShape(seed: Long): Shape = GenericShape { size, _ ->
     var state = seed
     fun nextUnit(): Float {
         state += -7046029254386353131L
