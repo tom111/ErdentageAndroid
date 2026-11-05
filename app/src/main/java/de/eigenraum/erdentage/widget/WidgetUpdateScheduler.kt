@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.glance.appwidget.updateAll
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingWorkPolicy
@@ -17,6 +18,7 @@ import androidx.work.WorkerParameters
 import de.eigenraum.erdentage.ErdentageApplication
 import de.eigenraum.erdentage.data.PeopleRepository
 import de.eigenraum.erdentage.data.PersistedAppState
+import de.eigenraum.erdentage.data.ignoringNewerSchema
 import de.eigenraum.erdentage.domain.DayCountLogic
 import java.time.Duration
 import java.time.Instant
@@ -29,14 +31,17 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
+private const val TAG = "ErdentageWidget"
+
 class WidgetUpdateWorker(
     context: Context,
     params: WorkerParameters,
 ) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
         val application = applicationContext as ErdentageApplication
-        val state = application.container.peopleRepository.state
-            .first()
+        val state = ignoringNewerSchema(onIgnored = { Log.w(TAG, it.message, it) }) {
+            application.container.peopleRepository.state.first()
+        } ?: return Result.success()
         ErdentageGlanceWidget().updateAll(applicationContext)
         WidgetUpdateScheduler.scheduleNext(applicationContext, state)
         return Result.success()
@@ -94,7 +99,10 @@ object WidgetStateObserver {
     fun start(context: Context, repository: PeopleRepository) {
         val applicationContext = context.applicationContext
         scope.launch {
-            repository.state.collectLatest { state ->
+            // Never let a newer-schema file kill the process from here.
+            repository.state
+                .ignoringNewerSchema(onIgnored = { Log.w(TAG, it.message, it) })
+                .collectLatest { state ->
                 if (WidgetUpdateScheduler.hasWidgets(applicationContext)) {
                     ErdentageGlanceWidget().updateAll(applicationContext)
                     WidgetUpdateScheduler.scheduleNext(applicationContext, state)
@@ -113,9 +121,13 @@ class WidgetTimeChangeReceiver : BroadcastReceiver() {
         CoroutineScope(SupervisorJob() + Dispatchers.Default).launch {
             try {
                 val application = applicationContext as ErdentageApplication
-                val state = application.container.peopleRepository.state.first()
-                ErdentageGlanceWidget().updateAll(applicationContext)
-                WidgetUpdateScheduler.scheduleNext(applicationContext, state)
+                val state = ignoringNewerSchema(onIgnored = { Log.w(TAG, it.message, it) }) {
+                    application.container.peopleRepository.state.first()
+                }
+                if (state != null) {
+                    ErdentageGlanceWidget().updateAll(applicationContext)
+                    WidgetUpdateScheduler.scheduleNext(applicationContext, state)
+                }
             } finally {
                 pendingResult.finish()
             }

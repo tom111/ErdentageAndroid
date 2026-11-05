@@ -17,12 +17,14 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Rule
@@ -303,6 +305,78 @@ class PeopleRepositoryTest {
             // Expected.
         }
         assertEquals(1, subscriptions)
+    }
+
+    @Test
+    fun initializeSurfacesANewerSchemaFileUnwrappedAndLeavesItUntouched() = runTest {
+        val original = """{"schemaVersion":99,"people":[],"currentPersonIndex":0,"milestoneBackfillVersion":2}"""
+        val file = temporaryFolder.newFile("newer-init.json").apply { writeText(original) }
+        val repository = DataStorePeopleRepository(
+            DataStoreFactory.create(
+                serializer = AppStateSerializer,
+                corruptionHandler = AppStateDataStore.corruptionHandler(file),
+                scope = backgroundScope,
+                produceFile = { file },
+            ),
+        )
+
+        try {
+            repository.initialize(initialPeople = listOf(person(0)))
+            fail("Expected NewerSchemaException")
+        } catch (error: NewerSchemaException) {
+            assertEquals(99, error.storedSchemaVersion)
+        }
+        assertEquals(original, file.readText())
+    }
+
+    @Test
+    fun backgroundConsumersIgnoreANewerSchemaFileInsteadOfCrashing() = runTest {
+        val dataStore = object : DataStore<PersistedAppState> {
+            override val data = flow<PersistedAppState> {
+                throw IOException("Inoperable file", NewerSchemaException(99))
+            }
+
+            override suspend fun updateData(
+                transform: suspend (t: PersistedAppState) -> PersistedAppState,
+            ): PersistedAppState = throw IOException("Inoperable file", NewerSchemaException(99))
+        }
+        val repository = DataStorePeopleRepository(dataStore)
+
+        var ignoredFlow: NewerSchemaException? = null
+        assertEquals(
+            emptyList<PersistedAppState>(),
+            repository.state.ignoringNewerSchema(onIgnored = { ignoredFlow = it }).toList(),
+        )
+        assertEquals(99, ignoredFlow?.storedSchemaVersion)
+
+        var ignoredCall: NewerSchemaException? = null
+        assertNull(ignoringNewerSchema(onIgnored = { ignoredCall = it }) { repository.initialize() })
+        assertEquals(99, ignoredCall?.storedSchemaVersion)
+    }
+
+    @Test
+    fun ignoringNewerSchemaStillPropagatesOtherFailures() = runTest {
+        val dataStore = object : DataStore<PersistedAppState> {
+            override val data = flow<PersistedAppState> { throw IllegalStateException("boom") }
+
+            override suspend fun updateData(
+                transform: suspend (t: PersistedAppState) -> PersistedAppState,
+            ): PersistedAppState = throw IOException("disk full")
+        }
+        val repository = DataStorePeopleRepository(dataStore)
+
+        try {
+            repository.state.ignoringNewerSchema().toList()
+            fail("Expected IllegalStateException")
+        } catch (_: IllegalStateException) {
+            // Expected: only newer-schema files are ignored.
+        }
+        try {
+            ignoringNewerSchema { repository.initialize() }
+            fail("Expected IOException")
+        } catch (error: IOException) {
+            assertEquals("disk full", error.message)
+        }
     }
 
     @Test
