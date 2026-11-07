@@ -163,9 +163,18 @@ Already prepared:
 Verified on 2026-11-07 for 1.4.0 (version code 1):
 
 - A clean checkout without `keystore.properties` builds
-  `app-release-unsigned.apk`, and its contents are byte-identical to the
-  owner-signed release APK outside `META-INF/`, so the reproducible-build
-  route with `Binaries:` plus `AllowedAPKSigningKeys` is viable.
+  `app-release-unsigned.apk`, and fdroidserver's `verify_apks` (the check the
+  build server runs for `Binaries:` recipes) accepts it against the
+  owner-signed release APK, so the reproducible-build route with `Binaries:`
+  plus `AllowedAPKSigningKeys` is viable. Two AGP defaults had to be turned
+  off in `app/build.gradle.kts` for this: `dependenciesInfo` (an encrypted
+  Google Play block in the APK signing block that `fdroid scanner` counts as
+  a problem) and the release build type's `vcsInfo` (which wrote
+  `META-INF/version-control-info.textproto` with the git revision, so an APK
+  only matched the exact commit it was built from).
+- Order of operations for every release: merge, tag, then build and sign
+  from the tagged commit, and attach that APK. An APK signed before the tag
+  exists was built from a different commit.
 - The wrapper's Gradle 9.5.0 is listed in F-Droid's gradle-transparency-log
   with the same sha256 as `gradle-wrapper.properties`, so the build server
   can fetch it. Dependency verification passes from an empty Gradle cache.
