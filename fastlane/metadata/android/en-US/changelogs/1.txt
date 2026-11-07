@@ -1,0 +1,10 @@
+First Android version of Erdentage (German interface).
+
+• Several people with their own colours and milestones
+• Shared "Demnächst" overview of upcoming milestones
+• "Zusammen" page with the interactions between people
+• Birthday coincidences on rows that fall on a birthday
+• Import of a selected contact
+• Sharing and a privacy-friendly calendar handoff
+• Configurable, responsive home-screen widget
+• Light/dark mode, phone and tablet layouts

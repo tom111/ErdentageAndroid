@@ -160,6 +160,23 @@ Already prepared:
   release APK that builds from the command line.
 - German Fastlane text metadata and a version-code-specific changelog.
 
+Verified on 2026-11-07 for 1.4.0 (version code 1):
+
+- A clean checkout without `keystore.properties` builds
+  `app-release-unsigned.apk`, and its contents are byte-identical to the
+  owner-signed release APK outside `META-INF/`, so the reproducible-build
+  route with `Binaries:` plus `AllowedAPKSigningKeys` is viable.
+- The wrapper's Gradle 9.5.0 is listed in F-Droid's gradle-transparency-log
+  with the same sha256 as `gradle-wrapper.properties`, so the build server
+  can fetch it. Dependency verification passes from an empty Gradle cache.
+- F-Droid requires an `en-US` Fastlane locale; it exists next to `de-DE`
+  and says that the interface is German.
+- Draft recipe: `metadata/ch.firsching.erdentage.yml` in the maintainer's
+  fdroiddata fork, `Binaries:
+  https://github.com/tom111/ErdentageAndroid/releases/download/v%v/erdentage-%v.apk`,
+  so every GitHub release must attach the signed APK under exactly that name
+  (`erdentage-1.4.0.apk`).
+
 Before submitting to `fdroiddata`:
 
 1. Publish the complete source repository, issue tracker, maintainer contact,

@@ -1,0 +1,31 @@
+How many days have you lived on Earth? Erdentage keeps count.
+
+Enter your date of birth, optionally with the time, and see your current number of days on Earth. Several people can be managed with their own colours and settings. The "Demnächst" (Coming up) page merges the next milestones of the whole family in chronological order.
+
+The app's interface is in German.
+
+TOGETHER
+
+From two people onward, the "Zusammen" (Together) page shows what happens between them: the day on which someone has exactly twice as many days as someone else; the day on which two or three people together are as old as another; and the days on which a group reaches 100 years together, that is 36,525 days. You choose how many rows each category shows.
+
+MILESTONES
+
+Discover round numbers, primes and twin primes, palindromes, square numbers, powers of two, digit sequences, Catalan numbers and Fibonacci numbers. Which kinds of numbers are shown is up to you, per person.
+
+WIDGETS
+
+The configurable home-screen widget can follow a fixed person or always show the person last viewed in the app. Small and wide widget sizes show exactly the information that fits.
+
+SHARING AND CALENDAR
+
+Share day counts and milestones through the Android share sheet. Hand an upcoming milestone to your calendar app without giving Erdentage access to your calendar.
+
+PRIVATE
+
+Your entries stay on the device. No account, no server, no ads, no tracking and no analytics. Erdentage needs no internet, contacts or calendar permission.
+
+FREE SOFTWARE
+
+Erdentage is free of charge and published as free software under the Apache License 2.0.
+
+A family project from Magdeburg, Germany.
