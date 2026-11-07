@@ -59,6 +59,16 @@ class DataStorePeopleRepository(
         .distinctUntilChanged()
 
     override suspend fun initialize(initialPeople: List<Person>) {
+        try {
+            initializeStored(initialPeople)
+        } catch (cause: IOException) {
+            // updateData reads first; surface a newer-schema file the same
+            // way `state` does, so callers can recognise it.
+            throw cause.newerSchemaOrSelf()
+        }
+    }
+
+    private suspend fun initializeStored(initialPeople: List<Person>) {
         dataStore.updateData { stored ->
             val current = stored.normalized()
             if (current.people.isNotEmpty() || initialPeople.isEmpty()) {
@@ -222,8 +232,43 @@ class DataStorePeopleRepository(
     }
 }
 
-private fun Throwable.newerSchemaOrSelf(): Throwable =
-    generateSequence(this) { it.cause }.firstOrNull { it is NewerSchemaException } ?: this
+/**
+ * The [NewerSchemaException] in this throwable's cause chain, if any.
+ * DataStore wraps serializer failures in its own IOException.
+ */
+fun Throwable.newerSchemaCause(): NewerSchemaException? =
+    generateSequence(this) { it.cause }.filterIsInstance<NewerSchemaException>().firstOrNull()
+
+private fun Throwable.newerSchemaOrSelf(): Throwable = newerSchemaCause() ?: this
+
+/**
+ * For consumers that cannot explain a newer-schema file to the user
+ * (application start-up, widgets, receivers): the flow completes quietly
+ * instead of throwing, and the explanation is left to the main UI, which
+ * reads [PeopleRepository.state] directly and shows `state_newer_schema`.
+ * Every other failure still propagates.
+ */
+fun Flow<PersistedAppState>.ignoringNewerSchema(
+    onIgnored: (NewerSchemaException) -> Unit = {},
+): Flow<PersistedAppState> = catch { cause ->
+    val newer = cause.newerSchemaCause() ?: throw cause
+    onIgnored(newer)
+}
+
+/**
+ * Runs [block]; returns null instead of throwing when the repository
+ * reports a newer-schema file. See [ignoringNewerSchema].
+ */
+suspend fun <T> ignoringNewerSchema(
+    onIgnored: (NewerSchemaException) -> Unit = {},
+    block: suspend () -> T,
+): T? = try {
+    block()
+} catch (cause: IOException) {
+    val newer = cause.newerSchemaCause() ?: throw cause
+    onIgnored(newer)
+    null
+}
 
 private fun readRetryDelayMillis(attempt: Long): Long =
     (100L shl attempt.coerceAtMost(8).toInt()).coerceAtMost(30_000L)

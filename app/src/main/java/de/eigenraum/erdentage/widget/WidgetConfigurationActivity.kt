@@ -39,6 +39,7 @@ import androidx.lifecycle.lifecycleScope
 import de.eigenraum.erdentage.ErdentageApplication
 import de.eigenraum.erdentage.R
 import de.eigenraum.erdentage.data.PersistedAppState
+import de.eigenraum.erdentage.data.ignoringNewerSchema
 import de.eigenraum.erdentage.domain.Person
 import de.eigenraum.erdentage.platform.withGermanLocale
 import de.eigenraum.erdentage.ui.theme.ErdentageTheme
@@ -68,9 +69,12 @@ class WidgetConfigurationActivity : ComponentActivity() {
         )
         val application = application as ErdentageApplication
         val currentSelection = WidgetSelectionStore(this).read(appWidgetId)
+        // Built once outside composition; a newer-schema file leaves the
+        // list at the "follow the app" row instead of crashing the picker.
+        val people = application.container.peopleRepository.state.ignoringNewerSchema()
         setContent {
             ErdentageTheme {
-                val state by application.container.peopleRepository.state
+                val state by people
                     .collectAsStateWithLifecycle(initialValue = PersistedAppState())
                 WidgetConfigurationScreen(
                     state = state,
@@ -88,10 +92,12 @@ class WidgetConfigurationActivity : ComponentActivity() {
             val glanceId = GlanceAppWidgetManager(this@WidgetConfigurationActivity)
                 .getGlanceIdBy(appWidgetId)
             ErdentageGlanceWidget().update(this@WidgetConfigurationActivity, glanceId)
-            val state = (application as ErdentageApplication)
-                .container.peopleRepository.state
-                .first()
-            WidgetUpdateScheduler.scheduleNext(this@WidgetConfigurationActivity, state)
+            val state = ignoringNewerSchema {
+                (application as ErdentageApplication).container.peopleRepository.state.first()
+            }
+            if (state != null) {
+                WidgetUpdateScheduler.scheduleNext(this@WidgetConfigurationActivity, state)
+            }
             setResult(
                 Activity.RESULT_OK,
                 Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId),

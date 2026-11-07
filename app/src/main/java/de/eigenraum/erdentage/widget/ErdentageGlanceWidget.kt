@@ -41,6 +41,8 @@ import androidx.glance.unit.ColorProvider
 import de.eigenraum.erdentage.ErdentageApplication
 import de.eigenraum.erdentage.MainActivity
 import de.eigenraum.erdentage.R
+import de.eigenraum.erdentage.data.PersistedAppState
+import de.eigenraum.erdentage.data.ignoringNewerSchema
 import de.eigenraum.erdentage.domain.DayCountSnapshot
 import de.eigenraum.erdentage.domain.MilestoneCandidate
 import de.eigenraum.erdentage.domain.MilestoneKind
@@ -67,8 +69,11 @@ class ErdentageGlanceWidget : GlanceAppWidget() {
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val appWidgetId = GlanceAppWidgetManager(context).getAppWidgetId(id)
-        val state = (context.applicationContext as ErdentageApplication)
-            .container.peopleRepository.state.first()
+        // A newer-schema file renders as the empty widget; the app explains it.
+        val state = ignoringNewerSchema {
+            (context.applicationContext as ErdentageApplication)
+                .container.peopleRepository.state.first()
+        } ?: PersistedAppState()
         val snapshot = WidgetSnapshotFactory.create(
             state = state,
             selection = WidgetSelectionStore(context).read(appWidgetId),
