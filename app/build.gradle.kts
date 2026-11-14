@@ -44,6 +44,15 @@ android {
         }
     }
 
+    // Keep the release artefacts free of Google-only metadata, as F-Droid
+    // requires (verified against fdroidserver 2.4.5 on 2026-11-07): the
+    // dependency block is encrypted for Google Play and F-Droid's scanner
+    // flags it as a problem.
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
     signingConfigs {
         keystoreProperties?.let { properties ->
             create("release") {
@@ -61,6 +70,12 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            // Without this AGP writes META-INF/version-control-info.textproto
+            // with the git revision, so the APK would only reproduce from the
+            // exact commit it was built from.
+            vcsInfo {
+                include = false
+            }
             if (keystoreProperties != null) {
                 signingConfig = signingConfigs.getByName("release")
             }
